@@ -1,4 +1,4 @@
-package com.example.demo;
+package dal.csci5308.project.group15.elearning;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
