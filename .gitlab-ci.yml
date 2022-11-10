@@ -19,10 +19,19 @@ test:
  tags:
   - dalfcs_gitlab_docker_ci
  image: gradle:alpine
- script: ./gradlew check
+ script:
+  - ./gradlew check
+  - bundle install
+  - bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml
+ artifacts:
+  when: always
+  paths:
+   - rspec.xml
+  reports:
+   junit: rspec.xml
  only:
   refs:
-    - develop
+   - develop
     
 deploy:
  stage: deploy
