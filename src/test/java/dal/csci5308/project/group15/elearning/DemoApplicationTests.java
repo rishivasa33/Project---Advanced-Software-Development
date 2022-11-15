@@ -1,4 +1,4 @@
-package com.example.demo;
+package dal.csci5308.project.group15.elearning;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
