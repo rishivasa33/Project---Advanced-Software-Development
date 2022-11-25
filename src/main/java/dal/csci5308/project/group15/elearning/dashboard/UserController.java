@@ -38,7 +38,7 @@ public class UserController
 
         Database db = new Database();
 
-        Connection connection = db.getConnection();
+        Connection connection = db.GetConnection();
 
         PreparedStatement statement = null;
         try

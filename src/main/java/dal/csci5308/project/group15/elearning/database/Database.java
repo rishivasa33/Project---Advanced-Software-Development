@@ -9,23 +9,33 @@ import java.sql.SQLException;
 @Repository
 public class Database
 {
-    public Connection getConnection()
+    private Connection conn_;
+    public Connection GetConnection()
     {
-        Connection conn;
+        if(conn_ == null) {
 
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
 
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/asdc_group15?enabledTLSProtocols=TLSv1.2","root","password");
-            conn.setAutoCommit(false);
+                conn_ = DriverManager.getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_15_DEVINT?enabledTLSProtocols=TLSv1.2", "CSCI5308_15_DEVINT_USER", "LZQ7ss9jJS");
+                conn_.setAutoCommit(false);
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        catch (SQLException | ClassNotFoundException e)
-        {
-            throw new RuntimeException(e);
-        }
+        return conn_;
+    }
 
-        return conn;
+    public  void CloseConnection(){
+        try{
+            if(conn_ != null) {
+                conn_.close();
+                conn_ = null;
+            }
+        }
+        catch (SQLException sqlException){
+            throw  new RuntimeException(sqlException);
+        }
     }
 }
