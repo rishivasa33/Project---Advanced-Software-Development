@@ -3,18 +3,43 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Spring Boot Thymeleaf Hello World Example</title>
+    <title>Aura Professor Dashboard</title>
     <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/professorDashboard.css}"/>
 </head>
 <body>
 <main role="main" class="container">
     <div class="starter-template">
-        <h1>Spring Boot  Thymeleaf Hello world</h1>
+        <h1>Professor Dashboard</h1>
         <h2>
             <span th:text="'Hello'"></span>
         </h2>
     </div>
+
+    <div th:switch="${course_list}">
+        <h2 th:case="null">No Graded Courses assigned for Professor</h2>
+        <div th:case="*">
+            <h2>Graded Courses taught by Professor</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Total Points</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course : ${course_list}">
+                    <td th:text="${course[0]}"></td>
+                    <td th:text="${course[1]}"></td>
+                    <td th:text="${course[2]}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/signup">Add a new user</a></p>
+    </div>
+
 </main>
 <!-- /.container -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
