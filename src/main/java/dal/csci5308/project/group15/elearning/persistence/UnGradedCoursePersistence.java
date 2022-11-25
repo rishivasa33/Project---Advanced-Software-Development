@@ -1,10 +1,10 @@
 package dal.csci5308.project.group15.elearning.persistence;
 
-import dal.csci5308.project.group15.elearning.models.course.UngradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.UnGradedCourse;
 
 public interface UnGradedCoursePersistence {
 
-    UngradedCourse Load(int course_id);
+    UnGradedCourse Load(int course_id);
 
-    void Save(UngradedCourse course);
+    void Save(UnGradedCourse course);
 }

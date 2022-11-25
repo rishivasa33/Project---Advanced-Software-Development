@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class DashBoardController {
 
-    @GetMapping("/dashboard")
+    @GetMapping("/dashboard/professor")
     public String DashboardView()
     {
         return "Dashboard!";

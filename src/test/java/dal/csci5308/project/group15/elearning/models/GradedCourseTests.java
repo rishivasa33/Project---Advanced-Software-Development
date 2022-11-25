@@ -3,7 +3,7 @@ package dal.csci5308.project.group15.elearning.models;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBGradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,15 +40,15 @@ public class GradedCourseTests {
     void TestGradedCourseSave(){
         CourseFactory courseFactory = new CourseFactory();
         GradedCourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 20);
-        GradedCoursePersistence mockDBGradedCoursePersistence =  new MockDBGradedCoursePersistence();
+        GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         course.Save(mockDBGradedCoursePersistence);
     }
 
     @Test
     void TestGradedCourseLoad(){
-        CourseFactory courseFactory = new CourseFactory();
-        GradedCoursePersistence coursePersistence =  new MockDBGradedCoursePersistence();
-        GradedCourse gradedCourse = courseFactory.LoadGradedCourse(1, coursePersistence);
+
+        GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
+        GradedCourse gradedCourse = coursePersistence.Load(1);
         Assertions.assertEquals(gradedCourse.GetCourse().GetCourseID(), 1);
         Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test1");
         assertEquals(gradedCourse.GetCourse().GetDescription(), "test description");
