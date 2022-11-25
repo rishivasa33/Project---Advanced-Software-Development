@@ -4,9 +4,11 @@ import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     private MySqlCoursePersistence mySqlCoursePersistence_;
@@ -79,6 +81,36 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
             CourseFactory courseFactory = new CourseFactory();
             return courseFactory.CreateGradedCourse(course_id, course.GetName(), course.GetDescription(), total_credits);
+
+        }
+        catch (SQLException sqlException){
+            throw  new RuntimeException(sqlException);
+        }
+        finally {
+            database_.CloseConnection();
+        }
+    }
+
+    public ArrayList<GradedCourse> GetAllGradedCourses(){
+        Connection connection = database_.GetConnection();
+        String sql_query = "SELECT gc.course_id, c.course_name, c.course_description, gc.total_credits FROM graded_course as gc INNER JOIN course as c ON c.course_id = gc.course_id;";
+        ArrayList<GradedCourse> gradedCourseArrayList = new ArrayList<>();
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            ResultSet resultSet = statement.executeQuery();
+            CourseFactory courseFactory = new CourseFactory();
+
+            while(resultSet.next()){
+                int course_id = resultSet.getInt("gc.course_id");
+                int total_credits =  resultSet.getInt("gc.total_credits");
+                String course_name = resultSet.getString("c.course_name");
+                String course_description = resultSet.getString("c.course_description");
+                gradedCourseArrayList.add(courseFactory.CreateGradedCourse(course_id, course_name, course_description, total_credits));
+            }
+
+
+            return gradedCourseArrayList;
 
         }
         catch (SQLException sqlException){

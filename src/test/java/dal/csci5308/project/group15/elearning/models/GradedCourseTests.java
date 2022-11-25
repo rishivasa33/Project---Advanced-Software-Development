@@ -57,15 +57,13 @@ public class GradedCourseTests {
 
     //db check.
 
-//    @Test
-//    void TestGradedCourseSave2(){
-//        Database database = new Database();
-//        CourseFactory courseFactory = new CourseFactory();
-//        GradedCourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 20);
-//        MySqlCoursePersistence coursePersistence = new MySqlCoursePersistence(database);
-//        GradedCoursePersistence gradedCoursePersistence = new MySqlGradedCoursePersistence(coursePersistence,database);
-//        course.Save(gradedCoursePersistence);
-//    }
+    @Test
+    void TestGradedCourseSave2(){
+        GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
+        CourseFactory courseFactory = new CourseFactory();
+        GradedCourse course = courseFactory.CreateGradedCourse(2, "database concepts", "help students with database design", 25);
+        course.Save(gradedCoursePersistence);
+    }
 //
 //    @Test
 //    void TestGradedCourseLoad2(){
