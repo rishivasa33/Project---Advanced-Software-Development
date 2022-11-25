@@ -20,26 +20,26 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
             String sql_query = "create table if not exists `graded_course` (`course_id` integer, `total_credits` integer," +
                     "PRIMARY KEY(`course_id`), FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE);";
 
-            Statement statement =  database_ .GetConnection().createStatement();
+            Statement statement =  database_.getConnection().createStatement();
             statement.execute(sql_query);
-            database_ .GetConnection().commit();
-            database_ .GetConnection().close();
+            database_.getConnection().commit();
+            database_.getConnection().close();
         }
         catch (SQLException sqlException){
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_ .CloseConnection();
+            database_.getConnection();
         }
 
 
 
     }
-    public void Save(GradedCourse graded_course){
+    public void Save(GradedCourse graded_course) throws SQLException {
 
         mySqlCoursePersistence_.Save(graded_course.GetCourse());
 
-        Connection connection = database_.GetConnection();
+        Connection connection = database_.getConnection();
         String sql_query = "insert into graded_course (course_id, total_credits) values(?, ?) "
                 +
                 "ON DUPLICATE KEY UPDATE " +
@@ -57,16 +57,16 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
             throw  new RuntimeException(sqlException);
         }
         finally {
-           database_.CloseConnection();
+           database_.getConnection().close();
         }
 
     }
 
-    public GradedCourse Load(int course_id){
+    public GradedCourse Load(int course_id) throws SQLException {
 
         Course course = mySqlCoursePersistence_.Load(course_id);
 
-        Connection connection = database_.GetConnection();
+        Connection connection = database_.getConnection();
         String sql_query = "SELECT * FROM graded_course WHERE course_id = ?;";
         try {
 
@@ -87,12 +87,12 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_.CloseConnection();
+            database_.getConnection().close();
         }
     }
 
-    public ArrayList<GradedCourse> GetAllGradedCourses(){
-        Connection connection = database_.GetConnection();
+    public ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException {
+        Connection connection = database_.getConnection();
         String sql_query = "SELECT gc.course_id, c.course_name, c.course_description, gc.total_credits FROM graded_course as gc INNER JOIN course as c ON c.course_id = gc.course_id;";
         ArrayList<GradedCourse> gradedCourseArrayList = new ArrayList<>();
         try {
@@ -117,7 +117,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_.CloseConnection();
+            database_.getConnection().close();
         }
     }
 }

@@ -11,29 +11,29 @@ public class MySqlCoursePersistence implements CoursePersistence {
 
     private Database database_;
 
-    public MySqlCoursePersistence(Database database){
+    public MySqlCoursePersistence(Database database) throws SQLException {
         database_ = database;
         try {
             String sql_query = "create table if not exists `course` (`course_id` integer, `course_name` varchar(200)," +
                     " `course_description` varchar(1000), PRIMARY KEY(`course_id`));";
 
-            Statement statement =  database_ .GetConnection().createStatement();
+            Statement statement =  database_.getConnection().createStatement();
             statement.execute(sql_query);
-            database_ .GetConnection().commit();
-            database_ .GetConnection().close();
+            database_.getConnection().commit();
+            database_.getConnection().close();
         }
         catch (SQLException sqlException){
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_ .CloseConnection();
+            database_.getConnection().close();
         }
     }
 
 
 
-    public void Save(Course course){
-        Connection connection = database_.GetConnection();
+    public void Save(Course course) throws SQLException {
+        Connection connection = database_.getConnection();
         String sql_query = "insert into course (course_id, course_name, course_description) values(?, ? , ?) "
                 +
                 "ON DUPLICATE KEY UPDATE " +
@@ -53,14 +53,14 @@ public class MySqlCoursePersistence implements CoursePersistence {
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_.CloseConnection();
+            database_.getConnection().close();
         }
 
     }
 
     public Course Load(int course_id){
 
-        Connection connection = database_.GetConnection();
+        Connection connection = database_.getConnection();
         String sql_query = "SELECT * FROM course WHERE course_id = ?;";
         try {
 
@@ -83,7 +83,7 @@ public class MySqlCoursePersistence implements CoursePersistence {
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_.CloseConnection();
+            database_.getConnection();
         }
     }
 }

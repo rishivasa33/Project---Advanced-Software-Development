@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.fail;
 import static  org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,7 +39,7 @@ public class GradedCourseTests {
     }
 
     @Test
-    void TestGradedCourseSave(){
+    void TestGradedCourseSave() throws SQLException {
         CourseFactory courseFactory = new CourseFactory();
         GradedCourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
@@ -45,7 +47,7 @@ public class GradedCourseTests {
     }
 
     @Test
-    void TestGradedCourseLoad(){
+    void TestGradedCourseLoad() throws SQLException {
 
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         GradedCourse gradedCourse = coursePersistence.Load(1);
@@ -58,7 +60,7 @@ public class GradedCourseTests {
     //db check.
 
     @Test
-    void TestGradedCourseSave2(){
+    void TestGradedCourseSave2() throws SQLException {
         GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
         CourseFactory courseFactory = new CourseFactory();
         GradedCourse course = courseFactory.CreateGradedCourse(2, "database concepts", "help students with database design", 25);

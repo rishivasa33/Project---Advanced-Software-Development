@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        table
+        {
+            border: 1px solid black;
+        }
+
+        th
+        {
+            border: 1px solid black;
+        }
+
+        tr
+        {
+            border: 1px solid black;
+        }
+
+        td
+        {
+            border: 1px solid black;
+        }
+
+    </style>
+
+</head>
+
+    <body>
+        <table>
+            <th>TOPIC ID</th>
+            <th>TOPIC NAME</th>
+            <th>CREATED BY</th>
+            <th>RESPONSES</th>
+
+            <tr th:each="instance : ${forumTopicMap}">
+                <td th:text="${instance.value.id}"></td>
+                <td th:text="${instance.value.topic}"></td>
+                <td th:text="${instance.value.createdBy}"></td>
+
+                <td>
+                    <table>
+                        <tr th:each="response : ${instance.value.replyList}">
+                            <td th:text="${response.reply}"></td>
+                            <td th:text="${response.createdBy}"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

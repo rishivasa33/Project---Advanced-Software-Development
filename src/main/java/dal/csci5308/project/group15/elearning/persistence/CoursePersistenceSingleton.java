@@ -4,12 +4,14 @@ import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCoursePersistence;
 
+import java.sql.SQLException;
+
 public class CoursePersistenceSingleton {
     private static Database database_;
     private static  MySqlCoursePersistence mySqlCoursePersistence_instance_;
     private  static MockDBCoursePersistence mockDBCoursePersistence_instance_;
 
-    private static MySqlCoursePersistence CreateMySqlCoursePersistence(){
+    private static MySqlCoursePersistence CreateMySqlCoursePersistence() throws SQLException {
         return  new MySqlCoursePersistence(database_);
     }
     private static MockDBCoursePersistence CreateMockDBCoursePersistence(){
@@ -22,10 +24,9 @@ public class CoursePersistenceSingleton {
         mySqlCoursePersistence_instance_ = null;
     }
 
-    public static CoursePersistence GetMySqlCoursePersistenceInstance(){
-        if(database_ == null){
-            database_ = new Database();
-        }
+    public static CoursePersistence GetMySqlCoursePersistenceInstance() throws SQLException {
+        database_ = Database.instance();
+
         if(mySqlCoursePersistence_instance_ == null){
             mySqlCoursePersistence_instance_ = CreateMySqlCoursePersistence();
         }

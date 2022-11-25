@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
@@ -16,8 +17,7 @@ import java.util.ArrayList;
 public class ProfessorDashBoardController {
 
     @GetMapping("dashboard/professor")
-    public String DashboardView(Model model)
-    {
+    public String DashboardView(Model model) throws SQLException {
         GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
         ArrayList<GradedCourse> course_list = gradedCoursePersistence.GetAllGradedCourses();
         ArrayList<ArrayList<String>> course_names = new ArrayList<>();

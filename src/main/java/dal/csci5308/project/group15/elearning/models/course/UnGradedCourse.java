@@ -3,6 +3,8 @@ package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistence;
 
+import java.sql.SQLException;
+
 public class UnGradedCourse {
     private Course course_;
 
@@ -12,7 +14,11 @@ public class UnGradedCourse {
     }
 
     public void Save(UnGradedCoursePersistence course_persistence) {
-        course_persistence.Save(this);
+        try {
+            course_persistence.Save(this);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Course GetCourse(){

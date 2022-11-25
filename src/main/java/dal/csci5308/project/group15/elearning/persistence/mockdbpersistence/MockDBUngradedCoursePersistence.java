@@ -5,6 +5,8 @@ import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.UnGradedCourse;
 import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistence;
 
+import java.sql.SQLException;
+
 public class MockDBUngradedCoursePersistence implements UnGradedCoursePersistence {
 
     MockDBCoursePersistence mockDBCoursePersistence;
@@ -13,7 +15,7 @@ public class MockDBUngradedCoursePersistence implements UnGradedCoursePersistenc
         mockDBCoursePersistence = new MockDBCoursePersistence();
     }
 
-    public void Save(UnGradedCourse course){
+    public void Save(UnGradedCourse course) throws SQLException {
         course.GetCourse().Save(mockDBCoursePersistence);
     }
 

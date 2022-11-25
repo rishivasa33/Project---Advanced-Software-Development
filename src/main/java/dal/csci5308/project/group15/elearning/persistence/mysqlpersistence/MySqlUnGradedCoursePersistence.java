@@ -6,6 +6,8 @@ import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.UnGradedCourse;
 import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistence;
 
+import java.sql.SQLException;
+
 public class MySqlUnGradedCoursePersistence implements UnGradedCoursePersistence {
 
     private MySqlCoursePersistence mySqlCoursePersistence_;
@@ -15,7 +17,7 @@ public class MySqlUnGradedCoursePersistence implements UnGradedCoursePersistence
         mySqlCoursePersistence_ = mySqlCoursePersistence;
         database_ = database;
     }
-    public void Save(UnGradedCourse ungradedCourse){
+    public void Save(UnGradedCourse ungradedCourse) throws SQLException {
         mySqlCoursePersistence_.Save(ungradedCourse.GetCourse());
     }
 

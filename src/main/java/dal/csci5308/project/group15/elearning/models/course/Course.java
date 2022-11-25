@@ -2,13 +2,15 @@ package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
 
+import java.sql.SQLException;
+
 public class  Course {
     private int course_id_;
     private String course_name_;
 
     private String course_description_;
 
-    public void Save(CoursePersistence course_persistence){
+    public void Save(CoursePersistence course_persistence) throws SQLException {
         course_persistence.Save(this);
     }
     Course Load(CoursePersistence course_persistence, int course_id){

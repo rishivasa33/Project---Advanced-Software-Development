@@ -5,13 +5,15 @@ import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.Mock
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlGradedCoursePersistence;
 
+import java.sql.SQLException;
+
 
 public class GradedCoursePersistenceSingleton {
     private static Database database_;
     private static MySqlGradedCoursePersistence mySqlGradedCoursePersistence_instance;
     private  static MockDBGradedCoursePersistence mockDBGradedCoursePersistence_instance;
 
-    private static MySqlGradedCoursePersistence CreateMySqlGradedCoursePersistence(){
+    private static MySqlGradedCoursePersistence CreateMySqlGradedCoursePersistence() throws SQLException {
         return  new MySqlGradedCoursePersistence((MySqlCoursePersistence) CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance(), database_);
     }
     private static MockDBGradedCoursePersistence CreateMockDBCoursePersistence(){
@@ -24,9 +26,9 @@ public class GradedCoursePersistenceSingleton {
         mySqlGradedCoursePersistence_instance = null;
     }
 
-    public static MySqlGradedCoursePersistence GetMySqlGradedCoursePersistenceInstance(){
+    public static MySqlGradedCoursePersistence GetMySqlGradedCoursePersistenceInstance() throws SQLException {
         if(database_ == null){
-            database_ = new Database();
+            database_ = Database.instance();
         }
         if(mySqlGradedCoursePersistence_instance == null){
             mySqlGradedCoursePersistence_instance = CreateMySqlGradedCoursePersistence();

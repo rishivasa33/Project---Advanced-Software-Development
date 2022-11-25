@@ -2,6 +2,8 @@ package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 
+import java.sql.SQLException;
+
 public class GradedCourse{
     Course course_;
     private int total_credits_;
@@ -16,12 +18,12 @@ public class GradedCourse{
     }
 
 
-    public void Save(GradedCoursePersistence graded_course_persistence) {
+    public void Save(GradedCoursePersistence graded_course_persistence) throws SQLException {
         graded_course_persistence.Save(this);
     }
 
 
-    GradedCourse Load(GradedCoursePersistence gradedCoursePersistence, int course_id){
+    GradedCourse Load(GradedCoursePersistence gradedCoursePersistence, int course_id) throws SQLException {
         return gradedCoursePersistence.Load(course_id);
     }
 
