@@ -19,6 +19,11 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '3.0.0'
+
 }
 
 bootJar {

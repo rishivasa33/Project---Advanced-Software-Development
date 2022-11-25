@@ -22,9 +22,7 @@ public class UserController
     public String showLoginPage(Model model)
     {
         System.out.println("inside showLoginPage");
-
         user = new User();
-
         model.addAttribute("user", user);
 
         return "login";
@@ -51,8 +49,6 @@ public class UserController
 
             while(resultSet.next())
             {
-                User user = new User();
-
                 user.setId(resultSet.getString("ID"));
                 user.setEmail(resultSet.getString("EMAIL"));
                 user.setFirstName(resultSet.getString("FIRST_NAME"));
@@ -67,5 +63,17 @@ public class UserController
         }
 
         return "professorDashboard";
+    }
+
+    @GetMapping("/user")
+    public String user()
+    {
+        return "<h1>WELCOME USER</h1>";
+    }
+
+    @GetMapping("/admin")
+    public String admin()
+    {
+        return "<h1>WELCOME ADMIN</h1>";
     }
 }
