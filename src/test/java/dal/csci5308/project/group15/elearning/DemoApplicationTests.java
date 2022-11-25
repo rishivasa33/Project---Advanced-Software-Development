@@ -12,11 +12,5 @@ class DemoApplicationTests {
 	void contextLoads() {
 		System.out.println("Hello Test OK");
 	}
-	
-	@Test
-	void testFail()
-	{
-		fail("Failed");
-	}
 
 }
