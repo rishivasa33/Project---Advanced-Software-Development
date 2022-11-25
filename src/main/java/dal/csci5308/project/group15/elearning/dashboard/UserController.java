@@ -34,9 +34,7 @@ public class UserController
         System.out.println("inside login after submit");
         System.out.println("username: " + username);
 
-        Database db = new Database();
-
-        Connection connection = db.getConnection();
+        Connection connection = Database.instance().getConnection();
 
         PreparedStatement statement = null;
         try

@@ -22,7 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '3.0.0'
+	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.0.10.RELEASE'
+	implementation group: 'org.apache.tomcat', name: 'tomcat-dbcp', version: '10.1.2'
 
 }
 

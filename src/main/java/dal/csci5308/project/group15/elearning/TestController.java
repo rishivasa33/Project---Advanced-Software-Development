@@ -17,9 +17,7 @@ public class TestController
 	@GetMapping("/health")
 	public String healthCheck()
 	{
-		Database db = new Database();
-
-		Connection connection = db.getConnection();
+		Connection connection = Database.instance().getConnection();
 
 		PreparedStatement statement = null;
 		try
