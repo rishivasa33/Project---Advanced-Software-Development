@@ -16,22 +16,16 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     public MySqlGradedCoursePersistence(MySqlCoursePersistence mySqlCoursePersistence, Database database){
         mySqlCoursePersistence_ = mySqlCoursePersistence;
         database_ = database;
-        try {
+        try (Connection connection = database_.getConnection()) {
             String sql_query = "create table if not exists `graded_course` (`course_id` integer, `total_credits` integer," +
                     "PRIMARY KEY(`course_id`), FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE);";
 
-            Statement statement =  database_.getConnection().createStatement();
+            Statement statement = connection.createStatement();
             statement.execute(sql_query);
-            database_.getConnection().commit();
-            database_.getConnection().close();
+            connection.commit();
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
-        catch (SQLException sqlException){
-            throw  new RuntimeException(sqlException);
-        }
-        finally {
-            database_.getConnection();
-        }
-
 
 
     }
@@ -39,25 +33,21 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
         mySqlCoursePersistence_.Save(graded_course.GetCourse());
 
-        Connection connection = database_.getConnection();
-        String sql_query = "insert into graded_course (course_id, total_credits) values(?, ?) "
-                +
-                "ON DUPLICATE KEY UPDATE " +
-                "total_credits=?;";
-        try {
+        try (Connection connection = database_.getConnection()) {
+            String sql_query = "insert into graded_course (course_id, total_credits) values(?, ?) "
+                    +
+                    "ON DUPLICATE KEY UPDATE " +
+                    "total_credits=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
             preparedStatement.setInt(1, graded_course.GetCourse().GetCourseID());
             preparedStatement.setInt(2, graded_course.GetCredits());
             preparedStatement.setInt(3, graded_course.GetCredits());
             int rows_modified = preparedStatement.executeUpdate();
+            System.out.println("rows modified: " + rows_modified);
             connection.commit();
 
-        }
-        catch (SQLException sqlException){
-            throw  new RuntimeException(sqlException);
-        }
-        finally {
-           database_.getConnection().close();
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
 
     }
@@ -66,44 +56,38 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
         Course course = mySqlCoursePersistence_.Load(course_id);
 
-        Connection connection = database_.getConnection();
-        String sql_query = "SELECT * FROM graded_course WHERE course_id = ?;";
-        try {
+        try (Connection connection = database_.getConnection()) {
+            String sql_query = "SELECT * FROM graded_course WHERE course_id = ?;";
 
-           PreparedStatement statement = connection.prepareStatement(sql_query);
-           statement.setInt(1, course_id);
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setInt(1, course_id);
             ResultSet resultSet = statement.executeQuery();
             int total_credits = 0;
 
-            while(resultSet.next()){
-                total_credits =  resultSet.getInt("total_credits");
+            while (resultSet.next()) {
+                total_credits = resultSet.getInt("total_credits");
             }
 
             CourseFactory courseFactory = new CourseFactory();
             return courseFactory.CreateGradedCourse(course_id, course.GetName(), course.GetDescription(), total_credits);
 
-        }
-        catch (SQLException sqlException){
-            throw  new RuntimeException(sqlException);
-        }
-        finally {
-            database_.getConnection().close();
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
     public ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException {
-        Connection connection = database_.getConnection();
-        String sql_query = "SELECT gc.course_id, c.course_name, c.course_description, gc.total_credits FROM graded_course as gc INNER JOIN course as c ON c.course_id = gc.course_id;";
-        ArrayList<GradedCourse> gradedCourseArrayList = new ArrayList<>();
-        try {
+        try (Connection connection = database_.getConnection()) {
+            String sql_query = "SELECT gc.course_id, c.course_name, c.course_description, gc.total_credits FROM graded_course as gc INNER JOIN course as c ON c.course_id = gc.course_id;";
+            ArrayList<GradedCourse> gradedCourseArrayList = new ArrayList<>();
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
             ResultSet resultSet = statement.executeQuery();
             CourseFactory courseFactory = new CourseFactory();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int course_id = resultSet.getInt("gc.course_id");
-                int total_credits =  resultSet.getInt("gc.total_credits");
+                int total_credits = resultSet.getInt("gc.total_credits");
                 String course_name = resultSet.getString("c.course_name");
                 String course_description = resultSet.getString("c.course_description");
                 gradedCourseArrayList.add(courseFactory.CreateGradedCourse(course_id, course_name, course_description, total_credits));
@@ -112,12 +96,8 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
             return gradedCourseArrayList;
 
-        }
-        catch (SQLException sqlException){
-            throw  new RuntimeException(sqlException);
-        }
-        finally {
-            database_.getConnection().close();
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 }

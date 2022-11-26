@@ -2,6 +2,8 @@ package dal.csci5308.project.group15.elearning.models;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import org.junit.jupiter.api.Assertions;
@@ -57,9 +59,21 @@ public class GradedCourseTests {
         assertEquals(gradedCourse.GetCredits(), 10);
     }
 
-    //db check.
+    @Test
+    void TestCourseGenerateUniqueID() {
+
+        CoursePersistence coursePersistence = CoursePersistenceSingleton.GetMockDBCoursePersistenceInstance();
+        int unique_id = coursePersistence.GenerateUniqueCourseID();
+        Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
+    }
 
     @Test
+    void TestCourseGenerateUniqueID2() {
+
+        CoursePersistence coursePersistence = CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance();
+        int unique_id = coursePersistence.GenerateUniqueCourseID();
+        Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
+    }
     void TestGradedCourseSave2() throws SQLException {
         GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
         CourseFactory courseFactory = new CourseFactory();

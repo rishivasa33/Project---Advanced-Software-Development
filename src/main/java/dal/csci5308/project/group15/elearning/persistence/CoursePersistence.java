@@ -9,5 +9,7 @@ public interface CoursePersistence {
 
     Course Load(int course_id);
 
+    int GenerateUniqueCourseID();
+
     void Save(Course course) throws SQLException;
 }

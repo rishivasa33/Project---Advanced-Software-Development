@@ -6,39 +6,48 @@ import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
 
 import java.sql.*;
+import java.util.Random;
 
 public class MySqlCoursePersistence implements CoursePersistence {
 
     private Database database_;
 
-    public MySqlCoursePersistence(Database database) throws SQLException {
+    public MySqlCoursePersistence(Database database){
         database_ = database;
+        Connection connection = null;
         try {
+            connection = database_.getConnection();
             String sql_query = "create table if not exists `course` (`course_id` integer, `course_name` varchar(200)," +
                     " `course_description` varchar(1000), PRIMARY KEY(`course_id`));";
 
-            Statement statement =  database_.getConnection().createStatement();
+            Statement statement =  connection.createStatement();
             statement.execute(sql_query);
-            database_.getConnection().commit();
-            database_.getConnection().close();
+            connection.commit();;
         }
         catch (SQLException sqlException){
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_.getConnection().close();
+            try {
+                if (connection != null) {
+                    connection.close();
+                    ;
+                }
+            }
+            catch (SQLException exception){
+                throw new RuntimeException(exception);
+            }
         }
     }
 
 
 
     public void Save(Course course) throws SQLException {
-        Connection connection = database_.getConnection();
-        String sql_query = "insert into course (course_id, course_name, course_description) values(?, ? , ?) "
-                +
-                "ON DUPLICATE KEY UPDATE " +
-                "course_name=?, course_description=?;";
-        try {
+        try (Connection connection = database_.getConnection()) {
+            String sql_query = "insert into course (course_id, course_name, course_description) values(?, ? , ?) "
+                    +
+                    "ON DUPLICATE KEY UPDATE " +
+                    "course_name=?, course_description=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
             preparedStatement.setInt(1, course.GetCourseID());
             preparedStatement.setString(2, course.GetName());
@@ -48,17 +57,14 @@ public class MySqlCoursePersistence implements CoursePersistence {
             int rows_modified = preparedStatement.executeUpdate();
             connection.commit();
 
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
-        catch (SQLException sqlException){
-            throw  new RuntimeException(sqlException);
-        }
-        finally {
-            database_.getConnection().close();
-        }
+
 
     }
 
-    public Course Load(int course_id){
+    public Course Load(int course_id) {
 
         Connection connection = database_.getConnection();
         String sql_query = "SELECT * FROM course WHERE course_id = ?;";
@@ -83,7 +89,43 @@ public class MySqlCoursePersistence implements CoursePersistence {
             throw  new RuntimeException(sqlException);
         }
         finally {
-            database_.getConnection();
+            try {
+                connection.close();
+            }
+            catch (SQLException sqlException){
+                throw  new RuntimeException(sqlException);
+            }
+        }
+    }
+
+    public int GenerateUniqueCourseID(){
+        Connection connection = database_.getConnection();
+        String sql_query = "SELECT MAX(course_id) as max_course_id FROM course;";
+        try {
+            connection.setAutoCommit(false);
+
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            ResultSet resultSet = statement.executeQuery();
+            int max_course_id = -1;
+
+            while(resultSet.next()){
+               max_course_id =  resultSet.getInt("max_course_id");
+            }
+            connection.commit();
+
+           return max_course_id + 1;
+
+        }
+        catch (SQLException sqlException){
+            throw  new RuntimeException(sqlException);
+        }
+        finally {
+            try {
+                connection.close();
+            }
+            catch (SQLException sqlException){
+                throw  new RuntimeException(sqlException);
+            }
         }
     }
 }

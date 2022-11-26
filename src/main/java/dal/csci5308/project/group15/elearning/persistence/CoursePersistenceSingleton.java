@@ -11,7 +11,7 @@ public class CoursePersistenceSingleton {
     private static  MySqlCoursePersistence mySqlCoursePersistence_instance_;
     private  static MockDBCoursePersistence mockDBCoursePersistence_instance_;
 
-    private static MySqlCoursePersistence CreateMySqlCoursePersistence() throws SQLException {
+    private static MySqlCoursePersistence CreateMySqlCoursePersistence(){
         return  new MySqlCoursePersistence(database_);
     }
     private static MockDBCoursePersistence CreateMockDBCoursePersistence(){
@@ -24,7 +24,7 @@ public class CoursePersistenceSingleton {
         mySqlCoursePersistence_instance_ = null;
     }
 
-    public static CoursePersistence GetMySqlCoursePersistenceInstance() throws SQLException {
+    public static CoursePersistence GetMySqlCoursePersistenceInstance() {
         database_ = Database.instance();
 
         if(mySqlCoursePersistence_instance_ == null){
