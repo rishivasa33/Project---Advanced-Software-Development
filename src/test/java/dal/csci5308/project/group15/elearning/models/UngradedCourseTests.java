@@ -20,9 +20,9 @@ public class UngradedCourseTests {
     @Test
     void TestUnGradedCourseLoad(){
         UnGradedCoursePersistence unGradedCoursePersistence =  UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
-        UnGradedCourse ungradedCourse = unGradedCoursePersistence.Load(2);
+        UnGradedCourse ungradedCourse = unGradedCoursePersistence.Load("5308");
         Assertions.assertEquals(ungradedCourse.GetCourse().GetName() , "test2");
-        Assertions.assertEquals(ungradedCourse.GetCourse().GetCourseID(), 2);
+        Assertions.assertEquals(ungradedCourse.GetCourse().GetCourseID(), "5308");
 
     }
 
@@ -30,7 +30,7 @@ public class UngradedCourseTests {
     void TestUnGradedCourseSave(){
 
         CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse(1, "test", "test2");
+        UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
         UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
         course.Save(coursePersistence);
     }
@@ -39,7 +39,7 @@ public class UngradedCourseTests {
     void TestUnGradedCourseCreation(){
 
         CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse(1, "test", "test2");
+        UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
     }
 
 

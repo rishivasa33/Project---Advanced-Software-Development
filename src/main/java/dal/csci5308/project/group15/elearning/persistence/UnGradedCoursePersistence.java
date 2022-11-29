@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public interface UnGradedCoursePersistence {
 
-    UnGradedCourse Load(int course_id);
+    UnGradedCourse Load(String course_id);
 
     void Save(UnGradedCourse course) throws SQLException;
 }

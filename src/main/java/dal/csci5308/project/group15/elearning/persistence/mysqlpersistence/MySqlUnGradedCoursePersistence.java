@@ -21,7 +21,7 @@ public class MySqlUnGradedCoursePersistence implements UnGradedCoursePersistence
         mySqlCoursePersistence_.Save(ungradedCourse.GetCourse());
     }
 
-    public UnGradedCourse Load(int course_id){
+    public UnGradedCourse Load(String course_id){
         Course course = mySqlCoursePersistence_.Load(course_id);
         CourseFactory courseFactory = new CourseFactory();
         return courseFactory.CreateUngradedCourse(course.GetCourseID(), course.GetName(), course.GetDescription());

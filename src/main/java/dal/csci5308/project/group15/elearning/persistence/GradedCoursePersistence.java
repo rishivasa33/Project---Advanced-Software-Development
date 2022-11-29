@@ -9,7 +9,7 @@ public interface GradedCoursePersistence {
 
     void Save(GradedCourse gradedCourse) throws SQLException;
 
-    GradedCourse Load(int course_id) throws SQLException;
+    GradedCourse Load(String course_id) throws SQLException;
 
     ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException;
 }

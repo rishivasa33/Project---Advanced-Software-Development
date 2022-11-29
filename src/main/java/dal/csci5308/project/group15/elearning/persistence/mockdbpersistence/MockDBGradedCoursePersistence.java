@@ -19,7 +19,7 @@ public class MockDBGradedCoursePersistence implements GradedCoursePersistence {
     public void Save(GradedCourse course){
     }
 
-    public GradedCourse Load(int course_id){
+    public GradedCourse Load(String course_id){
         Course course = coursePersistence_.Load(course_id);
         CourseFactory courseFactory = new CourseFactory();
         return courseFactory.CreateGradedCourse(course.GetCourseID(), course.GetName(), course.GetDescription(), 10);

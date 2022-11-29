@@ -19,7 +19,7 @@ public class MockDBUngradedCoursePersistence implements UnGradedCoursePersistenc
         course.GetCourse().Save(mockDBCoursePersistence);
     }
 
-    public UnGradedCourse Load(int course_id){
+    public UnGradedCourse Load(String course_id){
         Course course = mockDBCoursePersistence.Load(course_id);
         CourseFactory courseFactory = new CourseFactory();
         return courseFactory.CreateUngradedCourse(course.GetCourseID(), course.GetName(), course.GetDescription());

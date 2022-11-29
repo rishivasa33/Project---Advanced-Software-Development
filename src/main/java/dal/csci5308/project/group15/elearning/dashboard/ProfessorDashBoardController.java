@@ -25,6 +25,7 @@ public class ProfessorDashBoardController {
             ArrayList<ArrayList<String>> course_names = new ArrayList<>();
             for (GradedCourse gc : course_list) {
                 ArrayList<String> course_info = new ArrayList<>();
+                course_info.add(gc.GetCourse().GetCourseID());
                 course_info.add(gc.GetCourse().GetName());
                 course_info.add(gc.GetCourse().GetDescription());
                 course_info.add(Integer.toString(gc.GetCredits()));
@@ -45,13 +46,12 @@ public class ProfessorDashBoardController {
     }
 
     @PostMapping("create/course")
-    public String CourseSubmitView(@RequestParam String course_name, @RequestParam String course_description,
+    public String CourseSubmitView(@RequestParam String course_code, @RequestParam String course_name, @RequestParam String course_description,
                                    @RequestParam int total_credits, Model model)
     {
         try {
-           int course_id = CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance().GenerateUniqueCourseID();
             CourseFactory courseFactory = new CourseFactory();
-            GradedCourse course = courseFactory.CreateGradedCourse(course_id, course_name, course_description, total_credits);
+            GradedCourse course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
             MySqlGradedCoursePersistence mySqlGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
             course.Save(mySqlGradedCoursePersistence);
             model.addAttribute("course_created", true);

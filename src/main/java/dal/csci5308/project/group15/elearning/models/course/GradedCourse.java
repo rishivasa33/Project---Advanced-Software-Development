@@ -8,7 +8,7 @@ public class GradedCourse{
     Course course_;
     private int total_credits_;
 
-    GradedCourse(int course_id, String course_name, String course_description, int total_credits){
+    GradedCourse(String course_id, String course_name, String course_description, int total_credits){
         course_ = new Course(course_id, course_name, course_description);
         total_credits_ = total_credits;
     }
@@ -23,7 +23,7 @@ public class GradedCourse{
     }
 
 
-    GradedCourse Load(GradedCoursePersistence gradedCoursePersistence, int course_id) throws SQLException {
+    GradedCourse Load(GradedCoursePersistence gradedCoursePersistence, String course_id) throws SQLException {
         return gradedCoursePersistence.Load(course_id);
     }
 

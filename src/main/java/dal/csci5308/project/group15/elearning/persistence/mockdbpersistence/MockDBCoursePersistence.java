@@ -12,7 +12,7 @@ public class MockDBCoursePersistence implements CoursePersistence {
 
     }
 
-    public Course Load(int course_id){
+    public Course Load(String course_id){
 
         CourseFactory courseFactory = new CourseFactory();
         return courseFactory.CreateCourse(course_id, "test" + course_id, "test description");
