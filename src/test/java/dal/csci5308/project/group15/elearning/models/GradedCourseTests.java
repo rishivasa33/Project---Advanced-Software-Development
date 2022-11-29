@@ -67,19 +67,19 @@ public class GradedCourseTests {
         Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
     }
 
-    @Test
-    void TestCourseGenerateUniqueID2() {
-
-        CoursePersistence coursePersistence = CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance();
-        int unique_id = coursePersistence.GenerateUniqueCourseID();
-        Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
-    }
-    void TestGradedCourseSave2() throws SQLException {
-        GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
-        CourseFactory courseFactory = new CourseFactory();
-        GradedCourse course = courseFactory.CreateGradedCourse(2, "database concepts", "help students with database design", 25);
-        course.Save(gradedCoursePersistence);
-    }
+//    @Test
+//    void TestCourseGenerateUniqueID2() {
+//
+//        CoursePersistence coursePersistence = CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance();
+//        int unique_id = coursePersistence.GenerateUniqueCourseID();
+//        Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
+//    }
+//    void TestGradedCourseSave2() throws SQLException {
+//        GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
+//        CourseFactory courseFactory = new CourseFactory();
+//        GradedCourse course = courseFactory.CreateGradedCourse(2, "database concepts", "help students with database design", 25);
+//        course.Save(gradedCoursePersistence);
+//    }
 //
 //    @Test
 //    void TestGradedCourseLoad2(){

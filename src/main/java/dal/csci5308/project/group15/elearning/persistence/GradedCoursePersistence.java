@@ -1,15 +1,27 @@
 package dal.csci5308.project.group15.elearning.persistence;
 
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.ICourse;
+import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.ICoursePersistence;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface GradedCoursePersistence {
+public abstract class GradedCoursePersistence implements ICoursePersistence {
 
-    void Save(GradedCourse gradedCourse) throws SQLException;
 
-    GradedCourse Load(int course_id) throws SQLException;
+    public void Save(ICourse iCourse) throws SQLException {
+        Save((GradedCourse) iCourse);
+    }
 
-    ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException;
+    public ICourse Load(ICourse iCourse, int iCourseId){
+        return (ICourse) Load((GradedCourse)(iCourse), iCourseId);
+    }
+   public abstract GradedCourse Load(int course_id) throws SQLException;
+
+    public abstract void Save(GradedCourse course) throws SQLException;
+
+
+
+    public abstract ArrayList<GradedCourse> GetAllGradedCourses();
 }

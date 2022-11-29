@@ -4,7 +4,7 @@ import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenc
 
 import java.sql.SQLException;
 
-public class GradedCourse{
+public class GradedCourse implements ICourse{
     Course course_;
     private int total_credits_;
 
@@ -23,11 +23,24 @@ public class GradedCourse{
     }
 
 
-    GradedCourse Load(GradedCoursePersistence gradedCoursePersistence, int course_id) throws SQLException {
+    public ICourse Load(GradedCoursePersistence gradedCoursePersistence, int course_id) throws SQLException {
         return gradedCoursePersistence.Load(course_id);
     }
 
     public int GetCredits(){
         return total_credits_;
+    }
+
+    public int GetCourseID(){
+        return GetCourse().GetCourseID();
+    }
+    public String GetCourseName(){
+        return course_.GetName();
+    }
+    public String GetCourseDescription(){
+        return course_.GetDescription();
+    }
+    public boolean IsGradedCourse(){
+        return  true;
     }
 }

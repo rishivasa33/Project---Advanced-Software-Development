@@ -4,13 +4,14 @@ import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
+public class MySqlGradedCoursePersistence extends GradedCoursePersistence {
     private MySqlCoursePersistence mySqlCoursePersistence_;
     private Database database_;
     public MySqlGradedCoursePersistence(MySqlCoursePersistence mySqlCoursePersistence, Database database){
@@ -29,9 +30,10 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
 
     }
-    public void Save(GradedCourse graded_course) throws SQLException {
+    public void Save(GradedCourse gradedCourse) throws SQLException {
 
-        mySqlCoursePersistence_.Save(graded_course.GetCourse());
+
+        mySqlCoursePersistence_.Save(gradedCourse.GetCourse());
 
         try (Connection connection = database_.getConnection()) {
             String sql_query = "insert into graded_course (course_id, total_credits) values(?, ?) "
@@ -39,9 +41,9 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
                     "ON DUPLICATE KEY UPDATE " +
                     "total_credits=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-            preparedStatement.setInt(1, graded_course.GetCourse().GetCourseID());
-            preparedStatement.setInt(2, graded_course.GetCredits());
-            preparedStatement.setInt(3, graded_course.GetCredits());
+            preparedStatement.setInt(1, gradedCourse.GetCourse().GetCourseID());
+            preparedStatement.setInt(2, gradedCourse.GetCredits());
+            preparedStatement.setInt(3, gradedCourse.GetCredits());
             int rows_modified = preparedStatement.executeUpdate();
             System.out.println("rows modified: " + rows_modified);
             connection.commit();
@@ -51,6 +53,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
         }
 
     }
+
 
     public GradedCourse Load(int course_id) throws SQLException {
 
@@ -76,7 +79,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
         }
     }
 
-    public ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException {
+    public ArrayList<GradedCourse> GetAllGradedCourses(){
         try (Connection connection = database_.getConnection()) {
             String sql_query = "SELECT gc.course_id, c.course_name, c.course_description, gc.total_credits FROM graded_course as gc INNER JOIN course as c ON c.course_id = gc.course_id;";
             ArrayList<GradedCourse> gradedCourseArrayList = new ArrayList<>();

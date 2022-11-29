@@ -29,10 +29,16 @@ public class UngradedCourseTests {
     @Test
     void TestUnGradedCourseSave(){
 
-        CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse(1, "test", "test2");
-        UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
-        course.Save(coursePersistence);
+        try {
+
+            CourseFactory courseFactory = new CourseFactory();
+            UnGradedCourse course = courseFactory.CreateUngradedCourse(1, "test", "test2");
+            UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
+            course.Save(coursePersistence);
+        }
+        catch (Exception e){
+            Assertions.fail();
+        }
     }
 
     @Test
