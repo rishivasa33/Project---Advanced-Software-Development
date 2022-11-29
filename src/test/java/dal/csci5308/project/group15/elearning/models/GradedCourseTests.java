@@ -54,7 +54,7 @@ public class GradedCourseTests {
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         GradedCourse gradedCourse = coursePersistence.Load("5308");
         Assertions.assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
-        Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test1");
+        Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test5308");
         assertEquals(gradedCourse.GetCourse().GetDescription(), "test description");
         assertEquals(gradedCourse.GetCredits(), 10);
     }

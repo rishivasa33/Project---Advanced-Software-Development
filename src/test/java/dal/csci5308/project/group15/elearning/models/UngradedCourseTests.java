@@ -21,7 +21,7 @@ public class UngradedCourseTests {
     void TestUnGradedCourseLoad(){
         UnGradedCoursePersistence unGradedCoursePersistence =  UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
         UnGradedCourse ungradedCourse = unGradedCoursePersistence.Load("5308");
-        Assertions.assertEquals(ungradedCourse.GetCourse().GetName() , "test2");
+        Assertions.assertEquals(ungradedCourse.GetCourse().GetName() , "test5308");
         Assertions.assertEquals(ungradedCourse.GetCourse().GetCourseID(), "5308");
 
     }
