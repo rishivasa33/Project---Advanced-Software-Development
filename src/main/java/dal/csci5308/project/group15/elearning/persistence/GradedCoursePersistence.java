@@ -21,6 +21,7 @@ public abstract class GradedCoursePersistence implements ICoursePersistence {
 
     public abstract void Save(GradedCourse course) throws SQLException;
 
+    GradedCourse Load(String course_id) throws SQLException;
 
 
     public abstract ArrayList<GradedCourse> GetAllGradedCourses();

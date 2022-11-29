@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public interface CoursePersistence {
 
-    Course Load(int course_id);
+    Course Load(String course_id);
 
     int GenerateUniqueCourseID();
 

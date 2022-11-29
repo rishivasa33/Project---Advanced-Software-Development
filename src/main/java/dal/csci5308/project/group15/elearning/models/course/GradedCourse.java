@@ -8,7 +8,7 @@ public class GradedCourse implements ICourse{
     Course course_;
     private int total_credits_;
 
-    GradedCourse(int course_id, String course_name, String course_description, int total_credits){
+    GradedCourse(String course_id, String course_name, String course_description, int total_credits){
         course_ = new Course(course_id, course_name, course_description);
         total_credits_ = total_credits;
     }
@@ -23,7 +23,7 @@ public class GradedCourse implements ICourse{
     }
 
 
-    public ICourse Load(GradedCoursePersistence gradedCoursePersistence, int course_id) throws SQLException {
+    GradedCourse Load(GradedCoursePersistence gradedCoursePersistence, String course_id) throws SQLException {
         return gradedCoursePersistence.Load(course_id);
     }
 
@@ -31,7 +31,7 @@ public class GradedCourse implements ICourse{
         return total_credits_;
     }
 
-    public int GetCourseID(){
+    public String GetCourseID(){
         return GetCourse().GetCourseID();
     }
     public String GetCourseName(){

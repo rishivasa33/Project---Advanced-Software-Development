@@ -28,7 +28,7 @@ public class GradedCourseTests {
         CourseFactory courseFactory = new CourseFactory();
         GradedCourse gradedCourse = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
         assertEquals(gradedCourse.GetCourse().GetName(), "test");
-        assertEquals(gradedCourse.GetCourse().GetCourseID(), 1);
+        assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
         assertEquals(gradedCourse.GetCourse().GetDescription(), "test2");
         assertEquals(gradedCourse.GetCredits(), 10);
     }
@@ -36,14 +36,14 @@ public class GradedCourseTests {
     @Test
     void TestGradedCourseCredits(){
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse gradedCourse = courseFactory.CreateGradedCourse(1, "test", "test2", 20);
+        GradedCourse gradedCourse = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
         assertEquals(gradedCourse.GetCredits(), 20);
     }
 
     @Test
     void TestGradedCourseSave() throws SQLException {
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 20);
+        GradedCourse course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         course.Save(mockDBGradedCoursePersistence);
     }
@@ -52,41 +52,10 @@ public class GradedCourseTests {
     void TestGradedCourseLoad() throws SQLException {
 
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
-        GradedCourse gradedCourse = coursePersistence.Load(1);
-        Assertions.assertEquals(gradedCourse.GetCourse().GetCourseID(), 1);
-        Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test1");
+        GradedCourse gradedCourse = coursePersistence.Load("5308");
+        Assertions.assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
+        Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test5308");
         assertEquals(gradedCourse.GetCourse().GetDescription(), "test description");
         assertEquals(gradedCourse.GetCredits(), 10);
     }
-
-    @Test
-    void TestCourseGenerateUniqueID() {
-
-        CoursePersistence coursePersistence = CoursePersistenceSingleton.GetMockDBCoursePersistenceInstance();
-        int unique_id = coursePersistence.GenerateUniqueCourseID();
-        Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
-    }
-
-//    @Test
-//    void TestCourseGenerateUniqueID2() {
-//
-//        CoursePersistence coursePersistence = CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance();
-//        int unique_id = coursePersistence.GenerateUniqueCourseID();
-//        Assertions.assertTrue(unique_id > 0 && unique_id < Integer.MAX_VALUE);
-//    }
-//    void TestGradedCourseSave2() throws SQLException {
-//        GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
-//        CourseFactory courseFactory = new CourseFactory();
-//        GradedCourse course = courseFactory.CreateGradedCourse(2, "database concepts", "help students with database design", 25);
-//        course.Save(gradedCoursePersistence);
-//    }
-//
-//    @Test
-//    void TestGradedCourseLoad2(){
-//        Database database = new Database();
-//        CourseFactory courseFactory = new CourseFactory();
-//        MySqlCoursePersistence coursePersistence = new MySqlCoursePersistence(database);
-//        GradedCoursePersistence  graded_coursePersistence = new MySqlGradedCoursePersistence(coursePersistence,database);
-//        GradedCourse gradedCourse = courseFactory.LoadGradedCourse(1, graded_coursePersistence);
-//    }
 }

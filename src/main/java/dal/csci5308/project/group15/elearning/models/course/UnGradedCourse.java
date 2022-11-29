@@ -9,17 +9,16 @@ public class UnGradedCourse implements ICourse {
     private Course course_;
 
 
-    UnGradedCourse(int course_id, String course_name, String course_description){
+    UnGradedCourse(String course_id, String course_name, String course_description){
         course_ = new Course(course_id, course_name, course_description);
     }
 
-    public void Save(UnGradedCoursePersistence coursePersistence) throws SQLException{
-        coursePersistence.Save(this);
-    }
-
-   public  ICourse Load(UnGradedCoursePersistence iCoursePersistence, int course_id) throws SQLException
-    {
-       return iCoursePersistence.Load(course_id);
+    public void Save(UnGradedCoursePersistence course_persistence) {
+        try {
+            course_persistence.Save(this);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -28,13 +27,15 @@ public class UnGradedCourse implements ICourse {
     }
 
 
+    UnGradedCourse Load(UnGradedCoursePersistence course_persistence, String course_id){
+        return course_persistence.Load(course_id);
 //    UnGradedCourse Load(UnGradedCoursePersistence course_persistence, int course_id){
 //        return course_persistence.Load(course_id);
 //    }
 
 
 
-    public int GetCourseID(){
+    public String GetCourseID(){
         return GetCourse().GetCourseID();
     }
     public String GetCourseName(){
