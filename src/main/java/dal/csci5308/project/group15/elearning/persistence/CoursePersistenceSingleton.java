@@ -4,8 +4,6 @@ import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCoursePersistence;
 
-import java.sql.SQLException;
-
 public class CoursePersistenceSingleton {
     private static Database database_;
     private static  MySqlCoursePersistence mySqlCoursePersistence_instance_;
@@ -38,5 +36,15 @@ public class CoursePersistenceSingleton {
             mockDBCoursePersistence_instance_ = CreateMockDBCoursePersistence();
         }
         return mockDBCoursePersistence_instance_;
+    }
+
+    public static CoursePersistence GetCoursePersistence(){
+        String is_test_mode = System.getenv().getOrDefault("IS_TEST_MODE", null);
+        if(is_test_mode != null && is_test_mode.equals("TRUE")){
+            return GetMockDBCoursePersistenceInstance();
+        }
+        else{
+            return GetMySqlCoursePersistenceInstance();
+        }
     }
 }

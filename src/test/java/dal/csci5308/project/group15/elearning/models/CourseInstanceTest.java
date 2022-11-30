@@ -20,7 +20,7 @@ public class CourseInstanceTest {
     void TestCourseInstanceCreation() {
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022";
         try{
@@ -36,7 +36,7 @@ public class CourseInstanceTest {
     void TestCourseInstanceCreationInvalidStartDate(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/09/202233";
         String end_date = "20/12/2022";
         try{
@@ -52,7 +52,7 @@ public class CourseInstanceTest {
     void TestCourseInstanceCreationInvalidEndDate(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022323";
         try{
@@ -68,7 +68,7 @@ public class CourseInstanceTest {
     void TestCourseInstanceGetCourseNameFall(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022323";
         try{
@@ -86,9 +86,9 @@ public class CourseInstanceTest {
     void TestCourseInstanceGetCourseNameSummer(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/05/2022";
-        String end_date = "20/08/2022323";
+        String end_date = "20/08/2022";
         try{
             CourseInstance courseInstance =  courseFactory.CreateCourseInstance(course,start_date,end_date);
             String course_instance_name = courseInstance.GetName();
@@ -104,13 +104,13 @@ public class CourseInstanceTest {
     void TestCourseInstanceGetCourseNameWinter(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("Test", "test", "test2", 10);
         String start_date = "05/01/2022";
-        String end_date = "20/04/2022323";
+        String end_date = "20/04/2022";
         try{
             CourseInstance courseInstance =  courseFactory.CreateCourseInstance(course,start_date,end_date);
             String course_instance_name = courseInstance.GetName();
-            String expected_name = "2022 Summer test";
+            String expected_name = "2022 Winter test";
             assertEquals(course_instance_name, expected_name);
         }
         catch (ParseException exception){
@@ -122,13 +122,13 @@ public class CourseInstanceTest {
     void TestCourseInstanceSave(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/01/2022";
-        String end_date = "20/04/2022323";
+        String end_date = "20/04/2022";
         try{
             CourseInstance courseInstance =  courseFactory.CreateCourseInstance(course,start_date,end_date);
             String course_instance_name = courseInstance.GetName();
-            String expected_name = "2022 Summer test";
+            String expected_name = "2022 Winter test";
             assertEquals(course_instance_name, expected_name);
             CourseInstancePersistence courseInstancePersistence = CourseInstancePersistenceSingleton.GetMockDBCourseInstancePersistenceInstance();
             courseInstance.Save(courseInstancePersistence);
@@ -144,10 +144,10 @@ public class CourseInstanceTest {
 
         try{
             CourseInstancePersistence courseInstancePersistence =  CourseInstancePersistenceSingleton.GetMockDBCourseInstancePersistenceInstance();
-            int test_course_id = 1;
+            String test_course_id = "test";
             CourseInstance courseInstance =  courseInstancePersistence.Load(test_course_id);
-            assertEquals(courseInstance.GetCourseInstanceId(), test_course_id);
-            assertEquals(courseInstance.GetName(), "test");
+            assertEquals(courseInstance.GetCourse().GetCourseID(), test_course_id);
+            assertEquals(courseInstance.GetName(), "2023 Winter test");
         }
         catch (Exception exception){
             Assertions.fail();

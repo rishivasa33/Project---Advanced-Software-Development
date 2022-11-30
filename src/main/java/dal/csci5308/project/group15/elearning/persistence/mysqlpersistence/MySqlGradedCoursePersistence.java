@@ -11,16 +11,15 @@ import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenc
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MySqlGradedCoursePersistence extends GradedCoursePersistence {
+public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     private MySqlCoursePersistence mySqlCoursePersistence_;
     private Database database_;
     public MySqlGradedCoursePersistence(MySqlCoursePersistence mySqlCoursePersistence, Database database){
         mySqlCoursePersistence_ = mySqlCoursePersistence;
         database_ = database;
     }
-    public void Save(GradedCourse graded_course) throws SQLException {
-
-        mySqlCoursePersistence_.Save(graded_course.GetCourse());
+    public void Save(GradedCourse gradedCourse) throws SQLException {
+        mySqlCoursePersistence_.Save(gradedCourse.GetCourse());
 
         try (Connection connection = database_.getConnection()) {
             String sql_query = "update course set course_credits=? "
@@ -28,8 +27,8 @@ public class MySqlGradedCoursePersistence extends GradedCoursePersistence {
                     "WHERE course_id = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-            preparedStatement.setInt(1, graded_course.GetCredits());
-            preparedStatement.setString(2, graded_course.GetCourse().GetCourseID());
+            preparedStatement.setInt(1, gradedCourse.GetCredits());
+            preparedStatement.setString(2, gradedCourse.GetCourse().GetCourseID());
             int rows_modified = preparedStatement.executeUpdate();
             System.out.println("rows modified: " + rows_modified);
             connection.commit();
@@ -39,6 +38,7 @@ public class MySqlGradedCoursePersistence extends GradedCoursePersistence {
         }
 
     }
+
 
     public GradedCourse Load(String course_id) throws SQLException {
 
@@ -63,6 +63,8 @@ public class MySqlGradedCoursePersistence extends GradedCoursePersistence {
             throw new RuntimeException(sqlException);
         }
     }
+
+
 
     public ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException {
         try (Connection connection = database_.getConnection()) {

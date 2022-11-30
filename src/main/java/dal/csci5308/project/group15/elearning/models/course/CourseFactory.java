@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
 import java.text.ParseException;
+import java.util.Date;
 
 public class CourseFactory {
     public GradedCourse CreateGradedCourse(String course_id, String course_name, String course_description, int total_credits){
@@ -16,6 +17,10 @@ public class CourseFactory {
     }
 
     public CourseInstance CreateCourseInstance(ICourse course, String start_date, String end_date) throws ParseException {
+        return new CourseInstance(course, start_date, end_date);
+    }
+
+    public CourseInstance CreateCourseInstance(ICourse course, Date start_date, Date end_date) throws ParseException {
         return new CourseInstance(course, start_date, end_date);
     }
 

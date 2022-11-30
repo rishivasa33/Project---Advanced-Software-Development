@@ -26,7 +26,7 @@ public class GradedCourseTests {
     void TestGradedCourseCreation(){
 
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse gradedCourse = courseFactory.CreateGradedCourse(1, "test", "test2", 10);
+        GradedCourse gradedCourse = courseFactory.CreateGradedCourse("5308", "test", "test2", 10);
         assertEquals(gradedCourse.GetCourse().GetName(), "test");
         assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
         assertEquals(gradedCourse.GetCourse().GetDescription(), "test2");
@@ -45,7 +45,7 @@ public class GradedCourseTests {
         CourseFactory courseFactory = new CourseFactory();
         GradedCourse course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
-        course.Save(mockDBGradedCoursePersistence);
+        course.Save();
     }
 
     @Test

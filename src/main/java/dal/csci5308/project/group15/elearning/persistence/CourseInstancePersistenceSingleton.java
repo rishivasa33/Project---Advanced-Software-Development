@@ -37,4 +37,14 @@ public class CourseInstancePersistenceSingleton {
         }
         return mockDBCourseInstancePersistenceInstance_;
     }
+
+    public static CourseInstancePersistence GetGradedCoursePersistence(){
+        String is_test_mode = System.getenv().getOrDefault("IS_TEST_MODE", null);
+        if(is_test_mode != null && is_test_mode.equals("TRUE")){
+            return GetMockDBCourseInstancePersistenceInstance();
+        }
+        else{
+            return GetMySqlCourseInstancePersistenceInstance();
+        }
+    }
 }

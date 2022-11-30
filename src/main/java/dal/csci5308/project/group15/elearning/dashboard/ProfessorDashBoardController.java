@@ -53,7 +53,7 @@ public class ProfessorDashBoardController {
             CourseFactory courseFactory = new CourseFactory();
             GradedCourse course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
             MySqlGradedCoursePersistence mySqlGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
-            course.Save(mySqlGradedCoursePersistence);
+            course.Save();
             model.addAttribute("course_created", true);
             return "courseCreationSuccess";
         }

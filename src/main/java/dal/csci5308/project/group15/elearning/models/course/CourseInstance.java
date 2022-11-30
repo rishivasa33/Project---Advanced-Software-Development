@@ -2,6 +2,7 @@ package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistence;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 public class CourseInstance {
 
-    private int course_instance_id_;
+    private String course_instance_id_;
     private ICourse course_;
     private Date startDate_;
     private Date endDate_;
@@ -28,12 +29,11 @@ public class CourseInstance {
     }
 
     private Date DateFromString(String date_string) throws ParseException {
-        String sDate1="31/12/1998";
         try {
-            return new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            return new SimpleDateFormat("dd/MM/yyyy").parse(date_string);
         }
         catch (ParseException exception){
-            return new SimpleDateFormat("dd/MM/yy").parse(sDate1);
+            return new SimpleDateFormat("dd/MM/yy").parse(date_string);
         }
     }
 
@@ -63,7 +63,7 @@ public class CourseInstance {
     }
 
     public String GetName(){
-        int start_year = startDate_.getYear();
+        int start_year = startDate_.getYear() + 1900;
         return start_year +
                 " " +
                 GetSemesterName() +
@@ -71,15 +71,15 @@ public class CourseInstance {
                 GetCourse().GetCourseName();
     }
 
-    public void Save(CourseInstancePersistence courseInstancePersistence){
+    public void Save(CourseInstancePersistence courseInstancePersistence) throws SQLException {
         courseInstancePersistence.Save(this);
     }
 
-    public CourseInstance Load(CourseInstancePersistence courseInstancePersistence,int courseInstanceId) throws ParseException {
+    public CourseInstance Load(CourseInstancePersistence courseInstancePersistence,String courseInstanceId) throws ParseException, SQLException {
         return courseInstancePersistence.Load(courseInstanceId);
     }
 
-    public int GetCourseInstanceId() {
+    public String GetCourseInstanceId() {
         return course_instance_id_;
     }
 

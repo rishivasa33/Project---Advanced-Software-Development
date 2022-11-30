@@ -7,9 +7,10 @@ import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBCoursePersistence;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MockDBGradedCoursePersistence extends GradedCoursePersistence {
+public class MockDBGradedCoursePersistence implements GradedCoursePersistence {
 
     MockDBCoursePersistence coursePersistence_;
 
@@ -17,8 +18,11 @@ public class MockDBGradedCoursePersistence extends GradedCoursePersistence {
         coursePersistence_ = new MockDBCoursePersistence();
     }
 
-    public void Save(GradedCourse course){
+    public void Save(GradedCourse course) throws SQLException {
+
     }
+
+
 
     public GradedCourse Load(String course_id){
         Course course = coursePersistence_.Load(course_id);
@@ -26,7 +30,7 @@ public class MockDBGradedCoursePersistence extends GradedCoursePersistence {
         return courseFactory.CreateGradedCourse(course.GetCourseID(), course.GetName(), course.GetDescription(), 10);
     }
 
-    public ArrayList<GradedCourse> GetAllGradedCourses(){
+    public ArrayList<GradedCourse> GetAllGradedCourses() {
         return new ArrayList<>();
     }
 }

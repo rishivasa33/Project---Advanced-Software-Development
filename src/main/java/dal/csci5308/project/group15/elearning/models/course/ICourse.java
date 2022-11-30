@@ -4,10 +4,14 @@ import java.sql.SQLException;
 
 public interface ICourse {
 
-    int GetCourseID();
+    String GetCourseID();
     String GetCourseName();
     String GetCourseDescription();
     boolean IsGradedCourse();
+
+    void Save() throws SQLException;
+
+    ICourse Load(String course_id) throws SQLException;
 
 
 

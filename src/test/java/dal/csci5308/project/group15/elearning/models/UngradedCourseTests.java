@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.fail;
 import static  org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,12 +29,12 @@ public class UngradedCourseTests {
     }
 
     @Test
-    void TestUnGradedCourseSave(){
+    void TestUnGradedCourseSave() throws SQLException {
 
         CourseFactory courseFactory = new CourseFactory();
         UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
         UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
-        course.Save(coursePersistence);
+        course.Save();
     }
 
     @Test
