@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Aura Add Course Content For Module</title>
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/professorDashboard.css}"/>
+</head>
+<body>
+<main role="main" class="container">
+    <div class="starter-template">
+        <h1>Create Content Using Form Below</h1>
+    </div>
+
+    <form  th:action="@{/add/courseContent}" method="post" id = "create_content_form">
+        <label>Content Heading:</label><br>
+        <input type="text"  name = "course_content_heading"/><br>
+        <label>Text Content:</label><br>
+        <textarea name = "course_content_text" form = "create_content_form"></textarea>
+        <input type="submit" value="Add Course Content">
+    </form>
+
+
+</main>
+<!-- /.container -->
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
+</html>

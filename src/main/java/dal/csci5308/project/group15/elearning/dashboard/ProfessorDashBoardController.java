@@ -2,7 +2,8 @@ package dal.csci5308.project.group15.elearning.dashboard;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlGradedCoursePersistence;
@@ -62,5 +63,30 @@ public class ProfessorDashBoardController {
             return "courseCreationSuccess";
         }
     }
+
+    @GetMapping("add/courseContent")
+    public String AddCourseContentView(Model model)
+    {
+        return "createCourseContent";
+    }
+
+    @PostMapping("add/courseContent")
+    public String CourseContentSubmitView(@RequestParam String course_content_heading, @RequestParam String course_content_text, Model model)
+    {
+        try {
+            CourseContentFactory courseContentFactory = new CourseContentFactory();
+            TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent(course_content_heading, course_content_text);
+            textCourseContent.Save();
+            model.addAttribute("course_content_added", true);
+            return "AddContentSuccess";
+        }
+        catch (Exception exception){
+            System.out.println("error happened in course content creation");
+            model.addAttribute("course_content_added", null);
+            return "AddContentSuccess";
+        }
+    }
+
+
 
 }
