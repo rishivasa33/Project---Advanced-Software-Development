@@ -17,8 +17,8 @@ public class MySqlCoursePersistence implements CoursePersistence {
         Connection connection = null;
         try {
             connection = database_.getConnection();
-            String sql_query = "create table if not exists `course` (`course_id` integer, `course_name` varchar(200)," +
-                    " `course_description` varchar(1000), PRIMARY KEY(`course_id`));";
+            String sql_query = "create table if not exists `course` (`course_id` varchar(12), `course_name` varchar(200)," +
+                    " `course_description` varchar(1000), course_credits int(3), PRIMARY KEY(`course_id`));";
 
             Statement statement =  connection.createStatement();
             statement.execute(sql_query);
@@ -49,7 +49,7 @@ public class MySqlCoursePersistence implements CoursePersistence {
                     "ON DUPLICATE KEY UPDATE " +
                     "course_name=?, course_description=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-            preparedStatement.setInt(1, course.GetCourseID());
+            preparedStatement.setString(1, course.GetCourseID());
             preparedStatement.setString(2, course.GetName());
             preparedStatement.setString(4, course.GetName());
             preparedStatement.setString(3, course.GetDescription());
@@ -64,14 +64,14 @@ public class MySqlCoursePersistence implements CoursePersistence {
 
     }
 
-    public Course Load(int course_id) {
+    public Course Load(String course_id) {
 
         Connection connection = database_.getConnection();
         String sql_query = "SELECT * FROM course WHERE course_id = ?;";
         try {
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
-            statement.setInt(1, course_id);
+            statement.setString(1, course_id);
             ResultSet resultSet = statement.executeQuery();
             String course_name = "";
             String course_description = "";
@@ -101,31 +101,32 @@ public class MySqlCoursePersistence implements CoursePersistence {
     public int GenerateUniqueCourseID(){
         Connection connection = database_.getConnection();
         String sql_query = "SELECT MAX(course_id) as max_course_id FROM course;";
-        try {
-            connection.setAutoCommit(false);
-
-            PreparedStatement statement = connection.prepareStatement(sql_query);
-            ResultSet resultSet = statement.executeQuery();
-            int max_course_id = -1;
-
-            while(resultSet.next()){
-               max_course_id =  resultSet.getInt("max_course_id");
-            }
-            connection.commit();
-
-           return max_course_id + 1;
-
-        }
-        catch (SQLException sqlException){
-            throw  new RuntimeException(sqlException);
-        }
-        finally {
-            try {
-                connection.close();
-            }
-            catch (SQLException sqlException){
-                throw  new RuntimeException(sqlException);
-            }
-        }
+//        try {
+//            connection.setAutoCommit(false);
+//
+//            PreparedStatement statement = connection.prepareStatement(sql_query);
+//            ResultSet resultSet = statement.executeQuery();
+//            int max_course_id = -1;
+//
+//            while(resultSet.next()){
+//               max_course_id =  resultSet.getInt("max_course_id");
+//            }
+//            connection.commit();
+//
+//           return max_course_id + 1;
+//
+//        }
+//        catch (SQLException sqlException){
+//            throw  new RuntimeException(sqlException);
+//        }
+//        finally {
+//            try {
+//                connection.close();
+//            }
+//            catch (SQLException sqlException){
+//                throw  new RuntimeException(sqlException);
+//            }
+//        }
+        return 1;
     }
 }

@@ -36,5 +36,6 @@ jar {
 }
 
 tasks.named('test') {
+	environment "IS_TEST_MODE", "TRUE"
 	useJUnitPlatform()
 }

@@ -5,14 +5,12 @@ import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.Mock
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlUnGradedCoursePersistence;
 
-import java.sql.SQLException;
-
 public class UnGradedCoursePersistenceSingleton {
     private static Database database_;
     private static MySqlUnGradedCoursePersistence mySqlUnGradedCoursePersistence_instance;
     private  static MockDBUngradedCoursePersistence mockDBUnGradedCoursePersistence_instance;
 
-    private static MySqlUnGradedCoursePersistence CreateMySqlUnGradedCoursePersistence() throws SQLException {
+    private static MySqlUnGradedCoursePersistence CreateMySqlUnGradedCoursePersistence(){
         return  new MySqlUnGradedCoursePersistence((MySqlCoursePersistence) CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance(),  database_);
     }
     private static MockDBUngradedCoursePersistence CreateMockDBUnGradedCoursePersistence(){
@@ -25,7 +23,7 @@ public class UnGradedCoursePersistenceSingleton {
         mySqlUnGradedCoursePersistence_instance = null;
     }
 
-    public static UnGradedCoursePersistence GetMySqlUnGradedCoursePersistenceInstance() throws SQLException {
+    public static UnGradedCoursePersistence GetMySqlUnGradedCoursePersistenceInstance(){
         if(database_ == null){
             database_ = Database.instance();
         }
@@ -40,5 +38,15 @@ public class UnGradedCoursePersistenceSingleton {
             mockDBUnGradedCoursePersistence_instance = CreateMockDBUnGradedCoursePersistence();
         }
         return mockDBUnGradedCoursePersistence_instance;
+    }
+
+    public static UnGradedCoursePersistence GetUnGradedCoursePersistence(){
+        String is_test_mode = System.getenv().getOrDefault("IS_TEST_MODE", null);
+        if(is_test_mode != null && is_test_mode.equals("TRUE")){
+            return GetMockDBUnGradedCoursePersistenceInstance();
+        }
+        else{
+            return GetMySqlUnGradedCoursePersistenceInstance();
+        }
     }
 }

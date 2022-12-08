@@ -13,7 +13,7 @@ public class GradedCoursePersistenceSingleton {
     private static MySqlGradedCoursePersistence mySqlGradedCoursePersistence_instance;
     private  static MockDBGradedCoursePersistence mockDBGradedCoursePersistence_instance;
 
-    private static MySqlGradedCoursePersistence CreateMySqlGradedCoursePersistence() throws SQLException {
+    private static MySqlGradedCoursePersistence CreateMySqlGradedCoursePersistence(){
         return  new MySqlGradedCoursePersistence((MySqlCoursePersistence) CoursePersistenceSingleton.GetMySqlCoursePersistenceInstance(), database_);
     }
     private static MockDBGradedCoursePersistence CreateMockDBCoursePersistence(){
@@ -26,7 +26,7 @@ public class GradedCoursePersistenceSingleton {
         mySqlGradedCoursePersistence_instance = null;
     }
 
-    public static MySqlGradedCoursePersistence GetMySqlGradedCoursePersistenceInstance() throws SQLException {
+    public static MySqlGradedCoursePersistence GetMySqlGradedCoursePersistenceInstance() {
         if(database_ == null){
             database_ = Database.instance();
         }
@@ -41,5 +41,15 @@ public class GradedCoursePersistenceSingleton {
             mockDBGradedCoursePersistence_instance = CreateMockDBCoursePersistence();
         }
         return mockDBGradedCoursePersistence_instance;
+    }
+
+    public static GradedCoursePersistence GetGradedCoursePersistence(){
+        String is_test_mode = System.getenv().getOrDefault("IS_TEST_MODE", null);
+        if(is_test_mode != null && is_test_mode.equals("TRUE")){
+            return GetMockDBGradedCoursePersistenceInstance();
+        }
+        else{
+            return GetMySqlGradedCoursePersistenceInstance();
+        }
     }
 }

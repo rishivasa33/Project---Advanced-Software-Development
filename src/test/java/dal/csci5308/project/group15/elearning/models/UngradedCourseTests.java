@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.fail;
 import static  org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,26 +22,26 @@ public class UngradedCourseTests {
     @Test
     void TestUnGradedCourseLoad(){
         UnGradedCoursePersistence unGradedCoursePersistence =  UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
-        UnGradedCourse ungradedCourse = unGradedCoursePersistence.Load(2);
-        Assertions.assertEquals(ungradedCourse.GetCourse().GetName() , "test2");
-        Assertions.assertEquals(ungradedCourse.GetCourse().GetCourseID(), 2);
+        UnGradedCourse ungradedCourse = unGradedCoursePersistence.Load("5308");
+        Assertions.assertEquals(ungradedCourse.GetCourse().GetName() , "test5308");
+        Assertions.assertEquals(ungradedCourse.GetCourse().GetCourseID(), "5308");
 
     }
 
     @Test
-    void TestUnGradedCourseSave(){
+    void TestUnGradedCourseSave() throws SQLException {
 
         CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse(1, "test", "test2");
+        UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
         UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
-        course.Save(coursePersistence);
+        course.Save();
     }
 
     @Test
     void TestUnGradedCourseCreation(){
 
         CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse(1, "test", "test2");
+        UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
     }
 
 
