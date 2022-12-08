@@ -6,4 +6,8 @@ public class CourseContentFactory {
     public TextCourseContent CreateTextCourseContent(String contentHeading, String contentText){
         return new TextCourseContent(contentHeading, contentText);
     }
+
+    public CourseModule CreateCourseModule(String moduleName){
+        return new CourseModule(moduleName);
+    }
 }

@@ -46,6 +46,14 @@ public class ProfessorDashBoardController {
         return "createCourse";
     }
 
+    @GetMapping("courseDetails")
+    public String CreateCourseView(@RequestParam String courseId, Model model)
+    {
+        model.addAttribute("courseId", courseId);
+
+        return "courseDetails";
+    }
+
     @PostMapping("create/course")
     public String CourseSubmitView(@RequestParam String course_code, @RequestParam String course_name, @RequestParam String course_description,
                                    @RequestParam int total_credits, Model model)

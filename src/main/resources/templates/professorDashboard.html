@@ -27,6 +27,7 @@
                     <th>Course Name</th>
                     <th>Description</th>
                     <th>Total Points</th>
+                    <th>Go to Course Details</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,7 @@
                     <td th:text="${course[1]}"></td>
                     <td th:text="${course[2]}"></td>
                     <td th:text="${course[3]}"></td>
+                    <td> <a th:href ="@{/courseDetails/(courseId=${course[0]})}"> Get Course Details </a></td>
                 </tr>
                 </tbody>
             </table>
