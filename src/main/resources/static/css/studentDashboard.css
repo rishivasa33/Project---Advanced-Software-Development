@@ -1,0 +1,21 @@
+body {
+    padding-top: 5rem;
+}
+.title {
+    text-align: center;
+}
+h1{
+    color: #000000;
+}
+h2{
+    text-align: center;
+    color: #1d501b;
+}
+
+h4{
+    color: #273f58;
+}
+
+.announcement-buffer{
+    padding-top: 1rem;
+}
