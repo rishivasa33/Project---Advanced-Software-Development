@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.dashboard;
+package dal.csci5308.project.group15.elearning.models.course.dashboard;
 
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.User;

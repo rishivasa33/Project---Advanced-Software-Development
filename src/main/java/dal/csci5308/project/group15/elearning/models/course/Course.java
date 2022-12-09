@@ -17,6 +17,10 @@ public class Course implements ICourse{
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
+    Course(String course_id){
+        baseCourse_ = new BaseCourse(course_id);
+    }
+
     public BaseCourse GetCourse(){
         return baseCourse_;
     }

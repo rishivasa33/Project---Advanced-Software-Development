@@ -30,6 +30,10 @@ public class BaseCourse {
         course_description_ = course_description;
     }
 
+    BaseCourse(String course_id){
+        course_id_ = course_id;
+    }
+
     public String GetCourseID(){
         return  course_id_;
     }

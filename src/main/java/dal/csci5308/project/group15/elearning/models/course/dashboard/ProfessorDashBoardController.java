@@ -1,7 +1,9 @@
-package dal.csci5308.project.group15.elearning.dashboard;
+package dal.csci5308.project.group15.elearning.models.course.dashboard;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlGradedCoursePersistence;
@@ -49,7 +51,7 @@ public class ProfessorDashBoardController {
                                    @RequestParam int total_credits, Model model)
     {
         try {
-            CourseFactory courseFactory = new CourseFactory();
+            ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
             Course course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
             MySqlGradedCoursePersistence mySqlGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
             course.Save();

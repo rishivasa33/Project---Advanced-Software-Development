@@ -1,9 +1,11 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistence;
 
 import java.sql.SQLException;
@@ -17,8 +19,8 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
     }
 
     public CourseByTerm loadByID(String course_instance_id) throws ParseException, SQLException {
-        CourseFactory courseFactory = new CourseFactory();
-        Course course = courseFactory.LoadCourseDummyInstance("CSCI5100");
+        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+        Course course = courseFactory.createCourseInstanceForLoad("CSCI5100");
         course = course.Load("CSCI5100");
         return courseFactory.CreateCourseInstance("TestCInstID",course, "15/01/2023", "15/04/2022", "F22", 10, 20);
     }
@@ -26,9 +28,9 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
     @Override
     public ArrayList<ICourseByTerm> loadByTerm(String courseTerm) throws ParseException, SQLException {
         ArrayList<ICourseByTerm> coursesByTerm = new ArrayList<>();
-        CourseFactory courseFactory = new CourseFactory();
+        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
 
-        Course course = courseFactory.LoadCourseDummyInstance("CSCI5100");
+        Course course = courseFactory.createCourseInstanceForLoad("CSCI5100");
         course = course.Load("CSCI5100");
 
         ICourseByTerm courseInstance = courseFactory.CreateCourseInstance("TestCInsID1", course, "15/01/2023", "15/04/2022", "F22", 10, 20);

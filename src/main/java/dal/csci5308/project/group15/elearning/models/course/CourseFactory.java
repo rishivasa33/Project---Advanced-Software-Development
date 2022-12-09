@@ -3,7 +3,7 @@ package dal.csci5308.project.group15.elearning.models.course;
 import java.text.ParseException;
 import java.util.Date;
 
-public class CourseFactory {
+public class CourseFactory implements ICourseFactory {
     public Course CreateGradedCourse(String course_id, String course_name, String course_description, int total_credits){
         return new Course(course_id, course_name, course_description, total_credits);
     }
@@ -24,7 +24,7 @@ public class CourseFactory {
         return new CourseByTerm(courseInstanceID, course, start_date, end_date, courseTerm, enrolledSeats, totalSeats);
     }
 
-    public Course LoadCourseDummyInstance(String courseID){
-        return new Course(courseID, null, null, 0);
+    public Course createCourseInstanceForLoad(String courseID){
+        return new Course(courseID);
     }
 }
