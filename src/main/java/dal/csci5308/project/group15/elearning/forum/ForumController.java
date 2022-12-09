@@ -8,6 +8,7 @@ import dal.csci5308.project.group15.elearning.security.AuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.*;
 import java.util.*;
 
-@Controller()
+@Controller
 @RequestMapping("/forum")
 public class ForumController
 {
@@ -28,6 +29,9 @@ public class ForumController
 
     @Value("${STORED_PROCEDURE_FORUM_GET_FORUM_LIST}")
     private String STORED_PROCEDURE_FORUM_GET_FORUM_LIST;
+
+    @Value("${STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC}")
+    private String STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -51,7 +55,7 @@ public class ForumController
             statement = connection.prepareCall(STORED_PROCEDURE_FORUM_GET_FORUM_LIST);
 
             //  TODO: Replace the hardcoded course ID with a variable
-            statement.setString(1, "CSCI 5400");
+            statement.setString(1, "F22CSCI 5402");
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next())
@@ -100,11 +104,10 @@ public class ForumController
         model.addAttribute("forumTopicMap", forumTopicMap);
         model.addAttribute("topicList", topicList);
         model.addAttribute("forumComment", new ForumComment());
+        model.addAttribute("newTopic", new ForumTopic());
 
         return "forumList";
     }
-
-    private String testVar;
 
     @PostMapping("/postForumComment")
     public String addNewCommentToTopic(@ModelAttribute("forumComment") ForumComment comment,
@@ -176,6 +179,40 @@ public class ForumController
         catch (SQLException sqlException)
         {
             System.out.println("Error adding comment: " + sqlException.getMessage());
+        }
+
+        return "redirect:/forum/list";
+    }
+
+    @PostMapping("/createNewTopic")
+    public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic)
+    {
+        System.out.println("New Topic: " + newTopic.toString());
+        //  insert new topic to DB corresponding to the current course instance (fetched from the session)
+
+        try(
+                Connection connection = Database.instance().getConnection();
+                CallableStatement statement = connection.prepareCall(STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC);
+            )
+        {
+            statement.setString(1, "F22CSCI 5402");
+            statement.setString(2, newTopic.getTopic());
+            statement.setString(3, AuthUser.getUsername());
+
+            int result = statement.executeUpdate();
+
+            if(result > 0)
+            {
+                connection.commit();
+            }
+            else
+            {
+                connection.rollback();
+            }
+        }
+        catch (SQLException sqlException)
+        {
+            logger.error("SQL Exception: " + sqlException.getMessage());
         }
 
         return "redirect:/forum/list";
