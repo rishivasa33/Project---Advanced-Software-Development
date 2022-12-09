@@ -1,21 +1,17 @@
 package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.database.DatabaseQuery;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.MessageDigest;
-import java.security.SecureRandom;
 import java.sql.*;
 import java.util.*;
 
@@ -32,9 +28,13 @@ public class ForumController
     @Value("${STORED_PROCEDURE_FORUM_GET_FORUM_LIST}")
     private String STORED_PROCEDURE_FORUM_GET_FORUM_LIST;
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @GetMapping("/list")
     public String showForum(Model model)
     {
+        logger.error("Inside forum list showForum");
+
         forumTopicMap = new HashMap<>();
         topicList = new LinkedList<>();
 
