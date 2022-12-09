@@ -1,8 +1,9 @@
-package dal.csci5308.project.group15.elearning.dashboard;
+package dal.csci5308.project.group15.elearning.models.course.dashboard;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlGradedCoursePersistence;
@@ -21,9 +22,9 @@ public class ProfessorDashBoardController {
     public String DashboardView(Model model)  {
         try {
             GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
-            ArrayList<GradedCourse> course_list = gradedCoursePersistence.GetAllGradedCourses();
+            ArrayList<Course> course_list = gradedCoursePersistence.GetAllGradedCourses();
             ArrayList<ArrayList<String>> course_names = new ArrayList<>();
-            for (GradedCourse gc : course_list) {
+            for (Course gc : course_list) {
                 ArrayList<String> course_info = new ArrayList<>();
                 course_info.add(gc.GetCourse().GetCourseID());
                 course_info.add(gc.GetCourse().GetName());
@@ -50,8 +51,8 @@ public class ProfessorDashBoardController {
                                    @RequestParam int total_credits, Model model)
     {
         try {
-            CourseFactory courseFactory = new CourseFactory();
-            GradedCourse course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
+            ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+            Course course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
             MySqlGradedCoursePersistence mySqlGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
             course.Save();
             model.addAttribute("course_created", true);
