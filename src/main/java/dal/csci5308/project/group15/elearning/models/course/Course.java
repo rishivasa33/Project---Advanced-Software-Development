@@ -1,37 +1,50 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 
 import java.sql.SQLException;
 
-public class  Course {
-    private String course_id_;
-    private String course_name_;
+public class Course implements ICourse{
+    BaseCourse baseCourse_;
+    private int total_credits_;
 
-    private String course_description_;
+    GradedCoursePersistence gradedCoursePersistence_;
 
-    public void Save(CoursePersistence course_persistence) throws SQLException {
-        course_persistence.Save(this);
-    }
-    Course Load(CoursePersistence course_persistence, String course_id){
-        return course_persistence.Load(course_id);
-    }
-    public String GetName(){
-        return course_name_;
+    Course(String course_id, String course_name, String course_description, int total_credits) {
+        baseCourse_ = new BaseCourse(course_id, course_name, course_description);
+        total_credits_ = total_credits;
+        gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
-
-    public String GetDescription(){
-        return course_description_;
+    public BaseCourse GetCourse(){
+        return baseCourse_;
     }
-    Course (String course_id, String course_name, String course_description){
-        course_id_ = course_id;
-        course_name_ = course_name;
-        course_description_ = course_description;
+
+
+    public void Save() throws SQLException {
+        gradedCoursePersistence_.Save(this);
+    }
+
+
+    public Course Load(String course_id) throws SQLException {
+        return gradedCoursePersistence_.Load(course_id);
+    }
+
+    public int GetCredits(){
+        return total_credits_;
     }
 
     public String GetCourseID(){
-        return  course_id_;
+        return GetCourse().GetCourseID();
     }
-
+    public String GetCourseName(){
+        return baseCourse_.GetName();
+    }
+    public String GetCourseDescription(){
+        return baseCourse_.GetDescription();
+    }
+    public boolean IsGradedCourse(){
+        return  true;
+    }
 }

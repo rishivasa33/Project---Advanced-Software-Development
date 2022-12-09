@@ -20,7 +20,7 @@ public class StudentController {
         return "studentDashboard";
     }
 
-    private HashMap<String, String> getEnrolledCourses(){
+   /* private HashMap<String, String> getEnrolledCourses(){
 
-    }
+    }*/
 }

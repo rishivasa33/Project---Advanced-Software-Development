@@ -1,12 +1,11 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
 
 import java.sql.*;
-import java.util.Random;
 
 public class MySqlCoursePersistence implements CoursePersistence {
 
@@ -42,18 +41,18 @@ public class MySqlCoursePersistence implements CoursePersistence {
 
 
 
-    public void Save(Course course) throws SQLException {
+    public void Save(BaseCourse baseCourse) throws SQLException {
         try (Connection connection = database_.getConnection()) {
             String sql_query = "insert into course (course_id, course_name, course_description) values(?, ? , ?) "
                     +
                     "ON DUPLICATE KEY UPDATE " +
                     "course_name=?, course_description=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-            preparedStatement.setString(1, course.GetCourseID());
-            preparedStatement.setString(2, course.GetName());
-            preparedStatement.setString(4, course.GetName());
-            preparedStatement.setString(3, course.GetDescription());
-            preparedStatement.setString(5, course.GetDescription());
+            preparedStatement.setString(1, baseCourse.GetCourseID());
+            preparedStatement.setString(2, baseCourse.GetName());
+            preparedStatement.setString(4, baseCourse.GetName());
+            preparedStatement.setString(3, baseCourse.GetDescription());
+            preparedStatement.setString(5, baseCourse.GetDescription());
             int rows_modified = preparedStatement.executeUpdate();
             connection.commit();
 
@@ -64,7 +63,7 @@ public class MySqlCoursePersistence implements CoursePersistence {
 
     }
 
-    public Course Load(String course_id) {
+    public BaseCourse Load(String course_id) {
 
         Connection connection = database_.getConnection();
         String sql_query = "SELECT * FROM course WHERE course_id = ?;";

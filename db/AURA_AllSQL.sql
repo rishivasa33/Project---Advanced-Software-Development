@@ -5,13 +5,13 @@ select * from `role`;
 select * from `user`;
 select * from `user_x_role`;
 
-select * from `course` ;programs
+select * from `course`;
 select * from `programs`;
 select * from `course_by_term`;
 SELECT * FROM `program_by_term`;
 select * from `student_details`;
 select * from `university_term`;
-select * from ``;
+select * from `student_course_enrollment`;
 
 #student
 ##student-course mapping (registration from UI)
