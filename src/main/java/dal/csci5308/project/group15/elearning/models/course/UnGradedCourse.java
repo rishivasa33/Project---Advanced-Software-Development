@@ -7,13 +7,13 @@ import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersiste
 import java.sql.SQLException;
 
 public class UnGradedCourse implements ICourse {
-    private Course course_;
+    private BaseCourse baseCourse_;
 
     private UnGradedCoursePersistence unGradedCoursePersistence_;
 
 
     UnGradedCourse(String course_id, String course_name, String course_description){
-        course_ = new Course(course_id, course_name, course_description);
+        baseCourse_ = new BaseCourse(course_id, course_name, course_description);
         unGradedCoursePersistence_ = UnGradedCoursePersistenceSingleton.GetUnGradedCoursePersistence();
     }
 
@@ -22,8 +22,8 @@ public class UnGradedCourse implements ICourse {
     }
 
 
-    public Course GetCourse(){
-        return course_;
+    public BaseCourse GetCourse(){
+        return baseCourse_;
     }
 
 
@@ -37,10 +37,10 @@ public class UnGradedCourse implements ICourse {
         return GetCourse().GetCourseID();
     }
     public String GetCourseName(){
-        return course_.GetName();
+        return baseCourse_.GetName();
     }
     public String GetCourseDescription(){
-        return course_.GetDescription();
+        return baseCourse_.GetDescription();
     }
     public boolean IsGradedCourse(){
         return  true;

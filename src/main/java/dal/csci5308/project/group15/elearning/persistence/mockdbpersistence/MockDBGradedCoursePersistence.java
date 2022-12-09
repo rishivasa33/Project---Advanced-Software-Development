@@ -1,11 +1,11 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
 
-import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
-import dal.csci5308.project.group15.elearning.models.course.ICourse;
+import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBCoursePersistence;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,19 +18,19 @@ public class MockDBGradedCoursePersistence implements GradedCoursePersistence {
         coursePersistence_ = new MockDBCoursePersistence();
     }
 
-    public void Save(GradedCourse course) throws SQLException {
+    public void Save(Course course) throws SQLException {
 
     }
 
 
 
-    public GradedCourse Load(String course_id){
-        Course course = coursePersistence_.Load(course_id);
-        CourseFactory courseFactory = new CourseFactory();
-        return courseFactory.CreateGradedCourse(course.GetCourseID(), course.GetName(), course.GetDescription(), 10);
+    public Course Load(String course_id){
+        BaseCourse baseCourse = coursePersistence_.Load(course_id);
+        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+        return courseFactory.CreateGradedCourse(baseCourse.GetCourseID(), baseCourse.GetName(), baseCourse.GetDescription(), 10);
     }
 
-    public ArrayList<GradedCourse> GetAllGradedCourses() {
+    public ArrayList<Course> GetAllGradedCourses() {
         return new ArrayList<>();
     }
 }

@@ -1,9 +1,7 @@
 package dal.csci5308.project.group15.elearning.models;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import org.junit.jupiter.api.Assertions;
@@ -19,31 +17,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 
-public class GradedCourseTests {
+public class CourseTests {
 
 
         @Test
     void TestGradedCourseCreation(){
 
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse gradedCourse = courseFactory.CreateGradedCourse("5308", "test", "test2", 10);
-        assertEquals(gradedCourse.GetCourse().GetName(), "test");
-        assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
-        assertEquals(gradedCourse.GetCourse().GetDescription(), "test2");
-        assertEquals(gradedCourse.GetCredits(), 10);
+        Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 10);
+        assertEquals(course.GetCourse().GetName(), "test");
+        assertEquals(course.GetCourse().GetCourseID(), "5308");
+        assertEquals(course.GetCourse().GetDescription(), "test2");
+        assertEquals(course.GetCredits(), 10);
     }
 
     @Test
     void TestGradedCourseCredits(){
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse gradedCourse = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
-        assertEquals(gradedCourse.GetCredits(), 20);
+        Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
+        assertEquals(course.GetCredits(), 20);
     }
 
     @Test
     void TestGradedCourseSave() throws SQLException {
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
+        Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         course.Save();
     }
@@ -52,10 +50,10 @@ public class GradedCourseTests {
     void TestGradedCourseLoad() throws SQLException {
 
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
-        GradedCourse gradedCourse = coursePersistence.Load("5308");
-        Assertions.assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
-        Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test5308");
-        assertEquals(gradedCourse.GetCourse().GetDescription(), "test description");
-        assertEquals(gradedCourse.GetCredits(), 10);
+        Course course = coursePersistence.Load("5308");
+        Assertions.assertEquals(course.GetCourse().GetCourseID(), "5308");
+        Assertions.assertEquals(course.GetCourse().GetName(), "test5308");
+        assertEquals(course.GetCourse().GetDescription(), "test description");
+        assertEquals(course.GetCredits(), 10);
     }
 }
