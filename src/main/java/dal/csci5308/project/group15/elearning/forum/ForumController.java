@@ -4,6 +4,7 @@ import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
+import dal.csci5308.project.group15.elearning.security.AuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -157,7 +158,7 @@ public class ForumController
         {
             statement.setString(1, topic.getId());
             statement.setString(2, commentToAdd);
-            statement.setString(3, auth.getName());    // TODO: get username from session principle
+            statement.setString(3, AuthUser.getUsername());
 
             int updateResult = statement.executeUpdate();
 
