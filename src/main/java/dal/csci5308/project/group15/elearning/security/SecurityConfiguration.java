@@ -2,29 +2,44 @@ package dal.csci5308.project.group15.elearning.security;
 
 import dal.csci5308.project.group15.elearning.database.Database;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
+    @Value("${aura.db.connector}")
+    private String dbConnector;
+
+    @Value("${aura.db.url}")
+    private String dbUrl;
+
+    @Value("${aura.db.username}")
+    private String dbUsername;
+
+    @Value("${aura.db.password}")
+    private String dbPassword;
+
+    @Value("${aura.db.query.user.authentication}")
+    private String userAuthenticationQuery;
+
+    @Value("${aura.db.query.user.authorization}")
+    private String userAuthorizationQuery;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
         BasicDataSource dataSource = new BasicDataSource();
 
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUsername("CSCI5308_15_DEVINT_USER");
-        dataSource.setPassword("LZQ7ss9jJS");
-        dataSource.setUrl("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_15_DEVINT?enabledTLSProtocols=TLSv1.2");
+        dataSource.setDriverClassName(dbConnector);
+        dataSource.setUsername(dbUsername);
+        dataSource.setPassword(dbPassword);
+        dataSource.setUrl(dbUrl);
         dataSource.setMaxIdle(5);
         dataSource.setInitialSize(5);
         dataSource.setValidationQuery("SELECT 1");
@@ -33,22 +48,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from user where username = ?")
-                .authoritiesByUsernameQuery("select username, authority from user_x_role where username = ?");
+                .usersByUsernameQuery(userAuthenticationQuery)
+                .authoritiesByUsernameQuery(userAuthorizationQuery);
     }
 
     @Bean
     public PasswordEncoder passwordEncoder()
     {
-        return NoOpPasswordEncoder.getInstance();
+        return AuraPasswordEncoder.instance();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .antMatchers("/user").hasAnyAuthority("USER")
+                .antMatchers("/forum/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/", "static/css", "static/js").permitAll()
                 .and().formLogin();
     }

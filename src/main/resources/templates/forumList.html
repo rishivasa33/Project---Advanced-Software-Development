@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <link rel="stylesheet" th:href="@{/css/forum.css}"/>
+    </head>
+    <body>
+        <form method="post" th:action="@{/forum/postForumComment}" th:object="${forumComment}">
+            <!-- th:each is thymeleaf loop -->
+            <div th:each="topicItem,iterator : ${forumTopicMap}">
+                <u><h3 th:text="${topicItem.value.topic}"></h3></u>
+
+                <div th:each="response : ${topicItem.value.replyList}">
+                    <p th:text="${response.reply} + ' (' + ${response.createdBy} + ')'"></p>
+                </div>
+
+                <input type="text" th:field="*{comment}" class="forum-topic-comment-box"/>
+                <button type="submit">Add Comment</button>
+                <br/><br/><hr/>
+            </div>
+        </form>
+    </body>
+</html>
