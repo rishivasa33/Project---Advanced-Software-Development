@@ -1,5 +1,6 @@
 package dal.csci5308.project.group15.elearning.models.forum;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ForumTopic
@@ -14,7 +15,7 @@ public class ForumTopic
 
     public ForumTopic()
     {
-
+        replyList = new LinkedList<>();
     }
 
     public ForumTopic(String id, String courseId, String topic, String createdBy, String createdOn, List<ForumTopicResponse> replyList) {

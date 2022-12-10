@@ -47,9 +47,6 @@ public class ForumController
         Connection connection = Database.instance().getConnection();
         CallableStatement statement = null;
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.toString());
-
         try
         {
             statement = connection.prepareCall(STORED_PROCEDURE_FORUM_GET_FORUM_LIST);
