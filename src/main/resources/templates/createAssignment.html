@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment Details</title>
+  <style type="text/css">
+        label {
+            display: inline-block;
+            width: 200px;
+            margin: 5px;
+            text-align: left;
+        }
+        input[type=text], input[type=email],input[type=radio] input[type=password], select {
+            display: inline-block;
+            width: 200px;
+        }
+        input[type=radio] {
+            margin-left: 45px;
+        }
+        input[type=checkbox] {
+            margin-right: 190px;
+        }
+        button {
+            padding: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+  <div style="border-style:solid; width:500px">
+    <h1>Enter Assignment Details</h1>
+    <form
+            role="form"
+            method="post"
+            th:action="@{/saveAssignment}"
+            th:object="${assignment}"
+            enctype="multipart/form-data"
+    >
+
+      <label>Subject ID:</label>
+      <input type="text" th:field = "*{subId}" />
+      <br />
+      <label>Assignment ID:</label>
+      <input type="text" th:field = "*{assignmentId}" />
+      <br />
+      <label>Assignment Title:</label>
+      <input type="text" th:field = "*{assignmentTitle}" />
+      <br />
+      <label>Assignment Description:</label>
+      <input type="text" th:field = "*{assignmentDescription}" />
+      <br />
+      <label>Start Date:</label>
+      <input type="date" th:field = "*{assignmentStartDate}"  />
+      </br>
+      <label>End Date:</label>
+      <input type="date" th:field = "*{assignmentEndDate}"  />
+      </br>
+      <input type="file" th:field = "*{file}">
+      </br>
+      <button type="submit">Submit Assignment</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
