@@ -2,7 +2,6 @@ package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import java.util.Map;
 
 public interface IForumHandler

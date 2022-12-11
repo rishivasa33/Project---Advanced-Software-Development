@@ -99,6 +99,12 @@ public class ForumHandler implements IForumHandler
         String[] commentArray = comment.getComment().split(",");
 
         int topicIdToUpdate = getTopicIdToUpdate(commentArray);
+
+        if(topicIdToUpdate == -1)
+        {
+            return -1;
+        }
+
         String commentToAdd = commentArray[topicIdToUpdate];
         ForumTopic topic = getTopicToUpdate(forumTopicMap, topicIdToUpdate);
 
@@ -124,7 +130,7 @@ public class ForumHandler implements IForumHandler
             }
         }
 
-        return 0;
+        return -1;
     }
 
     private ForumTopic getTopicToUpdate(Map<String, ForumTopic> forumTopicMap, int topicIdToUpdate)
