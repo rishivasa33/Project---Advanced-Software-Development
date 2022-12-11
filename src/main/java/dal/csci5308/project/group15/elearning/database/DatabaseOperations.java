@@ -33,6 +33,8 @@ public class DatabaseOperations implements IDatabaseOperations
     {
         Map<String, List<Object>> resultSetMap = new HashMap<>();
 
+        System.out.println("in Read: " + procedureName);
+
         try(Connection connection = Database.instance().getConnection();
             CallableStatement statement = prepareCallableStatement(connection, procedureName, params);
             ResultSet resultSet = statement.executeQuery();
@@ -42,9 +44,10 @@ public class DatabaseOperations implements IDatabaseOperations
 
             while(resultSet.next())
             {
-                for(int i = 0; i < resultSetMetaData.getColumnCount(); i++)
+                for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++)
                 {
-                    String columnName = resultSetMetaData.getColumnName(i);
+                    String columnName = resultSetMetaData.getColumnLabel(i);
+
                     List<Object> column;
 
                     if(resultSetMap.containsKey(columnName))
@@ -106,6 +109,7 @@ public class DatabaseOperations implements IDatabaseOperations
         while(i < paramsLength)
         {
             query.append("?,");
+            i++;
         }
 
         return query.substring(0, query.length() - 1).concat(");");
@@ -124,7 +128,11 @@ public class DatabaseOperations implements IDatabaseOperations
     private CallableStatement prepareCallableStatement(Connection connection, String procedureName, Object... params) throws SQLException
     {
         String preparedQuery = prepareProceduralQuery(procedureName, params.length);
-        CallableStatement statement = prepareCallableStatement(connection.prepareCall(preparedQuery), params);
+
+        System.out.println("Prepared Query : " + preparedQuery);
+
+        CallableStatement statement = connection.prepareCall(preparedQuery);
+        statement = prepareCallableStatement(statement, params);
 
         return statement;
     }
@@ -132,6 +140,7 @@ public class DatabaseOperations implements IDatabaseOperations
     @Override
     public Object getValueAt(Map<String, List<Object>> map, String columnName, int row)
     {
+        System.out.println();
         return map.get(columnName).get(row);
     }
 
