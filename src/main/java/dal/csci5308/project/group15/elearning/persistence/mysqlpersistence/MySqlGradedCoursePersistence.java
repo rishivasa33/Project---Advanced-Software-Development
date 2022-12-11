@@ -4,8 +4,6 @@ import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
-import dal.csci5308.project.group15.elearning.models.course.ICourse;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 
 import java.sql.*;
@@ -19,7 +17,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
         database_ = database;
     }
     public void Save(GradedCourse gradedCourse) throws SQLException {
-        mySqlCoursePersistence_.Save(gradedCourse.GetCourse());
+        mySqlCoursePersistence_.Save(gradedCourse.GetCourseBase());
 
         try (Connection connection = database_.getConnection()) {
             String sql_query = "update course set course_credits=? "
@@ -28,7 +26,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
             preparedStatement.setInt(1, gradedCourse.GetCredits());
-            preparedStatement.setString(2, gradedCourse.GetCourse().GetCourseID());
+            preparedStatement.setString(2, gradedCourse.GetCourseBase().GetCourseID());
             int rows_modified = preparedStatement.executeUpdate();
             System.out.println("rows modified: " + rows_modified);
             connection.commit();

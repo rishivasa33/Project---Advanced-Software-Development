@@ -16,7 +16,7 @@ public class MockDBUngradedCoursePersistence implements UnGradedCoursePersistenc
     }
 
     public void Save(UnGradedCourse course) throws SQLException {
-        course.GetCourse().Save(mockDBCoursePersistence);
+        course.GetCourseBase().Save(mockDBCoursePersistence);
     }
 
     public UnGradedCourse Load(String course_id){

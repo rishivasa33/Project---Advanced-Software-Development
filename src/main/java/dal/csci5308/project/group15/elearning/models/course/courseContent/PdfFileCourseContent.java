@@ -11,7 +11,7 @@ public class PdfFileCourseContent extends CourseContent {
         return filePath;
     }
 
-    public void Save(){
+    public void Save(int courseModuleId){
 
     }
 

@@ -1,15 +1,17 @@
 package dal.csci5308.project.group15.elearning.dashboard;
 
+import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
+import dal.csci5308.project.group15.elearning.persistence.*;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlGradedCoursePersistence;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,9 +28,9 @@ public class ProfessorDashBoardController {
             ArrayList<ArrayList<String>> course_names = new ArrayList<>();
             for (GradedCourse gc : course_list) {
                 ArrayList<String> course_info = new ArrayList<>();
-                course_info.add(gc.GetCourse().GetCourseID());
-                course_info.add(gc.GetCourse().GetName());
-                course_info.add(gc.GetCourse().GetDescription());
+                course_info.add(gc.GetCourseBase().GetCourseID());
+                course_info.add(gc.GetCourseBase().GetName());
+                course_info.add(gc.GetCourseBase().GetDescription());
                 course_info.add(Integer.toString(gc.GetCredits()));
                 course_names.add(course_info);
             }
@@ -47,11 +49,68 @@ public class ProfessorDashBoardController {
     }
 
     @GetMapping("courseDetails")
-    public String CreateCourseView(@RequestParam String courseId, Model model)
+    public String CourseDetailsView(@RequestParam String courseId, Model model)
     {
-        model.addAttribute("courseId", courseId);
+        CourseFactory courseFactory = new CourseFactory();
+        GradedCourse course = courseFactory.CreateGradedCourse("","","", 0);
+        try {
+            course = course.Load(courseId);
+            ArrayList<CourseModule> course_module_list = course.GetCourseBase().GetAllModules();
+            ArrayList<ArrayList<String>> course_module_names = new ArrayList<>();
+            for (CourseModule courseModule : course_module_list) {
+                ArrayList<String> course_module_info = new ArrayList<>();
+                course_module_info.add(Integer.toString(courseModule.GetCourseModuleId()));
+                course_module_info.add(courseModule.GetModuleName());
+                course_module_names.add(course_module_info);
+            }
+            model.addAttribute("course_module_list", course_module_names);
+            model.addAttribute("courseId", courseId);
+
+        }
+        catch(SQLException exception){
+            System.out.println("Course Module Fetch Error");
+        }
 
         return "courseDetails";
+    }
+
+    @GetMapping("courseDetails/courseModuleDetails")
+    public String CourseModuleDetailsView(@RequestParam String courseModuleId, @RequestParam String courseId, Model model)
+    {
+        model.addAttribute("courseId", courseId);
+        model.addAttribute("courseModuleId", courseModuleId);
+
+        CourseFactory courseFactory = new CourseFactory();
+        ICourse course = courseFactory.CreateGradedCourse("", "" , "", 10);
+        try{
+            course = course.Load(courseId);
+            String moduleName = course.GetCourseBase().GetModuleName(Integer.parseInt(courseModuleId));
+            model.addAttribute("courseModuleName", moduleName);
+        }
+        catch (SQLException exception){
+            model.addAttribute("courseModuleName", "Error Loading Module");
+        }
+
+        return "courseModuleDetails";
+    }
+
+
+
+    @PostMapping("courseDetails/AddModule")
+    public RedirectView AddModuleView(@RequestParam String courseId, @RequestParam String course_module_name, RedirectAttributes redirectAttributes)
+    {
+        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        CourseModule courseModule = courseContentFactory.CreateCourseModule(course_module_name);
+        try{
+            courseModule.Save(courseId);
+            redirectAttributes.addFlashAttribute("message", "module created successfully");
+        }
+        catch (SQLException exception){
+            System.out.println("Course Module Creation Error");
+            redirectAttributes.addFlashAttribute("message", "module creation failed");
+        }
+
+        return new RedirectView("?courseId="+courseId);
     }
 
     @PostMapping("create/course")
@@ -72,29 +131,12 @@ public class ProfessorDashBoardController {
         }
     }
 
-    @GetMapping("add/courseContent")
-    public String AddCourseContentView(Model model)
-    {
-        return "createCourseContent";
-    }
 
-    @PostMapping("add/courseContent")
-    public String CourseContentSubmitView(@RequestParam String course_content_heading, @RequestParam String course_content_text, Model model)
-    {
-        try {
-            CourseContentFactory courseContentFactory = new CourseContentFactory();
-            TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent(course_content_heading, course_content_text);
-            textCourseContent.Save();
-            model.addAttribute("course_content_added", true);
-            return "AddContentSuccess";
-        }
-        catch (Exception exception){
-            System.out.println("error happened in course content creation");
-            model.addAttribute("course_content_added", null);
-            return "AddContentSuccess";
-        }
-    }
+
+
 
 
 
 }
+
+

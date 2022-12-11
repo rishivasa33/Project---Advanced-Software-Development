@@ -1,15 +1,17 @@
 package dal.csci5308.project.group15.elearning.models.course.courseContent;
 
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
-import dal.csci5308.project.group15.elearning.persistence.CourseModulePersistence;
-import dal.csci5308.project.group15.elearning.persistence.CourseModulePersistenceSingleton;
 
+
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
+import dal.csci5308.project.group15.elearning.persistence.*;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CourseModule {
     private String moduleName;
 
-    private int moduleId;
+    private Integer moduleId;
     private ArrayList<CourseContent> contentList;
 
     private CourseModulePersistence courseModulePersistence;
@@ -19,7 +21,7 @@ public class CourseModule {
        this.courseModulePersistence = CourseModulePersistenceSingleton.GetCourseModulePersistence();
     }
 
-    private void SetModuleID(int moduleId){
+    void SetModuleID(int moduleId){
         this.moduleId = moduleId;
     }
 
@@ -31,7 +33,7 @@ public class CourseModule {
 
     }
 
-   public int GetCourseModuleId(){
+   public Integer GetCourseModuleId(){
         return moduleId;
     }
 
@@ -39,16 +41,30 @@ public class CourseModule {
         return moduleName;
     }
 
-    public ArrayList<CourseContent> GetCourseContents(){
-        return new ArrayList<>(contentList);
+    public ArrayList<CourseContent> GetCourseContents() throws SQLException {
+        if(contentList == null){
+            if(moduleId == null){
+                contentList = new ArrayList<>();
+            }
+            else {
+                TextCourseContentPersistence courseContentPersistence = CourseContentPersistenceSingleton.GetTextCourseContentPersistence();
+                contentList = courseContentPersistence.LoadAllContentsInModule(moduleId);
+            }
+        }
+        return contentList;
     }
 
-    public void Save(){
-        int moduleId = courseModulePersistence.Save(this);
+    public void Save(String courseId) throws SQLException {
+        int moduleId = courseModulePersistence.Save(this, courseId);
         SetModuleID(moduleId);
+        if(contentList != null){
+            for(CourseContent courseContent: contentList){
+                courseContent.Save(GetCourseModuleId());
+            }
+        }
     }
 
-    public CourseModule Load(int moduleId){
+    public CourseModule Load(int moduleId) throws SQLException {
         CourseModule courseModule = courseModulePersistence.Load(moduleId);
         courseModule.SetModuleID(moduleId);
         return courseModule;

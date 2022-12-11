@@ -2,8 +2,6 @@ package dal.csci5308.project.group15.elearning.models;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
 import org.junit.jupiter.api.Assertions;
@@ -27,9 +25,9 @@ public class GradedCourseTests {
 
         CourseFactory courseFactory = new CourseFactory();
         GradedCourse gradedCourse = courseFactory.CreateGradedCourse("5308", "test", "test2", 10);
-        assertEquals(gradedCourse.GetCourse().GetName(), "test");
-        assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
-        assertEquals(gradedCourse.GetCourse().GetDescription(), "test2");
+        assertEquals(gradedCourse.GetCourseBase().GetName(), "test");
+        assertEquals(gradedCourse.GetCourseBase().GetCourseID(), "5308");
+        assertEquals(gradedCourse.GetCourseBase().GetDescription(), "test2");
         assertEquals(gradedCourse.GetCredits(), 10);
     }
 
@@ -53,9 +51,9 @@ public class GradedCourseTests {
 
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         GradedCourse gradedCourse = coursePersistence.Load("5308");
-        Assertions.assertEquals(gradedCourse.GetCourse().GetCourseID(), "5308");
-        Assertions.assertEquals(gradedCourse.GetCourse().GetName(), "test5308");
-        assertEquals(gradedCourse.GetCourse().GetDescription(), "test description");
+        Assertions.assertEquals(gradedCourse.GetCourseBase().GetCourseID(), "5308");
+        Assertions.assertEquals(gradedCourse.GetCourseBase().GetName(), "test5308");
+        assertEquals(gradedCourse.GetCourseBase().GetDescription(), "test description");
         assertEquals(gradedCourse.GetCredits(), 10);
     }
 }

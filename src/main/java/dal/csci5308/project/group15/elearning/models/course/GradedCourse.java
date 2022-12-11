@@ -17,7 +17,7 @@ public class GradedCourse implements ICourse{
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
-    public Course GetCourse(){
+    public Course GetCourseBase(){
         return course_;
     }
 
@@ -36,7 +36,7 @@ public class GradedCourse implements ICourse{
     }
 
     public String GetCourseID(){
-        return GetCourse().GetCourseID();
+        return GetCourseBase().GetCourseID();
     }
     public String GetCourseName(){
         return course_.GetName();
@@ -47,4 +47,7 @@ public class GradedCourse implements ICourse{
     public boolean IsGradedCourse(){
         return  true;
     }
+
+
+
 }

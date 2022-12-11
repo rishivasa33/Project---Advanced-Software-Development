@@ -3,29 +3,36 @@ package dal.csci5308.project.group15.elearning.models.course.courseContent;
 
 // command pattern to do stuff with various content types.
 
+import java.sql.SQLException;
+
 public abstract class CourseContent {
 
     private String contentHeading;
-    private int contentId;
+    private Integer contentId;
 
     CourseContent(String contentHeading){
         this.contentHeading = contentHeading;
+        contentId = null;
     }
 
     public String GetContentHeading(){
         return contentHeading;
     }
 
-    public int GetContentId(){
+    public Integer GetContentId(){
         return contentId;
     }
 
-    protected void SetContentId(int contentId){
+    void SetContentId(int contentId){
         this.contentId = contentId;
     }
 
-    public abstract void Save();
+    public abstract void Save(int courseModuleId) throws SQLException;
 
-    public abstract CourseContent Load(int courseContentID);
+    public abstract CourseContent Load(int courseContentID) throws SQLException;
+
+    public boolean IsTextContent(){
+        return false;
+    }
 
 }

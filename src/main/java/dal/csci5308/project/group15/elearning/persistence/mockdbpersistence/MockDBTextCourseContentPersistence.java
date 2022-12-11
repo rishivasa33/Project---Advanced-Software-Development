@@ -2,16 +2,24 @@ package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
 
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.persistence.TextCourseContentPersistence;
 
-public class MockDBCourseTextCourseContentPersistence implements TextCourseContentPersistence{
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-    public int Save(CourseContent courseContent){
+public class MockDBTextCourseContentPersistence implements TextCourseContentPersistence{
+
+    public int Save(TextCourseContent courseContent, int courseModuleId){
        return 1;
     }
 
-    public CourseContent Load(int courseContentId){
+    public TextCourseContent Load(int courseContentId){
         CourseContentFactory courseContentFactory = new CourseContentFactory();
         return courseContentFactory.CreateTextCourseContent ("content heading", "content text");
+    }
+
+    public ArrayList<CourseContent> LoadAllContentsInModule(int courseModuleId) throws SQLException {
+        return null;
     }
 }

@@ -11,7 +11,11 @@ public interface ICourse {
 
     void Save() throws SQLException;
 
+    Course GetCourseBase();
+
     ICourse Load(String course_id) throws SQLException;
+
+
 
 
 
