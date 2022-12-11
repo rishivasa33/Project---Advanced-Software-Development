@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Assignment {
 
@@ -103,6 +104,10 @@ public class Assignment {
     public Assignment Load(String assignmentId){
       Assignment assignment = createAssignmentPersistence.load(assignmentId);
       return assignment;
+    }
+
+    public ArrayList<Assignment> LoadBySubjectId(String subId){
+        return null;
     }
 
 

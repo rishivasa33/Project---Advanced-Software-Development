@@ -6,8 +6,9 @@ import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySql
 
 public class CreateAssignmentPersistenceSingleton {
 
-    private static CreateAssignmentPersistence mySqlCoursePersistence_instance_;
-    private  static CreateAssignmentPersistence mockDBCoursePersistence_instance_;
+    private static CreateAssignmentPersistence mySqlCreateAssignmentPersistence_instance_;
+    private  static CreateAssignmentPersistence mockDBCreateAssignmentPersistence_instance_;
+
 
     private static CreateAssignmentPersistence CreateMySqlCreateAssignmentPersistence(){
         return new MySqlCreateAssignmentPersistence();
@@ -18,33 +19,33 @@ public class CreateAssignmentPersistenceSingleton {
 
     private CreateAssignmentPersistenceSingleton(){
 
-        mockDBCoursePersistence_instance_ = null;
-        mySqlCoursePersistence_instance_ = null;
+        mockDBCreateAssignmentPersistence_instance_ = null;
+        mySqlCreateAssignmentPersistence_instance_ = null;
     }
 
-    public static CreateAssignmentPersistence GetMySqlCoursePersistenceInstance() {
+    public static CreateAssignmentPersistence GetMySqlCreateAssignmentPersistenceInstance() {
 
 
-        if(mySqlCoursePersistence_instance_ == null){
-            mySqlCoursePersistence_instance_ = CreateMySqlCreateAssignmentPersistence();
+        if(mySqlCreateAssignmentPersistence_instance_ == null){
+            mySqlCreateAssignmentPersistence_instance_ = CreateMySqlCreateAssignmentPersistence();
         }
-        return mySqlCoursePersistence_instance_;
+        return mySqlCreateAssignmentPersistence_instance_;
     }
 
-    public static CreateAssignmentPersistence GetMockDBCoursePersistenceInstance(){
-        if(mockDBCoursePersistence_instance_ == null){
-            mockDBCoursePersistence_instance_ = CreateMockDBCreateAssignmentPersistence();
+    public static CreateAssignmentPersistence GetMockDBCreateAssignmentPersistenceInstance(){
+        if(mockDBCreateAssignmentPersistence_instance_ == null){
+            mockDBCreateAssignmentPersistence_instance_ = CreateMockDBCreateAssignmentPersistence();
         }
-        return mockDBCoursePersistence_instance_;
+        return mockDBCreateAssignmentPersistence_instance_;
     }
 
     public static CreateAssignmentPersistence GetCreateAssignmentPersistence(){
         String is_test_mode = System.getenv().getOrDefault("IS_TEST_MODE", null);
         if(is_test_mode != null && is_test_mode.equals("TRUE")){
-            return GetMockDBCoursePersistenceInstance();
+            return GetMockDBCreateAssignmentPersistenceInstance();
         }
         else{
-            return GetMySqlCoursePersistenceInstance();
+            return GetMySqlCreateAssignmentPersistenceInstance();
         }
     }
 }
