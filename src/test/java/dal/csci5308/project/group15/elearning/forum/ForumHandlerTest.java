@@ -7,10 +7,12 @@ import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
+@SpringBootTest
 public class ForumHandlerTest
 {
     @Test
