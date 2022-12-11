@@ -1,5 +1,6 @@
 package dal.csci5308.project.group15.elearning.register;
 
+import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
 import dal.csci5308.project.group15.elearning.models.Register.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,8 @@ public class RegisterUserController
     {
         System.out.println(user);
 
-
+        IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
+        registerUserHandler.createNewUser(user);
 
         return "registerUser";
     }

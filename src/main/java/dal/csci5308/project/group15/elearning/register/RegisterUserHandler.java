@@ -2,6 +2,8 @@ package dal.csci5308.project.group15.elearning.register;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
+import dal.csci5308.project.group15.elearning.factory.encoder.EncoderFactory;
+import dal.csci5308.project.group15.elearning.factory.encoder.IEncoder;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.forum.IForumHandler;
 import dal.csci5308.project.group15.elearning.models.Register.User;
@@ -27,7 +29,7 @@ public class RegisterUserHandler implements IRegisterUserHandler
     public int createNewUser(User user)
     {
         //  encode user password before saving to database
-        Encoder encoder = new Encoder();
+        IEncoder encoder = EncoderFactory.instance().makeEncoder();
         String encodedPassword = encoder.encode(user.getDefaultPassword());
 
         try
