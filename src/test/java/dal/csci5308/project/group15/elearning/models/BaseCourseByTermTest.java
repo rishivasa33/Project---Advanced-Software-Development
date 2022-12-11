@@ -13,8 +13,8 @@ import java.text.ParseException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class BaseCourseByTermTest {
-
+public class BaseCourseByTermTest
+{
     @Test
     void TestCourseInstanceCreation() {
 
@@ -152,5 +152,4 @@ public class BaseCourseByTermTest {
             Assertions.fail();
         }
     }
-
 }
