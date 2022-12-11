@@ -4,6 +4,16 @@
         <link rel="stylesheet" th:href="@{/css/forum.css}"/>
     </head>
     <body>
+
+        <div th:switch="${message}">
+            <div th:case="'success'" class="alert alert-success">
+                <p><strong>Success!</strong> Operation performed successfully.</p>
+            </div>
+            <div th:case="'fail'" class="alert alert-danger">
+                <p><strong>Failure!</strong> Operation failed. Please try again</p>
+            </div>
+        </div>
+
         <form method="post" th:action="@{/registerUser/add}" th:object="${user}">
             <div>
                 First Name: <input type="text" th:field="*{firstName}">
@@ -12,10 +22,14 @@
                 <br/>
                 Email: <input type="text" th:field="*{email}">
                 <br/>
-                Program: <input type="text" th:field="*{program}">
+                Program:
+                <select th:field="*{program}">
+                    <option th:each="i : ${programMap}" th:value="${i.key}" th:text="${i.value}"></option>
+                </select>
                 <br/>
                 Default Password: <input type="text" th:field="*{defaultPassword}">
                 <br/>
+
             </div>
 
             <br/>

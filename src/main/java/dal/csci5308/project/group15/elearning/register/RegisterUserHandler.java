@@ -31,6 +31,8 @@ public class RegisterUserHandler implements IRegisterUserHandler
         //  encode user password before saving to database
         IEncoder encoder = EncoderFactory.instance().makeEncoder();
         String encodedPassword = encoder.encode(user.getDefaultPassword());
+        String program = user.getProgram();
+        user.setProgram(program.replace(",", ""));
 
         try
         {
@@ -47,5 +49,31 @@ public class RegisterUserHandler implements IRegisterUserHandler
             logger.error(sqlException.getMessage());
             return 0;
         }
+    }
+
+    @Override
+    public Map<String, String> getAllProgramList()
+    {
+        Map<String, String> programMap = new HashMap<>();
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+
+        try
+        {
+            Map<String, List<Object>> resultSet = databaseOperations.read("get_program_list_all");
+
+            for(int row = 0; row < databaseOperations.getRowCount(resultSet); row++)
+            {
+                String programId = String.valueOf(databaseOperations.getValueAt(resultSet, "program_id", row));
+                String programName = String.valueOf(databaseOperations.getValueAt(resultSet, "program_name", row));
+                programMap.put(programId, programName);
+            }
+        }
+        catch (SQLException sqlException)
+        {
+            logger.error(sqlException.getMessage());
+            logger.debug(Arrays.toString(sqlException.getStackTrace()));
+        }
+
+        return programMap;
     }
 }

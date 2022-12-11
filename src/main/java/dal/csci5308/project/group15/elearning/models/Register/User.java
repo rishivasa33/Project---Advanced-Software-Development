@@ -1,5 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.Register;
 
+import java.util.List;
+import java.util.Map;
+
 public class User
 {
     private String firstName;
@@ -8,19 +11,21 @@ public class User
     private String email;
     private String defaultPassword;
     private String program;
+    private Map<String, String> programMap;
 
     public User()
     {
 
     }
 
-    public User(String firstName, String lastName, String userType, String email, String defaultPassword, String program) {
+    public User(String firstName, String lastName, String userType, String email, String defaultPassword, String program, Map<String, String> programMap) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = userType;
         this.email = email;
         this.defaultPassword = defaultPassword;
         this.program = program;
+        this.programMap = programMap;
     }
 
     public String getFirstName() {
@@ -71,6 +76,14 @@ public class User
         this.program = program;
     }
 
+    public Map<String, String> getProgramMap() {
+        return programMap;
+    }
+
+    public void setProgramMap(Map<String, String> programMap) {
+        this.programMap = programMap;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -80,6 +93,7 @@ public class User
                 ", email='" + email + '\'' +
                 ", defaultPassword='" + defaultPassword + '\'' +
                 ", program='" + program + '\'' +
+                ", programMap=" + programMap +
                 '}';
     }
 }
