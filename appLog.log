@@ -1611,3 +1611,150 @@ Caused by: java.lang.ClassNotFoundException: dal.csci5308.project.group15.elearn
 	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:145) ~[spring-boot-devtools-2.7.4.jar:2.7.4]
 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
 	... 36 common frames omitted
+16:17:02.020 [restartedMain] INFO   o.s.boot.StartupInfoLogger.logStarting 55  - Starting AuraApplication using Java 17.0.4.1 on DESKTOP-FD0MAA3 with PID 9576 (D:\Git\5308\GroupProject\group-15\build\classes\java\main started by Anuj in D:\Git\5308\GroupProject\group-15)
+16:17:02.021 [restartedMain] DEBUG  o.s.boot.StartupInfoLogger.logStarting 56  - Running with Spring Boot v2.7.4, Spring v5.3.23
+16:17:02.021 [restartedMain] INFO   o.s.boot.SpringApplication.logStartupProfileInfo 634  - No active profile set, falling back to 1 default profile: "default"
+16:17:02.580 [restartedMain] INFO   o.s.b.w.e.tomcat.TomcatWebServer.initialize 108  - Tomcat initialized with port(s): 8080 (http)
+16:17:02.581 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Starting service [Tomcat]
+16:17:02.581 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Starting Servlet engine: [Apache Tomcat/9.0.65]
+16:17:02.623 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Initializing Spring embedded WebApplicationContext
+16:17:02.624 [restartedMain] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext 292  - Root WebApplicationContext: initialization completed in 599 ms
+16:17:02.699 [restartedMain] INFO   o.s.s.web.DefaultSecurityFilterChain.<init> 55  - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@35aa28ac, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1375d7de, org.springframework.security.web.context.SecurityContextPersistenceFilter@7f1827ef, org.springframework.security.web.header.HeaderWriterFilter@727148b6, org.springframework.security.web.csrf.CsrfFilter@225a38e7, org.springframework.security.web.authentication.logout.LogoutFilter@2dfc4204, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4387dcbf, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@4453775, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@18076177, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@459a45bf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3dd69142, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@651824ec, org.springframework.security.web.session.SessionManagementFilter@cf6ab96, org.springframework.security.web.access.ExceptionTranslationFilter@21137576, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@27958d9a]
+16:17:02.709 [restartedMain] WARN   o.s.c.s.AbstractApplicationContext.refresh 591  - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'passwordEncoder' defined in class path resource [dal/csci5308/project/group15/elearning/security/SecurityConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.crypto.password.PasswordEncoder]: Factory method 'passwordEncoder' threw exception; nested exception is java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+16:17:02.710 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Stopping service [Tomcat]
+16:17:02.727 [restartedMain] INFO   o.s.b.a.l.ConditionEvaluationReportLoggingListener.logMessage 136  - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+16:17:02.738 [restartedMain] ERROR  o.s.boot.SpringApplication.reportFailure 824  - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'passwordEncoder' defined in class path resource [dal/csci5308/project/group15/elearning/security/SecurityConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.crypto.password.PasswordEncoder]: Factory method 'passwordEncoder' threw exception; nested exception is java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.23.jar:5.3.23]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.23.jar:5.3.23]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-2.7.4.jar:2.7.4]
+	at dal.csci5308.project.group15.elearning.AuraApplication.main(AuraApplication.java:11) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.4.jar:2.7.4]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.crypto.password.PasswordEncoder]: Factory method 'passwordEncoder' threw exception; nested exception is java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.23.jar:5.3.23]
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration.passwordEncoder(SecurityConfiguration.java:58) ~[main/:na]
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration$$EnhancerBySpringCGLIB$$78bac847.CGLIB$passwordEncoder$2(<generated>) ~[main/:na]
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration$$EnhancerBySpringCGLIB$$78bac847$$FastClassBySpringCGLIB$$1e905c4b.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331) ~[spring-context-5.3.23.jar:5.3.23]
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration$$EnhancerBySpringCGLIB$$78bac847.passwordEncoder(<generated>) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) ~[spring-beans-5.3.23.jar:5.3.23]
+	... 25 common frames omitted
+Caused by: java.lang.ClassNotFoundException: dal.csci5308.project.group15.elearning.security.AuraPasswordEncoder
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:145) ~[spring-boot-devtools-2.7.4.jar:2.7.4]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 36 common frames omitted
+16:19:35.481 [restartedMain] INFO   o.s.boot.StartupInfoLogger.logStarting 55  - Starting AuraApplication using Java 17.0.4.1 on DESKTOP-FD0MAA3 with PID 9576 (D:\Git\5308\GroupProject\group-15\build\classes\java\main started by Anuj in D:\Git\5308\GroupProject\group-15)
+16:19:35.481 [restartedMain] DEBUG  o.s.boot.StartupInfoLogger.logStarting 56  - Running with Spring Boot v2.7.4, Spring v5.3.23
+16:19:35.482 [restartedMain] INFO   o.s.boot.SpringApplication.logStartupProfileInfo 634  - No active profile set, falling back to 1 default profile: "default"
+16:19:36.072 [restartedMain] INFO   o.s.b.w.e.tomcat.TomcatWebServer.initialize 108  - Tomcat initialized with port(s): 8080 (http)
+16:19:36.074 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Starting service [Tomcat]
+16:19:36.074 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Starting Servlet engine: [Apache Tomcat/9.0.65]
+16:19:36.103 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Initializing Spring embedded WebApplicationContext
+16:19:36.104 [restartedMain] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext 292  - Root WebApplicationContext: initialization completed in 618 ms
+16:19:36.171 [restartedMain] INFO   o.s.s.web.DefaultSecurityFilterChain.<init> 55  - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@252f7335, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@d84751, org.springframework.security.web.context.SecurityContextPersistenceFilter@7678bcfd, org.springframework.security.web.header.HeaderWriterFilter@4561fed5, org.springframework.security.web.csrf.CsrfFilter@531cb02f, org.springframework.security.web.authentication.logout.LogoutFilter@7955dad7, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@786ce596, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@3c228870, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@2bc412bb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@297beac9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@63a63e65, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@349b1200, org.springframework.security.web.session.SessionManagementFilter@4053f110, org.springframework.security.web.access.ExceptionTranslationFilter@243f7c7f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@10677a13]
+16:19:36.180 [restartedMain] WARN   o.s.c.s.AbstractApplicationContext.refresh 591  - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'passwordEncoder' defined in class path resource [dal/csci5308/project/group15/elearning/security/SecurityConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.crypto.password.PasswordEncoder]: Factory method 'passwordEncoder' threw exception; nested exception is java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+16:19:36.182 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Stopping service [Tomcat]
+16:19:36.190 [restartedMain] INFO   o.s.b.a.l.ConditionEvaluationReportLoggingListener.logMessage 136  - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+16:19:36.201 [restartedMain] ERROR  o.s.boot.SpringApplication.reportFailure 824  - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'passwordEncoder' defined in class path resource [dal/csci5308/project/group15/elearning/security/SecurityConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.crypto.password.PasswordEncoder]: Factory method 'passwordEncoder' threw exception; nested exception is java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.23.jar:5.3.23]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.23.jar:5.3.23]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.7.4.jar:2.7.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-2.7.4.jar:2.7.4]
+	at dal.csci5308.project.group15.elearning.AuraApplication.main(AuraApplication.java:11) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.4.jar:2.7.4]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.crypto.password.PasswordEncoder]: Factory method 'passwordEncoder' threw exception; nested exception is java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185) ~[spring-beans-5.3.23.jar:5.3.23]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.23.jar:5.3.23]
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: dal/csci5308/project/group15/elearning/security/AuraPasswordEncoder
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration.passwordEncoder(SecurityConfiguration.java:58) ~[main/:na]
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration$$EnhancerBySpringCGLIB$$78bac847.CGLIB$passwordEncoder$2(<generated>) ~[main/:na]
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration$$EnhancerBySpringCGLIB$$78bac847$$FastClassBySpringCGLIB$$1e905c4b.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331) ~[spring-context-5.3.23.jar:5.3.23]
+	at dal.csci5308.project.group15.elearning.security.SecurityConfiguration$$EnhancerBySpringCGLIB$$78bac847.passwordEncoder(<generated>) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) ~[spring-beans-5.3.23.jar:5.3.23]
+	... 25 common frames omitted
+Caused by: java.lang.ClassNotFoundException: dal.csci5308.project.group15.elearning.security.AuraPasswordEncoder
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:145) ~[spring-boot-devtools-2.7.4.jar:2.7.4]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 36 common frames omitted
+16:19:47.000 [restartedMain] INFO   o.s.boot.StartupInfoLogger.logStarting 55  - Starting AuraApplication using Java 17.0.4.1 on DESKTOP-FD0MAA3 with PID 9576 (D:\Git\5308\GroupProject\group-15\build\classes\java\main started by Anuj in D:\Git\5308\GroupProject\group-15)
+16:19:47.001 [restartedMain] DEBUG  o.s.boot.StartupInfoLogger.logStarting 56  - Running with Spring Boot v2.7.4, Spring v5.3.23
+16:19:47.001 [restartedMain] INFO   o.s.boot.SpringApplication.logStartupProfileInfo 634  - No active profile set, falling back to 1 default profile: "default"
+16:19:47.611 [restartedMain] INFO   o.s.b.w.e.tomcat.TomcatWebServer.initialize 108  - Tomcat initialized with port(s): 8080 (http)
+16:19:47.612 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Starting service [Tomcat]
+16:19:47.613 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Starting Servlet engine: [Apache Tomcat/9.0.65]
+16:19:47.647 [restartedMain] INFO   org.apache.juli.logging.DirectJDKLog.log 173  - Initializing Spring embedded WebApplicationContext
+16:19:47.648 [restartedMain] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext 292  - Root WebApplicationContext: initialization completed in 643 ms
+16:19:47.716 [restartedMain] INFO   o.s.s.web.DefaultSecurityFilterChain.<init> 55  - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@95d1de9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@17ec52ca, org.springframework.security.web.context.SecurityContextPersistenceFilter@5fa18125, org.springframework.security.web.header.HeaderWriterFilter@8d03fd9, org.springframework.security.web.csrf.CsrfFilter@1d736a7d, org.springframework.security.web.authentication.logout.LogoutFilter@5ccea13e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1b5d966a, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@53bbad4b, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@21cb9d68, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3a3ccdd3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@331b13ba, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5652b1fd, org.springframework.security.web.session.SessionManagementFilter@598728ea, org.springframework.security.web.access.ExceptionTranslationFilter@4f4557bd, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3831d413]
+16:19:47.898 [restartedMain] INFO   o.s.b.d.a.OptionalLiveReloadServer.startServer 59  - LiveReload server is running on port 35729
+16:19:47.911 [restartedMain] INFO   o.s.b.w.e.tomcat.TomcatWebServer.start 220  - Tomcat started on port(s): 8080 (http) with context path ''
+16:19:47.915 [restartedMain] INFO   o.s.boot.StartupInfoLogger.logStarted 61  - Started AuraApplication in 0.956 seconds (JVM running for 1394.857)
+16:19:47.918 [restartedMain] INFO   o.s.b.d.a.ConditionEvaluationDeltaLoggingListener.onApplicationEvent 63  - Condition evaluation unchanged

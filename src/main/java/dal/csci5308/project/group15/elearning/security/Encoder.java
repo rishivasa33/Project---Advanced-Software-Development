@@ -1,8 +1,10 @@
 package dal.csci5308.project.group15.elearning.security;
 
+import dal.csci5308.project.group15.elearning.factory.encoder.IEncoder;
+
 import java.security.MessageDigest;
 
-public class Encoder
+public class Encoder implements IEncoder
 {
     public Encoder()
     {

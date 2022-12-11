@@ -1,5 +1,8 @@
 package dal.csci5308.project.group15.elearning.security;
 
+import dal.csci5308.project.group15.elearning.factory.encoder.EncoderFactory;
+import dal.csci5308.project.group15.elearning.factory.encoder.IEncoder;
+import dal.csci5308.project.group15.elearning.factory.encoder.IEncoderFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.MessageDigest;
@@ -26,9 +29,8 @@ public class AuraPasswordEncoder implements PasswordEncoder
     @Override
     public String encode(CharSequence plainTextPassword)
     {
-
-
-        return encodedString;
+        IEncoder encoder = EncoderFactory.instance().makeEncoder();
+        return encoder.encode(plainTextPassword.toString());
     }
 
     @Override

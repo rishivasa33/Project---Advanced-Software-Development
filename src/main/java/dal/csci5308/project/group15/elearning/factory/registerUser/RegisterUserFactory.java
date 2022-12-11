@@ -31,7 +31,6 @@ public class RegisterUserFactory implements IRegisterUserFactory
         return uniqueInstance;
     }
 
-
     @Override
     public User makeUser() {
         return new User();
