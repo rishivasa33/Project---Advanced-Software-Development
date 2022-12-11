@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.factory.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
@@ -38,65 +39,12 @@ public class ForumController
     @GetMapping("/list")
     public String showForum(Model model)
     {
-        logger.error("Inside forum list showForum");
+        logger.debug("Inside forum list showForum");
 
-        forumTopicMap = new HashMap<>();
         topicList = new LinkedList<>();
 
-        //  get forum details from database.
-        Connection connection = Database.instance().getConnection();
-        CallableStatement statement = null;
-
-        try
-        {
-            statement = connection.prepareCall(STORED_PROCEDURE_FORUM_GET_FORUM_LIST);
-
-            //  TODO: Replace the hardcoded course ID with a variable
-            statement.setString(1, "F22CSCI 5402");
-            ResultSet resultSet = statement.executeQuery();
-
-            while(resultSet.next())
-            {
-                ForumTopic topic = new ForumTopic();
-
-                topic.setId(resultSet.getString("TOPIC_ID"));
-                topic.setCourseId(resultSet.getString("COURSE_ID"));
-                topic.setTopic(resultSet.getString("TOPIC"));
-                topic.setCreatedBy(resultSet.getString("TOPIC_CREATED_BY"));
-
-                topicList.add(topic);
-
-                ForumTopicResponse response = new ForumTopicResponse();
-                response.setId(resultSet.getString("REPLY_ID"));
-                response.setReply(resultSet.getString("REPLY"));
-                response.setCreatedBy(resultSet.getString("REPLY_BY"));
-
-                if(forumTopicMap.containsKey(topic.getId()))
-                {
-                    //  topic does not exist. create new topic and add response to this topic
-                    ForumTopic updatedTopic = forumTopicMap.get(topic.getId());
-                    updatedTopic.getReplyList().add(response);
-
-                    forumTopicMap.put(topic.getId(), updatedTopic);
-                }
-                else
-                {
-                    //  topic exists. add response to this topic
-                    topic.setReplyList(new LinkedList<>());
-                    topic.getReplyList().add(response);
-
-                    forumTopicMap.put(topic.getId(), topic);
-                }
-            }
-
-            connection.close();
-
-            System.out.println(forumTopicMap);
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
+        IForumHandler forumHandler = new ForumHandler();
+        forumTopicMap = forumHandler.getAllTopics();
 
         model.addAttribute("forumTopicMap", forumTopicMap);
         model.addAttribute("topicList", topicList);
@@ -184,33 +132,9 @@ public class ForumController
     @PostMapping("/createNewTopic")
     public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic)
     {
-        System.out.println("New Topic: " + newTopic.toString());
-        //  insert new topic to DB corresponding to the current course instance (fetched from the session)
-
-        try(
-                Connection connection = Database.instance().getConnection();
-                CallableStatement statement = connection.prepareCall(STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC);
-            )
-        {
-            statement.setString(1, "F22CSCI 5402");
-            statement.setString(2, newTopic.getTopic());
-            statement.setString(3, AuthUser.getUsername());
-
-            int result = statement.executeUpdate();
-
-            if(result > 0)
-            {
-                connection.commit();
-            }
-            else
-            {
-                connection.rollback();
-            }
-        }
-        catch (SQLException sqlException)
-        {
-            logger.error("SQL Exception: " + sqlException.getMessage());
-        }
+        //  TODO: Replace with factory
+        IForumHandler forumHandler = new ForumHandler();
+        forumHandler.createNewTopic(newTopic);
 
         return "redirect:/forum/list";
     }

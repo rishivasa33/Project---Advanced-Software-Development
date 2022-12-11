@@ -1,5 +1,7 @@
 package dal.csci5308.project.group15.elearning.forum;
 
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
@@ -36,7 +38,6 @@ public class ForumHandlerTest
 
         int result = mockDb.createForumTopic(forumTopic);
 
-        Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result);
     }
 
@@ -63,7 +64,6 @@ public class ForumHandlerTest
 
         int result = mockDb.createForumTopic(forumTopic);
 
-        Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result);
     }
 
@@ -160,5 +160,12 @@ public class ForumHandlerTest
 
         int result = mockDb.createForumTopicResponse("1", response);
         Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    public void testStoredProcedureConstructMethod()
+    {
+        String generatedQuery = DatabaseOperations.instance().prepareProceduralQuery("MY_CUSTOM_PROCEDURE", 5);
+        Assertions.assertEquals("call MY_CUSTOM_PROCEDURE(?,?,?,?,?);", generatedQuery);
     }
 }

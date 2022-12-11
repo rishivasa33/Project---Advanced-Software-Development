@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class Database
 {
     BasicDataSource dataSource;
-    static Database uniqueInstance = null;
+    private static Database uniqueInstance = null;
 
     public static Database instance()
     {
