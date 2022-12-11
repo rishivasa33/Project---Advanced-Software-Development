@@ -1,14 +1,12 @@
 package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
-import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 

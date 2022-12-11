@@ -1,19 +1,15 @@
 package dal.csci5308.project.group15.elearning.forum;
 
-import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
