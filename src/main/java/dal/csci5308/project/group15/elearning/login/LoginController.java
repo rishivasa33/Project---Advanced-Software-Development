@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.login;
 
 import dal.csci5308.project.group15.elearning.security.AuthUser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,8 +11,6 @@ public class LoginController
     @RequestMapping("/")
     public String login()
     {
-        System.out.println("inside login controller");
-
         if(AuthUser.isAdmin())
         {
             System.out.println("admin");

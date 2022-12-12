@@ -17,7 +17,9 @@ public class AuthUser
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {
-            if(role.getAuthority().equals("admin"))
+            System.out.println(role.getAuthority().contains("admin"));
+
+            if(role.getAuthority().contains("admin"))
                 return true;
         }
 
@@ -28,6 +30,8 @@ public class AuthUser
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {
+            System.out.println(role.getAuthority().toString());
+
             if(role.getAuthority().equals("student"))
                 return true;
         }
