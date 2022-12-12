@@ -10,15 +10,19 @@ public class LoginController
     @RequestMapping("/")
     public String login()
     {
+        System.out.println("inside login controller");
+
         if(AuthUser.isAdmin())
         {
+            System.out.println("admin");
             return "redirect:/professor";
         }
         else if(AuthUser.isStudent())
         {
+            System.out.println("student");
             return "redirect:/student/dashboard";
         }
 
-        return "redirect:/student/dashboard";
+        return "redirect:/login";
     }
 }

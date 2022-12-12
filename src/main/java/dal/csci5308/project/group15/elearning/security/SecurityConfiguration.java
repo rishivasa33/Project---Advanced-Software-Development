@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .dataSource(dataSource)
                 .usersByUsernameQuery(userAuthenticationQuery)
                 .authoritiesByUsernameQuery(userAuthorizationQuery);
+
     }
 
     @Bean
@@ -66,6 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .antMatchers("/user").hasAnyAuthority("basic")
                 .antMatchers("/forum/**").hasAnyAuthority("admin", "student", "professor", "superuser")
                 .antMatchers("/registerUser/**").hasAuthority("admin")
+                .antMatchers("/student/**").hasAnyAuthority("student", "admin")
+                .antMatchers("/professor/**").hasAnyAuthority("professor", "admin")
                 .antMatchers("/", "static/css", "static/js").permitAll()
                 .and().formLogin();
     }
