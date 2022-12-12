@@ -45,12 +45,14 @@ public class ForumHandler implements IForumHandler
                 topic.setTopic(String.valueOf(databaseOperations.getValueAt(resultSet, "TOPIC", row)));
                 topic.setCreatedBy(String.valueOf(databaseOperations.getValueAt(resultSet, "TOPIC_CREATED_BY", row)));
                 topic.setCourseId(String.valueOf(databaseOperations.getValueAt(resultSet, "COURSE_ID", row)));
+                topic.setCreatedOn(String.valueOf(databaseOperations.getValueAt(resultSet, "CREATED_ON", row)));
 
                 ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
 
                 response.setId(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY_ID", row)));
                 response.setReply(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY", row)));
                 response.setCreatedBy(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY_BY", row)));
+                response.setCreatedOn(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY_CREATED_ON", row)));
 
                 forumTopicList.add(topic);
 
