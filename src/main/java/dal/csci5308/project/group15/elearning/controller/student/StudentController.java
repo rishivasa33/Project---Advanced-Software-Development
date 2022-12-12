@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollmentFactory;
 import dal.csci5308.project.group15.elearning.persistence.StudentCourseEnrollmentPersistenceSingleton;
@@ -37,9 +37,16 @@ public class StudentController {
         return "studentCoursePage";
     }
 
+    @GetMapping("/viewRegisteredCourses")
+    public String browseRegisterCourses(Model model) {
+        //Fetch Current and Future opened Terms
+        
+        return "studentRegisteredCourses";
+    }
+
     private ArrayList<IStudentCourseEnrollment> getCurrentEnrolledCourses(String studentNumber, String currentTerm) {
         try {
-            IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryInitializer.instance().getStudentCourseEnrollmentFactory();
+            IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
             IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad("B00901111");
 
             return studentCourseEnrollment.loadByTermAndStudentNumber(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance(), studentNumber, currentTerm);
