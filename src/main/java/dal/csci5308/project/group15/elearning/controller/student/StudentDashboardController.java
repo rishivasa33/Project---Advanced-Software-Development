@@ -1,6 +1,9 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
+import dal.csci5308.project.group15.elearning.deadlineNotification.CourseMaterialDeadlineNotification;
+import dal.csci5308.project.group15.elearning.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
+import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollmentFactory;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class StudentDashboardController {
@@ -27,6 +31,10 @@ public class StudentDashboardController {
         //Fetch Student's university-level announcements
 
         //Fetch Student's Calendar/Upcoming Deadlines
+        ICourseMaterialDeadlineNotificationHandler courseMaterialDeadlineNotificationHandler = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotificationHandler();
+        List<CourseMaterialDeadlineNotification> notificationList = courseMaterialDeadlineNotificationHandler.getCourseMaterialDeadlineNotifications();
+        model.addAttribute("deadlines", notificationList);
+
         return "studentDashboard";
     }
 
