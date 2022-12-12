@@ -22,6 +22,7 @@ public class BaseCourseByTermTest
         ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022";
+
         try{
             CourseByTerm courseByTerm =  courseFactory.CreateCourseInstance("test", course, "12/05/2022", "20/05/2022", "testTerm", 20,40);
             Assertions.assertTrue(true);
