@@ -4,6 +4,7 @@ window.onload = function() {
 
     $.when( initialize() ).done(function() {
         courseContentAddRequest.getAllContent();
+        ToggleHideTextorFileInput();
 });
 
 //   $(function () {
@@ -22,6 +23,8 @@ window.onload = function() {
 // }).then(courseContentAddRequest.getAllContent());
 };
 
+
+
  function initialize(){
       //$(function () {
     let token = $("meta[name='_csrf']").attr("content");
@@ -37,6 +40,19 @@ window.onload = function() {
       console.log(courseModuleId);
       courseContentAddRequest = new CreateCourseContentAddRequest(header,token, courseId, courseModuleId);
 //});
+}
+
+function ToggleHideTextorFileInput(){
+    let selectedOptionId= $('#contentType option:selected').attr("id");
+    if(selectedOptionId === "Text"){
+        $('#contentFileDiv').hide();
+        $('#contentTextDiv').show();
+    }
+    else{
+        $('#contentFileDiv').show();
+        $('#contentTextDiv').hide();
+    }
+
 }
 
 
@@ -98,58 +114,54 @@ class CreateCourseContentAddRequest {
 
   }
 
-  fetchContent(){
+  fetchContent(formData){
+
+    console.log( "form data" + formData);
 
     let url = document.getElementById('create_content_form').action;
+
     let courseContentHeading = $("#course_content_heading").val(); 
     let courseContentText = $("#course_content_text").val(); 
+    let selectedOptionId= $('#contentType option:selected').attr("id");
     var data=JSON.stringify({"courseId":this.courseId, "courseModuleId":this.courseModuleId, 
-        "courseContentHeading":courseContentHeading, "courseContentText": courseContentText});
-    // $.ajaxSetup({
-    // headers: { 'X-CSRF-TOKEN': this.token,"Content-Type" : "application/json"}
-    // });
-
-    // $.ajaxSetup({
-    // beforeSend: function(xhr) {
-    //     xhr.setRequestHeader(this.header, this.token);
-    //     xhr.setRequestHeader("Content-Type", "application/json");
-    //     }
-    // });
-
-
-
- //     $.ajax(
- //    {
- //        type:"POST",
- //        url: url,
- //        dataType : 'json',
- //        data:data, 
- //        success: function( response ) 
- //        {
- //              addContent(response)
-        
- //        }
-
- //     });
- // }
-    //courseDetails/courseModuleDetails/getAllContents
+        "courseContentHeading":courseContentHeading, "courseContentText": courseContentText, "courseContentType" : selectedOptionId});
+    let dataToSend = data;
     let qrReq=new XMLHttpRequest;
+    console.log("selected option" , selectedOptionId);
+    if(!(selectedOptionId === "Text")){
+         let fileupload = document.getElementById('contentFile');
+         if(fileupload.files.length > 0){
+            console.log("contentFile" , fileupload.files[0]);
+        }
+        formData.delete("course_content_text");
+        formData.append("courseContentType", selectedOptionId);
+        formData.append("courseId", this.courseId);
+        formData.append("courseModuleId", this.courseModuleId);
+        dataToSend = formData;
+        qrReq.open("post", url + "/fileUpload", true);
+        qrReq.setRequestHeader(this.header, this.token);
+        qrReq.setRequestHeader("ContentType", false);
+        qrReq.setRequestHeader("processData", false);
+        qrReq.setRequestHeader("enctype", "multipart/form-data");
+        qrReq.setRequestHeader("cache", false);
+    }
+    else{
+        qrReq.open("post", url, true);
+        qrReq.setRequestHeader(this.header, this.token);
+        qrReq.setRequestHeader("Content-Type", "application/json");
+    }
 
-        XMLHttpRequest.responseType="json";
     
-    qrReq.open("post", url, true);
-    qrReq.setRequestHeader(this.header, this.token);
-    qrReq.setRequestHeader("Content-Type", "application/json");
-     qrReq.onload = function(){
+    XMLHttpRequest.responseType="json";
+    qrReq.onload = function(){
 
           courseContentAddRequest.addContent(JSON.parse(qrReq.responseText));
 
-      }
-    qrReq.send(data);
+    }
+    qrReq.send(dataToSend);
 
     console.log("request send");
     
-
     }
 };
 
@@ -158,8 +170,29 @@ class CreateCourseContentAddRequest {
   var courseContentAddRequest = new CreateCourseContentAddRequest("default", 0);
 
   function test(){
-    courseContentAddRequest.fetchContent();
+    //courseContentAddRequest.fetchContent();
   }
+
+
+$(document).ready(function () {
+
+   $("#add_course_content").click(function(event) {
+    console.log("test");
+    let form = $('#create_content_form')[0];
+    event.preventDefault();    
+    let formData = new FormData(form);
+    courseContentAddRequest.fetchContent(formData);
+});
+
+   $("#contentType").change(function() {
+    console.log("test");
+  ToggleHideTextorFileInput();
+});
+
+
+});
+
+
 
 
 

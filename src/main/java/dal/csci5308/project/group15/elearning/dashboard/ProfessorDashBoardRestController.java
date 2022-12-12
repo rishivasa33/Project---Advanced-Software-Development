@@ -11,6 +11,7 @@ import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseC
 import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseContentViewFactory;
 import dal.csci5308.project.group15.elearning.views.course.courseContent.CreateJsonObjectFromRequestBody;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.json.JsonObject;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ProfessorDashBoardRestController {
     @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent")
     public String AddCourseContentToModuleView(@RequestBody String requestBody)
     {
+        System.out.println(requestBody);
         try {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
@@ -35,6 +37,28 @@ public class ProfessorDashBoardRestController {
             System.out.println("error happened in course content creation");
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
+            return courseContentView.getSerializedStringForFailure();
+        }
+    }
+
+    @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent/fileUpload")
+    public String AddCourseContentWithFileToModuleView(@RequestParam("course_content_heading") String courseContentHeading,
+                                                       @RequestParam String courseContentType,
+                                                       @RequestParam String courseId,
+                                                       @RequestParam String courseModuleId,
+                                                       @RequestParam("contentFile") MultipartFile uploadedFile)
+    {
+        System.out.println(courseContentType);
+        try {
+            CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
+            CourseContentView courseContentView = courseContentViewFactory.CreateFormDataCourseContentView(courseId,
+                    courseModuleId, courseContentHeading, uploadedFile);
+            return courseContentView.getSerializedStringForFailure();
+        }
+        catch (Exception exception){
+            System.out.println("error happened in course content creation");
+            CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
+            CourseContentView courseContentView = courseContentViewFactory.CreateJsonCourseContentView();
             return courseContentView.getSerializedStringForFailure();
         }
     }

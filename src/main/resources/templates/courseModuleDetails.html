@@ -27,12 +27,28 @@
         <h3>Create Content Using Form Below</h3>
     </div>
 
-    <form  action="/courseDetails/courseModuleDetails/addCourseModuleContent" method="post" id = "create_content_form">
-        <label>Content Heading:</label><br>
-        <input type="text" id = "course_content_heading"  name = "course_content_heading"/><br>
-        <label>Text Content:</label><br>
+    <form  action="/courseDetails/courseModuleDetails/addCourseModuleContent" method="post" id = "create_content_form"
+           enctype="multipart/form-data">
+        <label>Content Heading:</label><br/>
+        <input type="text" id = "course_content_heading"  name = "course_content_heading"/><br/>
+        <label for="contentType">Choose a Content Type:</label><br/>
+        <select id="contentType" name="contentType" size="3">
+            <option id ="Text" value="Text">Text</option>
+            <option id ="Pdf" value="Pdf">PDF</option>
+        </select>
+        <br/>
+        <div id ="contentFileDiv">
+        <label for="contentFile">Upload File:</label><br/>
+        <input id ="contentFile" type = "file" name ="contentFile"/>
+        <br/>
+        </div>
+
+        <div id ="contentTextDiv">
+        <label for="course_content_text">Enter Text Content in Text Box</label><br/>
         <textarea name = "course_content_text" id ="course_content_text" form = "create_content_form"></textarea>
-        <input type="button" value="Add Course Content" id="add_course_content" onclick="test();">
+        </div>
+        <br/>
+        <input type="submit" value="Add Course Content" id="add_course_content">
     </form>
 
 
