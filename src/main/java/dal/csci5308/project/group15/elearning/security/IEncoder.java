@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.factory.encoder;
+package dal.csci5308.project.group15.elearning.security;
 
 public interface IEncoder
 {
