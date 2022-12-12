@@ -1,86 +1,73 @@
 package dal.csci5308.project.group15.elearning.forum;
 
-import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
+import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
-import java.sql.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-@Controller()
+@Controller
 @RequestMapping("/forum")
 public class ForumController
 {
     private List<ForumTopic> topicList;
     private Map<String, ForumTopic> forumTopicMap;
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @GetMapping("/list")
-    public String showForum(Model model )
+    public String showForum(Model model)
     {
-        forumTopicMap = new HashMap<>();
+        logger.debug("Inside forum list showForum");
+        System.out.println("Inside forum list showForum");
+
         topicList = new LinkedList<>();
 
-        //  get forum details from database.
-        Connection connection = Database.instance().getConnection();
-        CallableStatement statement = null;
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
 
-        try
-        {
-            statement = connection.prepareCall("call get_forum_topics_and_replies()");
-            ResultSet resultSet = statement.executeQuery();
-
-            while(resultSet.next())
-            {
-                ForumTopic topic = new ForumTopic();
-
-                topic.setId(resultSet.getString("TOPIC_ID"));
-                topic.setTopic(resultSet.getString("TOPIC"));
-                topic.setCreatedBy(resultSet.getString("TOPIC_CREATED_BY"));
-
-                topicList.add(topic);
-
-                ForumTopicResponse response = new ForumTopicResponse();
-                response.setId(resultSet.getString("REPLY_ID"));
-                response.setReply(resultSet.getString("REPLY"));
-                response.setCreatedBy(resultSet.getString("REPLY_BY"));
-
-                if(forumTopicMap.containsKey(topic.getId()))
-                {
-                    //  topic does not exist. create new topic and add response to this topic
-                    ForumTopic updatedTopic = forumTopicMap.get(topic.getId());
-                    updatedTopic.getReplyList().add(response);
-
-                    forumTopicMap.put(topic.getId(), updatedTopic);
-                }
-                else
-                {
-                    //  topic exists. add response to this topic
-                    topic.setReplyList(new LinkedList<>());
-                    topic.getReplyList().add(response);
-
-                    forumTopicMap.put(topic.getId(), topic);
-                }
-            }
-
-            connection.close();
-
-            System.out.println(forumTopicMap);
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
+        //  TODO:   remove hardcoding of courseId
+        forumTopicMap = forumHandler.getAllTopics("F22CSCI 5402");
 
         model.addAttribute("forumTopicMap", forumTopicMap);
         model.addAttribute("topicList", topicList);
+        model.addAttribute("forumComment", new ForumComment());
+        model.addAttribute("newTopic", new ForumTopic());
 
-        return "forum";
+        return "forumList";
+    }
+
+    @PostMapping("/postForumComment")
+    public String addNewCommentToTopic(@ModelAttribute("forumComment") ForumComment comment,
+                                       Model model)
+    {
+        logger.debug("New Comment to add: " + comment.getComment());
+
+        System.out.println("New Comment to add: " + comment.getComment());
+
+        if(comment.getComment().length() > 0)
+        {
+            IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+            forumHandler.createNewResponse(forumTopicMap, comment);
+        }
+
+        return "redirect:/forum/list";
+    }
+
+    @PostMapping("/createNewTopic")
+    public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic)
+    {
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+
+        if(newTopic.getTopic().length() > 0)
+        {
+            //  TODO: Remove hardcoded value of course
+            forumHandler.createNewTopic("F22CSCI 5402", newTopic);
+        }
+
+        return "redirect:/forum/list";
     }
 }

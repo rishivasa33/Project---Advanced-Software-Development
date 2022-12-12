@@ -7,7 +7,6 @@ public interface ICourse {
     String GetCourseID();
     String GetCourseName();
     String GetCourseDescription();
-    boolean IsGradedCourse();
 
     void Save() throws SQLException;
 

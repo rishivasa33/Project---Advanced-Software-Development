@@ -1,10 +1,12 @@
 package dal.csci5308.project.group15.elearning.models.forum;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ForumTopic
 {
     private String id;
+    private String courseId;
     private String topic;
     private String createdBy;
     private String createdOn;
@@ -13,11 +15,12 @@ public class ForumTopic
 
     public ForumTopic()
     {
-
+        replyList = new LinkedList<>();
     }
 
-    public ForumTopic(String id, String topic, String createdBy, String createdOn, List<ForumTopicResponse> replyList) {
+    public ForumTopic(String id, String courseId, String topic, String createdBy, String createdOn, List<ForumTopicResponse> replyList) {
         this.id = id;
+        this.courseId = courseId;
         this.topic = topic;
         this.createdBy = createdBy;
         this.createdOn = createdOn;
@@ -64,10 +67,19 @@ public class ForumTopic
         this.replyList = replyList;
     }
 
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public String toString() {
-        return "Forum{" +
+        return "ForumTopic{" +
                 "id='" + id + '\'' +
+                ", courseId='" + courseId + '\'' +
                 ", topic='" + topic + '\'' +
                 ", createdBy='" + createdBy + '\'' +
                 ", createdOn='" + createdOn + '\'' +

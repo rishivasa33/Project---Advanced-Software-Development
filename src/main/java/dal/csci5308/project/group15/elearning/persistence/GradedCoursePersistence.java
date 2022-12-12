@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.persistence;
 
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.Course;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ public interface GradedCoursePersistence{
 
 
 
-    public  ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException;
+    public  ArrayList<Course> GetAllGradedCourses() throws SQLException;
 
-    void Save(GradedCourse gradedCourse) throws SQLException;
+    void Save(Course course) throws SQLException;
 
-    GradedCourse Load(String courseId) throws SQLException;
+    Course Load(String courseId) throws SQLException;
 
 
 

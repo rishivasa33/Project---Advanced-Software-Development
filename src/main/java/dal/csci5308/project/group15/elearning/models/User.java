@@ -2,6 +2,7 @@ package dal.csci5308.project.group15.elearning.models;
 
 public class User
 {
+
     private String id;
     private String username;
     private String email;

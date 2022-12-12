@@ -1,16 +1,18 @@
 package dal.csci5308.project.group15.elearning.persistence;
 
-import dal.csci5308.project.group15.elearning.models.course.CourseInstance;
+import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
+import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public interface CourseInstancePersistence {
 
 
-    void Save(CourseInstance courseInstance) throws SQLException;
+    void save(CourseByTerm courseByTerm) throws SQLException;
 
-    CourseInstance Load(String courseId) throws ParseException, SQLException;
+    ICourseByTerm loadByID(String courseId) throws ParseException, SQLException;
 
-
+    ArrayList<ICourseByTerm> loadByTerm(String courseTerm) throws ParseException, SQLException;
 }

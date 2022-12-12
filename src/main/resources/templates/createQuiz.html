@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Details</title>
+  <style type="text/css">
+        label {
+            display: inline-block;
+            width: 200px;
+            margin: 5px;
+            text-align: left;
+        }
+        input[type=text], input[type=email],input[type=radio] input[type=password], select {
+            display: inline-block;
+            width: 200px;
+        }
+        input[type=radio] {
+            margin-left: 45px;
+        }
+        input[type=checkbox] {
+            margin-right: 190px;
+        }
+        button {
+            padding: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+  <div style="border-style:solid; width:500px">
+    <h1>Enter Quiz Details</h1>
+    <form
+            role="form"
+            method="post"
+            th:action="@{/a/saveQuiz}"
+            th:object="${quiz}"
+    >
+
+      <label>Subject ID:</label>
+      <input type="text" th:field = "*{id}" />
+      <br />
+      <label>Quiz ID:</label>
+      <input type="text" th:field = "*{quizId}" />
+      <br />
+      <label>Description:</label>
+      <input type="text" th:field = "*{description}" />
+      <br />
+      <label>Start Date:</label>
+      <input type="date" th:field = "*{startDate}"  />
+      </br>
+      <label>End Date:</label>
+      <input type="date" th:field = "*{endDate}"  />
+      </br>
+
+
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

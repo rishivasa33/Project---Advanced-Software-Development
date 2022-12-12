@@ -1,8 +1,11 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
+import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 
@@ -18,6 +21,8 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     }
     public void Save(GradedCourse gradedCourse) throws SQLException {
         mySqlCoursePersistence_.Save(gradedCourse.GetCourseBase());
+    public void Save(Course course) throws SQLException {
+        mySqlCoursePersistence_.Save(course.GetCourse());
 
         try (Connection connection = database_.getConnection()) {
             String sql_query = "update course set course_credits=? "
@@ -25,8 +30,8 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
                     "WHERE course_id = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-            preparedStatement.setInt(1, gradedCourse.GetCredits());
-            preparedStatement.setString(2, gradedCourse.GetCourseBase().GetCourseID());
+            preparedStatement.setInt(1, course.GetCredits());
+            preparedStatement.setString(2, course.GetCourse().GetCourseID());
             int rows_modified = preparedStatement.executeUpdate();
             System.out.println("rows modified: " + rows_modified);
             connection.commit();
@@ -38,9 +43,9 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     }
 
 
-    public GradedCourse Load(String course_id) throws SQLException {
+    public Course Load(String course_id) throws SQLException {
 
-        Course course = mySqlCoursePersistence_.Load(course_id);
+        BaseCourse baseCourse = mySqlCoursePersistence_.Load(course_id);
 
         try (Connection connection = database_.getConnection()) {
             String sql_query = "SELECT * FROM course WHERE course_id = ?;";
@@ -54,8 +59,8 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
                 course_credits = resultSet.getInt("course_credits");
             }
 
-            CourseFactory courseFactory = new CourseFactory();
-            return courseFactory.CreateGradedCourse(course_id, course.GetName(), course.GetDescription(), course_credits);
+            ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+            return courseFactory.CreateGradedCourse(course_id, baseCourse.GetName(), baseCourse.GetDescription(), course_credits);
 
         } catch (SQLException sqlException) {
             throw new RuntimeException(sqlException);
@@ -64,25 +69,25 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
 
 
 
-    public ArrayList<GradedCourse> GetAllGradedCourses() throws SQLException {
+    public ArrayList<Course> GetAllGradedCourses() throws SQLException {
         try (Connection connection = database_.getConnection()) {
             String sql_query = "SELECT gc.course_id, gc.course_name, gc.course_description, gc.course_credits FROM course as gc";
-            ArrayList<GradedCourse> gradedCourseArrayList = new ArrayList<>();
+            ArrayList<Course> courseArrayList = new ArrayList<>();
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
             ResultSet resultSet = statement.executeQuery();
-            CourseFactory courseFactory = new CourseFactory();
+            ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
 
             while (resultSet.next()) {
                 String course_id = resultSet.getString("gc.course_id");
                 int total_credits = resultSet.getInt("gc.course_credits");
                 String course_name = resultSet.getString("gc.course_name");
                 String course_description = resultSet.getString("gc.course_description");
-                gradedCourseArrayList.add(courseFactory.CreateGradedCourse(course_id, course_name, course_description, total_credits));
+                courseArrayList.add(courseFactory.CreateGradedCourse(course_id, course_name, course_description, total_credits));
             }
 
 
-            return gradedCourseArrayList;
+            return courseArrayList;
 
         } catch (SQLException sqlException) {
             throw new RuntimeException(sqlException);
