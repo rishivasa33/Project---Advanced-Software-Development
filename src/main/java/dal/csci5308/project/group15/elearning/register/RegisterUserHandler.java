@@ -3,15 +3,12 @@ package dal.csci5308.project.group15.elearning.register;
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.encoder.EncoderFactory;
-import dal.csci5308.project.group15.elearning.factory.encoder.IEncoder;
-import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
-import dal.csci5308.project.group15.elearning.forum.IForumHandler;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
+import dal.csci5308.project.group15.elearning.security.IEncoder;
 import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
-import dal.csci5308.project.group15.elearning.security.AuthUser;
-import dal.csci5308.project.group15.elearning.security.Encoder;
+import dal.csci5308.project.group15.elearning.utility.IPropertiesUtility;
+import dal.csci5308.project.group15.elearning.utility.PropertiesUtility;
 import dal.csci5308.project.group15.elearning.utility.SqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +26,8 @@ public class RegisterUserHandler implements IRegisterUserHandler
     @Override
     public int createNewUser(User user)
     {
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+
         //  encode user password before saving to database
         IEncoder encoder = EncoderFactory.instance().makeEncoder();
         String encodedPassword = encoder.encode(user.getDefaultPassword());
@@ -39,7 +38,7 @@ public class RegisterUserHandler implements IRegisterUserHandler
         {
             IDatabaseOperations databaseOperations = DatabaseOperations.instance();
             return databaseOperations.create(
-                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_STUDENT"),
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_STUDENT"),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getEmail(),
@@ -58,11 +57,12 @@ public class RegisterUserHandler implements IRegisterUserHandler
     {
         Map<String, String> programMap = new HashMap<>();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
         try
         {
             Map<String, List<Object>> resultSet = databaseOperations.read(
-                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_GET_PROGRAM_LIST_ALL"));
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_GET_PROGRAM_LIST_ALL"));
 
             for(int row = 0; row < databaseOperations.getRowCount(resultSet); row++)
             {
