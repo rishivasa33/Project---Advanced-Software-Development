@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.student;
 
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
-import dal.csci5308.project.group15.elearning.persistence.IStudentCourseEnrollmentPersistence;
+import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
 import java.sql.SQLException;
 import java.text.ParseException;

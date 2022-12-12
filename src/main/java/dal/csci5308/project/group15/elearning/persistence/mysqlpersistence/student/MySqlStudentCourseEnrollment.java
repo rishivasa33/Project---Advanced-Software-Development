@@ -1,11 +1,11 @@
-package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence;
+package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.student;
 
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollmentFactory;
 import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollment;
-import dal.csci5308.project.group15.elearning.persistence.IStudentCourseEnrollmentPersistence;
+import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
