@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.forum;
 
-import dal.csci5308.project.group15.elearning.factory.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import org.slf4j.Logger;
@@ -23,6 +23,7 @@ public class ForumController
     public String showForum(Model model)
     {
         logger.debug("Inside forum list showForum");
+        System.out.println("Inside forum list showForum");
 
         topicList = new LinkedList<>();
 

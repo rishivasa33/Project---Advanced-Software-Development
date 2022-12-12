@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Aura Add Course Content For Module</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/professorDashboard.css}"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script  type="text/javascript" th:src ="@{/js/jquery-3.6.1.min.js}"></script>
+    <script type="text/javascript" th:src = "@{/js/formScript.js}"></script>
+</head>
+<body>
+<main role="main" class="container">
+    <div class="starter-template" id ="contentList">
+        <h1 id = "courseId" th:text="${courseId}">${courseId}</h1>
+        <h1 style="visibility:hidden" id = "courseModuleId" th:text="${courseModuleId}">${courseModuleId}</h1>
+        <h2 id = "courseModuleName" th:text="${courseModuleName}">${courseModuleName}</h2>
+
+    </div>
+    <div class="starter-template">
+        <h3>Create Content Using Form Below</h3>
+    </div>
+
+    <form  action="/courseDetails/courseModuleDetails/addCourseModuleContent" method="post" id = "create_content_form"
+           enctype="multipart/form-data">
+        <label>Content Heading:</label><br/>
+        <input type="text" id = "course_content_heading"  name = "course_content_heading"/><br/>
+        <label for="contentType">Choose a Content Type:</label><br/>
+        <select id="contentType" name="contentType" size="3">
+            <option id ="Text" value="Text">Text</option>
+            <option id ="Pdf" value="Pdf">PDF</option>
+        </select>
+        <br/>
+        <div id ="contentFileDiv">
+        <label for="contentFile">Upload File:</label><br/>
+        <input id ="contentFile" type = "file" name ="contentFile"/>
+        <br/>
+        </div>
+
+        <div id ="contentTextDiv">
+        <label for="course_content_text">Enter Text Content in Text Box</label><br/>
+        <textarea name = "course_content_text" id ="course_content_text" form = "create_content_form"></textarea>
+        </div>
+        <br/>
+        <input type="submit" value="Add Course Content" id="add_course_content">
+    </form>
+
+
+</main>
+<!-- /.container -->
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
+</html>

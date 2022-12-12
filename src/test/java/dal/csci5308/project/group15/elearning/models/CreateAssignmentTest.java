@@ -2,9 +2,6 @@ package dal.csci5308.project.group15.elearning.models;
 
 import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
-import dal.csci5308.project.group15.elearning.models.course.Course;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

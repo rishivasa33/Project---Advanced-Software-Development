@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <link rel="stylesheet" th:href="@{/css/forum.css}"/>
+    </head>
+    <body>
+
+        <div th:switch="${message}">
+            <div th:case="'success'" class="alert alert-success">
+                <p><strong>Success!</strong> Operation performed successfully.</p>
+            </div>
+            <div th:case="'fail'" class="alert alert-danger">
+                <p><strong>Failure!</strong> Operation failed. Please try again</p>
+            </div>
+        </div>
+
+        <form method="post" th:action="@{/registerUser/add}" th:object="${user}">
+            <div>
+                First Name: <input type="text" th:field="*{firstName}">
+                <br/>
+                Last Name: <input type="text" th:field="*{lastName}">
+                <br/>
+                Email: <input type="text" th:field="*{email}">
+                <br/>
+                Program:
+                <select th:field="*{program}">
+                    <option th:each="i : ${programMap}" th:value="${i.key}" th:text="${i.value}"></option>
+                </select>
+                <br/>
+                Default Password: <input type="text" th:field="*{defaultPassword}">
+                <br/>
+
+            </div>
+
+            <br/>
+
+            <div class="form-group">
+                <div class="custom-control custom-radio custom-control-inline">
+                    Role:
+                    <input type="radio" id="basic" name="basic" class="custom-control-input" value="1" th:field="*{role}">
+                    <label class="custom-control-label" for="basic">Basic</label>
+
+                    <input type="radio" id="student" name="student" class="custom-control-input" value="5" th:field="*{role}">
+                    <label class="custom-control-label" for="student">Student</label>
+
+                    <input type="radio" id="professor" name="professor" class="custom-control-input" value="4" th:field="*{role}">
+                    <label class="custom-control-label" for="professor">Professor</label>
+
+                    <input type="radio" id="admin" name="admin" class="custom-control-input" value="3" th:field="*{role}">
+                    <label class="custom-control-label" for="admin">Admin</label>
+
+                    <input type="radio" id="superuser" name="superuser" class="custom-control-input" value="2" th:field="*{role}">
+                    <label class="custom-control-label" for="superuser">Superuser</label>
+                </div>
+            </div>
+
+            <br/>
+
+            <button type="submit">Register User</button>
+        </form>
+    </body>
+</html>

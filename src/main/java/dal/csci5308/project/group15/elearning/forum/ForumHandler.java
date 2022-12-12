@@ -1,19 +1,18 @@
 package dal.csci5308.project.group15.elearning.forum;
 
-import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
+import dal.csci5308.project.group15.elearning.utility.SqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -30,10 +29,12 @@ public class ForumHandler implements IForumHandler
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         List<ForumTopic> forumTopicList = ForumFactory.instance().makeForumTopicList();
         Map<String, ForumTopic> forumTopicMap = new HashMap<>();
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
         try
         {
-            Map<String, List<Object>> resultSet = databaseOperations.read("get_forum_topics_and_replies", courseId);
+            Map<String, List<Object>> resultSet = databaseOperations.read(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_GET_FORUM_LIST"), courseId);
 
             //  iterate through the resultSet and put items in forumTopicList
             for(int row = 0; row < databaseOperations.getRowCount(resultSet); row++)
@@ -44,12 +45,14 @@ public class ForumHandler implements IForumHandler
                 topic.setTopic(String.valueOf(databaseOperations.getValueAt(resultSet, "TOPIC", row)));
                 topic.setCreatedBy(String.valueOf(databaseOperations.getValueAt(resultSet, "TOPIC_CREATED_BY", row)));
                 topic.setCourseId(String.valueOf(databaseOperations.getValueAt(resultSet, "COURSE_ID", row)));
+                topic.setCreatedOn(String.valueOf(databaseOperations.getValueAt(resultSet, "CREATED_ON", row)));
 
                 ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
 
                 response.setId(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY_ID", row)));
                 response.setReply(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY", row)));
                 response.setCreatedBy(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY_BY", row)));
+                response.setCreatedOn(String.valueOf(databaseOperations.getValueAt(resultSet, "REPLY_CREATED_ON", row)));
 
                 forumTopicList.add(topic);
 
@@ -83,8 +86,11 @@ public class ForumHandler implements IForumHandler
     {
         try
         {
+            IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
             IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-            return databaseOperations.create("add_forum_topic", courseId, topic.getTopic(), AuthUser.getUsername());
+            return databaseOperations.create(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC"),
+                    courseId, topic.getTopic(), AuthUser.getUsername());
         }
         catch (SQLException sqlException)
         {
@@ -107,11 +113,14 @@ public class ForumHandler implements IForumHandler
 
         String commentToAdd = commentArray[topicIdToUpdate];
         ForumTopic topic = getTopicToUpdate(forumTopicMap, topicIdToUpdate);
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
         try
         {
             IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-            return databaseOperations.create("add_comment_to_topic", topic.getId(), commentToAdd, AuthUser.getUsername());
+            return databaseOperations.create(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_INSERT_NEW_COMMENT"),
+                    topic.getId(), commentToAdd, AuthUser.getUsername());
         }
         catch (SQLException sqlException)
         {
