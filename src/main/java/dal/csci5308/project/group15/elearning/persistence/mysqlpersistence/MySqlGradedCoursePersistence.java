@@ -3,10 +3,8 @@ package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence;
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
 import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 
 import java.sql.*;
@@ -19,10 +17,8 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
         mySqlCoursePersistence_ = mySqlCoursePersistence;
         database_ = database;
     }
-    public void Save(GradedCourse gradedCourse) throws SQLException {
+    public void Save(Course gradedCourse) throws SQLException {
         mySqlCoursePersistence_.Save(gradedCourse.GetCourseBase());
-    public void Save(Course course) throws SQLException {
-        mySqlCoursePersistence_.Save(course.GetCourse());
 
         try (Connection connection = database_.getConnection()) {
             String sql_query = "update course set course_credits=? "
@@ -30,8 +26,8 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
                     "WHERE course_id = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-            preparedStatement.setInt(1, course.GetCredits());
-            preparedStatement.setString(2, course.GetCourse().GetCourseID());
+            preparedStatement.setInt(1, gradedCourse.GetCredits());
+            preparedStatement.setString(2, gradedCourse.GetCourseBase().GetCourseID());
             int rows_modified = preparedStatement.executeUpdate();
             System.out.println("rows modified: " + rows_modified);
             connection.commit();

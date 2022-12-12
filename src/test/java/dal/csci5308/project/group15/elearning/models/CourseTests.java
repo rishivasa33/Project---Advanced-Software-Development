@@ -25,9 +25,9 @@ public class CourseTests {
 
         CourseFactory courseFactory = new CourseFactory();
         Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 10);
-        assertEquals(course.GetCourse().GetName(), "test");
-        assertEquals(course.GetCourse().GetCourseID(), "5308");
-        assertEquals(course.GetCourse().GetDescription(), "test2");
+        assertEquals(course.GetCourseBase().GetName(), "test");
+        assertEquals(course.GetCourseBase().GetCourseID(), "5308");
+        assertEquals(course.GetCourseBase().GetDescription(), "test2");
         assertEquals(course.GetCredits(), 10);
     }
 
@@ -51,9 +51,9 @@ public class CourseTests {
 
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         Course course = coursePersistence.Load("5308");
-        Assertions.assertEquals(course.GetCourse().GetCourseID(), "5308");
-        Assertions.assertEquals(course.GetCourse().GetName(), "test5308");
-        assertEquals(course.GetCourse().GetDescription(), "test description");
+        Assertions.assertEquals(course.GetCourseBase().GetCourseID(), "5308");
+        Assertions.assertEquals(course.GetCourseBase().GetName(), "test5308");
+        assertEquals(course.GetCourseBase().GetDescription(), "test description");
         assertEquals(course.GetCredits(), 10);
     }
 }

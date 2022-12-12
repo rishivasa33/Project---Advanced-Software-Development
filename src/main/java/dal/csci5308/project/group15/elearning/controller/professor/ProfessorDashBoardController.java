@@ -1,13 +1,11 @@
-package dal.csci5308.project.group15.elearning.models.course.dashboard;
+package dal.csci5308.project.group15.elearning.controller.professor;
 
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
-import dal.csci5308.project.group15.elearning.persistence.*;
-import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
@@ -57,7 +55,7 @@ public class ProfessorDashBoardController {
     public String CourseDetailsView(@RequestParam String courseId, Model model)
     {
         CourseFactory courseFactory = new CourseFactory();
-        GradedCourse course = courseFactory.CreateGradedCourse("","","", 0);
+        Course course = courseFactory.CreateGradedCourse("","","", 0);
         try {
             course = course.Load(courseId);
             ArrayList<CourseModule> course_module_list = course.GetCourseBase().GetAllModules();

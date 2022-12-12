@@ -24,11 +24,11 @@ public class TextCourseContentTest {
         }
 
     @Test
-    void TestTextCourseContentSave(){
+    void TestTextCourseContentSave() throws SQLException {
 
         CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
         TextCourseContent textCourseContent = courseContentFactoryFactory.CreateTextCourseContent("content1", "text");
-        textCourseContent.Save();
+        textCourseContent.Save(1);
         assertEquals(textCourseContent.GetContentId(), 1);
 
     }
@@ -36,7 +36,7 @@ public class TextCourseContentTest {
 
 
     @Test
-    void TestTextCourseContentLoad(){
+    void TestTextCourseContentLoad() throws SQLException {
 
         CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
         TextCourseContent textCourseContent = courseContentFactoryFactory.CreateTextCourseContent("content1", "text");

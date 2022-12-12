@@ -1,7 +1,7 @@
-package dal.csci5308.project.group15.elearning.dashboard;
+package dal.csci5308.project.group15.elearning.controller.professor;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.GradedCourse;
+import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
@@ -74,7 +74,7 @@ public class ProfessorDashBoardRestController {
             ICourse course = courseFactory.CreateGradedCourse("", "" , "", 10);
             course = course.Load(courseId);
           if(course.IsGradedCourse()){
-              GradedCourse gradedCourse = (GradedCourse) course;
+              Course gradedCourse = (Course) course;
               ArrayList<CourseContent> courseContentsList = gradedCourse.GetCourseBase().GetAllContentsInAModule(courseModuleId);
               CourseContentView courseContentView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateJsonCourseContentView();
               return courseContentView.getSerializedStringForSuccess(courseId, courseModuleId, courseContentsList);
