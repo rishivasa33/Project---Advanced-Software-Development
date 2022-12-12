@@ -146,7 +146,6 @@ public class DatabaseOperations implements IDatabaseOperations
     @Override
     public Object getValueAt(Map<String, List<Object>> map, String columnName, int row)
     {
-        System.out.println();
         return map.get(columnName).get(row);
     }
 
