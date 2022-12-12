@@ -12,6 +12,7 @@ import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
 import dal.csci5308.project.group15.elearning.security.Encoder;
+import dal.csci5308.project.group15.elearning.utility.SqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,8 @@ public class RegisterUserHandler implements IRegisterUserHandler
         try
         {
             IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-            return databaseOperations.create("add_new_user_student",
+            return databaseOperations.create(
+                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_STUDENT"),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getEmail(),
@@ -59,7 +61,8 @@ public class RegisterUserHandler implements IRegisterUserHandler
 
         try
         {
-            Map<String, List<Object>> resultSet = databaseOperations.read("get_program_list_all");
+            Map<String, List<Object>> resultSet = databaseOperations.read(
+                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_GET_PROGRAM_LIST_ALL"));
 
             for(int row = 0; row < databaseOperations.getRowCount(resultSet); row++)
             {

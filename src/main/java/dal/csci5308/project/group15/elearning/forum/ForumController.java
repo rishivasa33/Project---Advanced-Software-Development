@@ -23,6 +23,7 @@ public class ForumController
     public String showForum(Model model)
     {
         logger.debug("Inside forum list showForum");
+        System.out.println("Inside forum list showForum");
 
         topicList = new LinkedList<>();
 
