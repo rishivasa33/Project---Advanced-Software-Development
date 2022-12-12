@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class BaseCourseByTermTest
 {
-   /* @Test
+    @Test
     void TestCourseInstanceCreation() {
 
         CourseFactory courseFactory = new CourseFactory();
@@ -151,6 +151,6 @@ public class BaseCourseByTermTest
         }
         catch (Exception exception){
             Assertions.fail();
+    }
         }
-    }*/
 }
