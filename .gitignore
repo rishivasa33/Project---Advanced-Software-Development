@@ -42,3 +42,4 @@ appLog.log
 *.gz
 appLog.log
 *.log
+*.log

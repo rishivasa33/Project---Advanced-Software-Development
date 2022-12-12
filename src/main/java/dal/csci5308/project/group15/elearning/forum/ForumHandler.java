@@ -7,6 +7,7 @@ import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
+import dal.csci5308.project.group15.elearning.utility.SqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,8 @@ public class ForumHandler implements IForumHandler
 
         try
         {
-            Map<String, List<Object>> resultSet = databaseOperations.read("get_forum_topics_and_replies", courseId);
+            Map<String, List<Object>> resultSet = databaseOperations.read(
+                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_FORUM_GET_FORUM_LIST"), courseId);
 
             //  iterate through the resultSet and put items in forumTopicList
             for(int row = 0; row < databaseOperations.getRowCount(resultSet); row++)
@@ -80,7 +82,9 @@ public class ForumHandler implements IForumHandler
         try
         {
             IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-            return databaseOperations.create("add_forum_topic", courseId, topic.getTopic(), AuthUser.getUsername());
+            return databaseOperations.create(
+                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC"),
+                    courseId, topic.getTopic(), AuthUser.getUsername());
         }
         catch (SQLException sqlException)
         {
@@ -107,7 +111,9 @@ public class ForumHandler implements IForumHandler
         try
         {
             IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-            return databaseOperations.create("add_comment_to_topic", topic.getId(), commentToAdd, AuthUser.getUsername());
+            return databaseOperations.create(
+                    SqlProperties.instance().getPropertiesMap().get("STORED_PROCEDURE_FORUM_INSERT_NEW_COMMENT"),
+                    topic.getId(), commentToAdd, AuthUser.getUsername());
         }
         catch (SQLException sqlException)
         {
