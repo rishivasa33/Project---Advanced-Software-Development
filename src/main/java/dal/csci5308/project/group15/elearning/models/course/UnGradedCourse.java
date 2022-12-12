@@ -22,7 +22,7 @@ public class UnGradedCourse implements ICourse {
     }
 
 
-    public BaseCourse GetCourse(){
+    public BaseCourse GetCourseBase(){
         return baseCourse_;
     }
 
@@ -34,7 +34,7 @@ public class UnGradedCourse implements ICourse {
 
 
     public String GetCourseID(){
-        return GetCourse().GetCourseID();
+        return GetCourseBase().GetCourseID();
     }
     public String GetCourseName(){
         return baseCourse_.GetName();

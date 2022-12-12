@@ -10,7 +10,13 @@ public interface ICourse {
 
     void Save() throws SQLException;
 
+    BaseCourse GetCourseBase();
+
     ICourse Load(String course_id) throws SQLException;
+
+    boolean IsGradedCourse();
+
+
 
 
 

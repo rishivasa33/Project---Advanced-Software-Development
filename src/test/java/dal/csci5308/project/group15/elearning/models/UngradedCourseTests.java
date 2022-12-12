@@ -2,7 +2,6 @@ package dal.csci5308.project.group15.elearning.models;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistenceSingleton;
-import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBUngradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.models.course.UnGradedCourse;
 import org.junit.jupiter.api.Assertions;
@@ -23,8 +22,8 @@ public class UngradedCourseTests {
     void TestUnGradedCourseLoad(){
         UnGradedCoursePersistence unGradedCoursePersistence =  UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
         UnGradedCourse ungradedCourse = unGradedCoursePersistence.Load("5308");
-        Assertions.assertEquals(ungradedCourse.GetCourse().GetName() , "test5308");
-        Assertions.assertEquals(ungradedCourse.GetCourse().GetCourseID(), "5308");
+        Assertions.assertEquals(ungradedCourse.GetCourseBase().GetName() , "test5308");
+        Assertions.assertEquals(ungradedCourse.GetCourseBase().GetCourseID(), "5308");
 
     }
 
