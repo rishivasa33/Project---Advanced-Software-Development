@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="topNavBar">
     <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="/viewRegisteredCourses">View Courses By Term</a>
+            <a class="nav-link" href="/student/viewRegisteredCoursesByTerm">View Courses By Term</a>
         </li>
         <li class="nav-item active">
             <a class="nav-link" href="#">Register for Courses</a>
@@ -49,7 +49,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item active bg-light" th:each="course:${student_current_courses}">
                         <a class="nav-link"
-                           th:href="@{/course/{courseInstanceID}(courseInstanceID=${course.courseInstanceID})}"
+                           th:href="@{/student/course/{courseInstanceID}(courseInstanceID=${course.courseInstanceID})}"
                            th:text="${course.courseInstanceID }"></a>
                         <hr/>
                     </li>
