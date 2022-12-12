@@ -151,6 +151,6 @@ public class BaseCourseByTermTest
         }
         catch (Exception exception){
             Assertions.fail();
-        }
     }
+        }
 }

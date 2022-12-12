@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.models.student;
 
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,7 +11,7 @@ public class TestStudentCourseEnrollment {
     @Test
     void TestStudentCourseEnrollmentCreation() {
 
-        IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryInitializer.instance().getStudentCourseEnrollmentFactory();
+        IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
         IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstance("F22CSCI5100", "B00901111", "F22");
 
         assertEquals(studentCourseEnrollment.getCourseInstanceID(), "F22CSCI5100");
@@ -22,7 +22,7 @@ public class TestStudentCourseEnrollment {
     @Test
     void TestStudentCourseEnrollmentCreationForLoad() {
 
-        IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryInitializer.instance().getStudentCourseEnrollmentFactory();
+        IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
         IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad("B00901111");
 
         assertEquals(studentCourseEnrollment.getCourseInstanceID(), null);
@@ -34,7 +34,7 @@ public class TestStudentCourseEnrollment {
     @Test
     void TestStudentCourseEnrollmentSave() {
 
-        /*IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryInitializer.instance().getStudentCourseEnrollmentFactory();
+        /*IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
         */
     }
 
@@ -43,7 +43,7 @@ public class TestStudentCourseEnrollment {
         /*try {
             String studentNumber = "B00901111";
             String currentTerm = "F22";
-            IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryInitializer.instance().getStudentCourseEnrollmentFactory();
+            IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
             IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad(studentNumber);
 
             ArrayList<IStudentCourseEnrollment> studentCourseEnrollments = new ArrayList<>();

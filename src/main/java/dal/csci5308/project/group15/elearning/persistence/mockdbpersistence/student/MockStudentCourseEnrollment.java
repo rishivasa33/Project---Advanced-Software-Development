@@ -1,8 +1,8 @@
-package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
+package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.student;
 
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollment;
-import dal.csci5308.project.group15.elearning.persistence.IStudentCourseEnrollmentPersistence;
+import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
 import java.sql.SQLException;
 import java.text.ParseException;
