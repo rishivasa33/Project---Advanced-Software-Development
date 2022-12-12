@@ -1,6 +1,8 @@
 package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import org.slf4j.Logger;
@@ -20,24 +22,24 @@ public class ForumController
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/list")
-    public String showForum(Model model)
+    public String showForum(Model model, @RequestParam("courseId") String courseId)
     {
         logger.debug("Inside forum list showForum");
-        System.out.println("Inside forum list showForum");
 
         topicList = new LinkedList<>();
 
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
         //  TODO:   remove hardcoding of courseId
-        forumTopicMap = forumHandler.getAllTopics("F22CSCI 5402");
+        forumTopicMap = forumHandler.getAllTopics(courseId);
 
         model.addAttribute("forumTopicMap", forumTopicMap);
         model.addAttribute("topicList", topicList);
         model.addAttribute("forumComment", new ForumComment());
         model.addAttribute("newTopic", new ForumTopic());
 
-        return "forumList";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_FORUM_LIST");
     }
 
     @PostMapping("/postForumComment")
@@ -46,15 +48,14 @@ public class ForumController
     {
         logger.debug("New Comment to add: " + comment.getComment());
 
-        System.out.println("New Comment to add: " + comment.getComment());
-
         if(comment.getComment().length() > 0)
         {
             IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
             forumHandler.createNewResponse(forumTopicMap, comment);
         }
 
-        return "redirect:/forum/list";
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_FORUM_LIST");
     }
 
     @PostMapping("/createNewTopic")
@@ -68,6 +69,7 @@ public class ForumController
             forumHandler.createNewTopic("F22CSCI 5402", newTopic);
         }
 
-        return "redirect:/forum/list";
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_FORUM_LIST");
     }
 }
