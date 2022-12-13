@@ -1,10 +1,13 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
+import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
+import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
 import org.springframework.stereotype.Controller;
@@ -31,7 +34,6 @@ public class StudentCourseController {
 
     @GetMapping("/student/viewRegisteredCoursesByTerm")
     public String fetchCurrentAndFutureTerms(Model model) {
-        //Fetches Terms where Term end date is AFTER Current System Date
         IUniversityTermsFactory universityTermsFactory = FactoryFacade.instance().getUniversityTermsFactory();
         IUniversityTerms universityTerms = universityTermsFactory.createEmptyUniversityTermsInstance();
 
@@ -64,4 +66,34 @@ public class StudentCourseController {
         return "studentRegisteredCoursesByTerm";
     }
 
+    @GetMapping("/student/viewTermsOpenForRegistration")
+    public String viewTermsOpenForRegistration(Model model){
+        IUniversityTermsFactory universityTermsFactory = FactoryFacade.instance().getUniversityTermsFactory();
+        IUniversityTerms universityTerms = universityTermsFactory.createEmptyUniversityTermsInstance();
+
+        ArrayList<IUniversityTerms> listOfTermsOpenForRegistration;
+        listOfTermsOpenForRegistration = universityTerms.loadOpenForRegistrationTerms(UniversityTermsSingleton.GetMySqlUniversityTermsPersistenceInstance(), new Date(System.currentTimeMillis()));
+
+        model.addAttribute("terms_open_for_registration_list", listOfTermsOpenForRegistration);
+        return "studentTermsOpenForRegistration";
+    }
+
+    @GetMapping("/student/viewAvailableCoursesByTerm/{termID}")
+    public String viewAvailableCoursesByTerm(@PathVariable String termID, Model model){
+        ArrayList<ICourseByTerm> availableCourses = null;
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
+        ICourseByTerm courseByTerm = courseFactory.CreateCourseInstanceForLoadByTerm(termID);
+
+        try {
+            availableCourses = courseByTerm.loadByTerm(CourseInstancePersistenceSingleton.GetMySqlCourseInstancePersistenceInstance(), termID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        model.addAttribute("available_courses_by_term_list", availableCourses);
+        model.addAttribute("termID", termID);
+        return "studentRegisterNewCoursesForTerm";
+    }
 }
