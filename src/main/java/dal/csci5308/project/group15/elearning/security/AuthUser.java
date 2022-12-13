@@ -40,7 +40,7 @@ public class AuthUser
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {
-            if(role.getAuthority().equals("professor"))
+            if(role.getAuthority().contains("professor"))
                 return true;
         }
 

@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -38,5 +39,18 @@ public class CourseFactory implements ICourseFactory {
 
     public CourseByTerm createCourseByTermInstance(ICourse course, UniversityTerms terms, int capacity){
         return new CourseByTerm(course, terms, capacity);
+    }
+
+    @Override
+    public CourseByTerm CreateCourseInstanceForLoadByTerm(String term){
+        CourseByTerm  courseByTerm = new CourseByTerm(term);
+        return courseByTerm;
+    }
+
+    @Override
+    public Course createCourseInstanceForLoad(String courseID) throws SQLException {
+        Course course = new Course(courseID);
+        course = course.Load(courseID);
+        return course;
     }
 }

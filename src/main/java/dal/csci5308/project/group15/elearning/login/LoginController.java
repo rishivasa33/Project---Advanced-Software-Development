@@ -20,6 +20,10 @@ public class LoginController
             System.out.println("admin");
             return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_PROFESSOR_DASHBOARD");
         }
+        else if(AuthUser.isProfessor()){
+            System.out.println("professor");
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_PROFESSOR_DASHBOARD");
+        }
         else if(AuthUser.isStudent())
         {
             System.out.println("student");
