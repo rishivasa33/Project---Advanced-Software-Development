@@ -42,6 +42,7 @@
                     <td th:text="${course[2]}"></td>
                     <td th:text="${course[3]}"></td>
                     <td> <a th:href ="@{courseDetails/(courseId=${course[0]})}"> Get Course Details </a></td>
+                    <td> <a th:href ="@{createCourseByTerm/(courseId=${course[0]})}"> Add Course Instance To a Term </a></td>
                 </tr>
                 </tbody>
             </table>

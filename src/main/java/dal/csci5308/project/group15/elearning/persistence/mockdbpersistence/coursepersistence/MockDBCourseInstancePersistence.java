@@ -19,7 +19,7 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
 
     public CourseByTerm loadByID(String course_instance_id) throws ParseException, SQLException {
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-        Course course = courseFactory.createCourseInstanceForLoad("CSCI5100");
+        Course course = courseFactory.createCourseForLoad("CSCI5100");
         course = course.Load("CSCI5100");
         return courseFactory.CreateCourseInstance("TestCInstID",course, "15/01/2023", "15/04/2022", "F22", 10, 20);
     }
@@ -29,7 +29,7 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
         ArrayList<ICourseByTerm> coursesByTerm = new ArrayList<>();
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
 
-        Course course = courseFactory.createCourseInstanceForLoad("CSCI5100");
+        Course course = courseFactory.createCourseForLoad("CSCI5100");
         course = course.Load("CSCI5100");
 
         ICourseByTerm courseInstance = courseFactory.CreateCourseInstance("TestCInsID1", course, "15/01/2023", "15/04/2022", "F22", 10, 20);

@@ -102,7 +102,7 @@ public class ProfessorDashBoardRestController {
             FetchModuleContentFileRequestView fetchModuleContentFileRequestView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchModuleContentFileRequestView(
                     jsonObject
             );
-           Course course =  FactoryFacade.instance().getCourseFactory().createCourseInstanceForLoad(fetchModuleContentFileRequestView.getCourseId());
+           Course course =  FactoryFacade.instance().getCourseFactory().createCourseForLoad(fetchModuleContentFileRequestView.getCourseId());
            course = course.Load(fetchModuleContentFileRequestView.getCourseId());
            FileCourseContent fileCourseContent =  course.GetCourseBase().GetContentFilePath(fetchModuleContentFileRequestView.getModuleId(), fetchModuleContentFileRequestView.getModuleContentId());
            FetchFileContentResponseView fetchFileContentResponseView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchFileContentResponseView(fileCourseContent);

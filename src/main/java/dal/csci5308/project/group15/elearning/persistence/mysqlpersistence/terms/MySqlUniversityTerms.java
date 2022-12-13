@@ -1,17 +1,18 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.terms;
 
+import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
 import dal.csci5308.project.group15.elearning.persistence.terms.IUniversityTermsPersistence;
 
-import java.sql.Date;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,5 +94,35 @@ public class MySqlUniversityTerms implements IUniversityTermsPersistence {
             universityTerms.add(term);
         }
         return universityTerms;
+    }
+
+    public IUniversityTerms loadTermByTermId(String termId) throws SQLException {
+        ArrayList<IUniversityTerms> universityTerms;
+        Database database = Database.instance();
+        try (Connection connection = database.getConnection()) {
+            CallableStatement cStmt = connection.prepareCall("{call `get_term_from_term_id` (?)}");
+            cStmt.setString("termId", termId);
+
+            boolean hasResult = cStmt.execute();
+            ResultSet resultSet = cStmt.getResultSet();
+            while(resultSet.next()){
+                String termName = resultSet.getString(2);
+                Date termStartDate = resultSet.getDate(3);
+                Date termEndDate =  resultSet.getDate(4);
+                Date registrationStartDate = resultSet.getDate(5);
+                Date registrationEndDate =  resultSet.getDate(6);
+
+               IUniversityTerms iUniversityTerms = FactoryFacade.instance().getUniversityTermsFactory().createUniversityTermsInstance(
+                       termId, termName, termStartDate, termEndDate, registrationStartDate, registrationEndDate
+               );
+                connection.commit();
+                return iUniversityTerms;
+            }
+
+
+        } catch (SQLException sqlException) {
+            throw sqlException;
+        }
+        throw new SQLException("Invalid Term Id");
     }
 }

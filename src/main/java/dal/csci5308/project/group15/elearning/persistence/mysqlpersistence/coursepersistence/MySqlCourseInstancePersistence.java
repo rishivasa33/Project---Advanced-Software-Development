@@ -46,7 +46,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
     @Override
     public void save(CourseByTerm courseByTerm) throws SQLException {
         try (Connection connection = database.getConnection()) {
-            String sql_query = "insert into course_by_term (course_instance_id, course_id, start_date, end_date, course_term, enrolled_seats, total_seats) values(?, ? , ?, ?, ?, ?, ?)";
+            String sql_query = "insert into course_by_term (course_instance_id, course_id, course_start_date, course_end_date, course_term, enrolled_seats, total_seats) values(?, ? , ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
             preparedStatement.setString(1, courseByTerm.getCourseInstanceID());
             preparedStatement.setString(2, courseByTerm.getCourseDetails().GetCourseID());
@@ -59,7 +59,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
             connection.commit();
 
         } catch (SQLException sqlException) {
-            throw new RuntimeException();
+            throw sqlException;
         }
     }
 
@@ -79,7 +79,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
                 Integer totalSeats = resultSet.getInt("total_seats");
 
                 ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-                Course course = courseFactory.createCourseInstanceForLoad(courseId);
+                Course course = courseFactory.createCourseForLoad(courseId);
                 course = course.Load(courseId);
 
                 return courseFactory.CreateCourseInstance(courseInstanceId, course, startDate, endDate, courseTerm, enrolledSeats, totalSeats);
@@ -109,7 +109,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
                 Integer totalSeats = resultSet.getInt("total_seats");
 
                 ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-                Course course = courseFactory.createCourseInstanceForLoad(courseId);
+                Course course = courseFactory.createCourseForLoad(courseId);
                 course = course.Load(courseId);
 
                 ICourseByTerm courseInstance = courseFactory.CreateCourseInstance(courseInstanceId, course, startDate, endDate, courseTerm, enrolledSeats, totalSeats);

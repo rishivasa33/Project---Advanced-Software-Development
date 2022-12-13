@@ -20,6 +20,7 @@ public class Course implements ICourse{
     Course(String courseId)  {
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
 
+
     }
 
     public BaseCourse GetCourseBase(){
@@ -33,7 +34,9 @@ public class Course implements ICourse{
 
 
     public Course Load(String course_id) throws SQLException {
-        return gradedCoursePersistence_.Load(course_id);
+        Course course =  gradedCoursePersistence_.Load(course_id);
+        course.GetCourseBase().SetCourseID(course_id);
+        return course;
     }
 
     public int GetCredits(){

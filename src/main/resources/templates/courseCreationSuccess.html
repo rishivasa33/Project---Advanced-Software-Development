@@ -14,11 +14,11 @@
     </div>
 
 
-    <div th:switch="${course_created}">
-        <h2 th:case="null">Course Creation Error</h2>
+    <div th:switch="${actionDone}">
+        <h2 th:case="null">Error</h2> <h2 th:text ="${actionName}"></h2>
         <h2 th:case="*">
-            Course Creation Successfull
-        </h2>
+            Success
+        </h2> <h2 th:text ="${actionName}"></h2>
     </div>
 
     <h2>

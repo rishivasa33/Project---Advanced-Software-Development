@@ -57,6 +57,10 @@ public class BaseCourse {
         course_id_ = course_id;
     }
 
+    protected void SetCourseID(String courseId){
+        course_id_ = courseId;
+    }
+
     public String GetCourseID(){
         return  course_id_;
     }
