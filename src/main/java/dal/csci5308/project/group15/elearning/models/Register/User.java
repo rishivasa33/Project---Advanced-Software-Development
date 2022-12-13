@@ -1,10 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.Register;
 
-import java.util.List;
 import java.util.Map;
 
-public class User
-{
+public class User {
     private String firstName;
     private String lastName;
     private String role;
@@ -13,8 +11,7 @@ public class User
     private String program;
     private Map<String, String> programMap;
 
-    public User()
-    {
+    public User() {
 
     }
 
