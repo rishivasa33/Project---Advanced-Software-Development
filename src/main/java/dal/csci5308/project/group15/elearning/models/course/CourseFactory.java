@@ -1,5 +1,6 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -24,7 +25,10 @@ public class CourseFactory implements ICourseFactory {
         return new CourseByTerm(courseInstanceID, course, start_date, end_date, courseTerm, enrolledSeats, totalSeats);
     }
 
-    public Course createCourseInstanceForLoad(String courseID){
-        return new Course(courseID);
+    public Course createCourseInstanceForLoad(String courseID) throws SQLException {
+
+        Course course = new Course(courseID);
+        course = course.Load(courseID);
+        return course;
     }
 }

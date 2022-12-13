@@ -1,47 +1,48 @@
 package dal.csci5308.project.group15.elearning.controller.professor;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.views.ViewFactoriesCollection;
-import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseContentView;
-import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseContentViewFactory;
-import dal.csci5308.project.group15.elearning.views.course.courseContent.CreateJsonObjectFromRequestBody;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.json.JsonObject;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/")
 public class ProfessorDashBoardRestController {
 
-    @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent")
+    @PostMapping("professor/courseDetails/courseModuleDetails/addCourseModuleContent")
     public String AddCourseContentToModuleView(@RequestBody String requestBody)
     {
         System.out.println(requestBody);
         try {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
-            CourseContentView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
+            CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
             CourseContentFactory courseContentFactory = new CourseContentFactory();
             TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent(courseContentView);
             textCourseContent.Save(courseContentView.getCourseModuleId());
-            courseContentView.Update(textCourseContent);
-            return courseContentView.getSerializedStringForSuccess();
+            CourseContentResponseView courseContentResponseView = courseContentViewFactory.CreateTextCourseContentResponseView(courseContentView.getCourseId(), courseContentView.getCourseModuleId(), textCourseContent);
+            return courseContentResponseView.getSerializedStringForSuccess();
         }
         catch (Exception exception){
             System.out.println("error happened in course content creation");
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
-            CourseContentView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
-            return courseContentView.getSerializedStringForFailure();
+            CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
+            return CourseContentResponseView.getSerializedStringForFailure();
         }
     }
 
-    @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent/fileUpload")
+    @PostMapping("professor/courseDetails/courseModuleDetails/addCourseModuleContent/fileUpload")
     public String AddCourseContentWithFileToModuleView(@RequestParam("course_content_heading") String courseContentHeading,
                                                        @RequestParam String courseContentType,
                                                        @RequestParam String courseId,
@@ -51,19 +52,23 @@ public class ProfessorDashBoardRestController {
         System.out.println(courseContentType);
         try {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
-            CourseContentView courseContentView = courseContentViewFactory.CreateFormDataCourseContentView(courseId,
+            CourseContentRequestView courseContentView = courseContentViewFactory.CreateFormDataCourseContentView(courseId,
                     courseModuleId, courseContentHeading, uploadedFile);
-            return courseContentView.getSerializedStringForFailure();
+            CourseContentFactory courseContentFactory = new CourseContentFactory();
+            FileCourseContent pdfFileCourseContent =  courseContentFactory.CreatePdfCourseContent(courseContentView);
+            pdfFileCourseContent.Save(courseContentView.getCourseModuleId());
+            CourseContentResponseView courseContentResponseView = courseContentViewFactory.CreatePdfCourseContentResponseView(courseContentView.getCourseId(), courseContentView.getCourseModuleId(), pdfFileCourseContent);
+            return courseContentResponseView.getSerializedStringForSuccess();
         }
         catch (Exception exception){
             System.out.println("error happened in course content creation");
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
-            CourseContentView courseContentView = courseContentViewFactory.CreateJsonCourseContentView();
-            return courseContentView.getSerializedStringForFailure();
+            CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView();
+            return CourseContentResponseView.getSerializedStringForFailure();
         }
     }
 
-    @PostMapping("courseDetails/courseModuleDetails/getAllContents")
+    @PostMapping("professor/courseDetails/courseModuleDetails/getAllContents")
     public String CourseModuleContentView(@RequestBody String requestBody)
     {
         try {
@@ -76,19 +81,36 @@ public class ProfessorDashBoardRestController {
           if(course.IsGradedCourse()){
               Course gradedCourse = (Course) course;
               ArrayList<CourseContent> courseContentsList = gradedCourse.GetCourseBase().GetAllContentsInAModule(courseModuleId);
-              CourseContentView courseContentView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateJsonCourseContentView();
-              return courseContentView.getSerializedStringForSuccess(courseId, courseModuleId, courseContentsList);
+             CourseContentResponseView courseContentResponseView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateTextCourseContentResponseView(courseId, courseModuleId);
+              return courseContentResponseView.getSerializedStringForSuccess(courseId, courseModuleId, courseContentsList);
           }
           else{
-              CourseContentView courseContentView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateJsonCourseContentView();
-              return courseContentView.getSerializedStringForFailure();
+               return CourseContentResponseView.getSerializedStringForFailure();
           }
 
         }
         catch (Exception exception){
             System.out.println("error happened in course content creation");
-            CourseContentView courseContentView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateJsonCourseContentView();
-            return courseContentView.getSerializedStringForFailure();
+            return CourseContentResponseView.getSerializedStringForFailure();
+        }
+    }
+
+    @RequestMapping(value="fetchModuleContentFile", method=RequestMethod.POST)
+    public ResponseEntity<byte[]> getPDF(@RequestBody String json) {
+        try {
+            JsonObject jsonObject = CreateJsonObjectFromRequestBody.GetJsonObjectFromRequestBody(json);
+            FetchModuleContentFileRequestView fetchModuleContentFileRequestView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchModuleContentFileRequestView(
+                    jsonObject
+            );
+           Course course =  FactoryInitializer.instance().getCourseFactory().createCourseInstanceForLoad(fetchModuleContentFileRequestView.getCourseId());
+           course = course.Load(fetchModuleContentFileRequestView.getCourseId());
+           FileCourseContent fileCourseContent =  course.GetCourseBase().GetContentFilePath(fetchModuleContentFileRequestView.getModuleId(), fetchModuleContentFileRequestView.getModuleContentId());
+           FetchFileContentResponseView fetchFileContentResponseView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchFileContentResponseView(fileCourseContent);
+           return fetchFileContentResponseView.GetResponseForSuccess();
+
+        }
+        catch (SQLException exception ){
+            return FetchFileContentResponseView.GetResponseForFailure();
         }
     }
 

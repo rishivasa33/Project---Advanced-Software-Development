@@ -1,4 +1,7 @@
 
+
+
+
  var courseContentAddRequest;
 window.onload = function() {
 
@@ -22,6 +25,26 @@ window.onload = function() {
 //       courseContentAddRequest = new CreateCourseContentAddRequest(header,token, courseId, courseModuleId);
 // }).then(courseContentAddRequest.getAllContent());
 };
+
+async function postData(url = '', data = {}, token) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN' : token
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response; // parses JSON response into native JavaScript objects
+}
+
 
 
 
@@ -66,14 +89,45 @@ class CreateCourseContentAddRequest {
     this.courseContentList = new Array();
   }
 
+  getModuleContentFile(courseModuleContentId){
+    let url = "/fetchModuleContentFile";
+    let data = {"courseModuleContentId":courseModuleContentId, "courseId" : this.courseId, "courseModuleId": this.courseModuleId};
+    postData(url, data, this.token)
+  .then((response) => {
+    response.blob().then(blob => {
+        //const filename =  response.headers.get('Content-Disposition').split('filename=')[1].trim();
+        const filename = "download.jpeg"
+        console.log(filename);
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        console.log("a download", a.download)
+        a.click(); // JSON data parsed by `data.json()` call
+  });
+
+  });
+}
+
   addContent(content){
     console.log(content);
     if(content["success"]){
         this.courseContentList.push(content);
+        let contentType = content["courseModuleContentType"]
         let contentHeading = content["courseModuleContentHeading"];
-        let contentText = content["courseModuleContentText"];
-        let contentId = content["courseModuleContentId"];
-        $("#contentList").append(`<div id = \"${contentId}\"><h3>${contentHeading}</h3><p>${contentText}</p></div>`);
+        console.log("content type ", contentType)
+
+        if(contentType === "Text"){
+            let contentText = content["courseModuleContentText"];
+            let contentId = content["courseModuleContentId"];
+            $("#contentList").append(`<div id = \"${contentId}\"><h3>${contentHeading}</h3><p>${contentText}</p></div>`);
+        }
+        else{
+             let contentFilePath = content["courseModuleContentFilePath"];
+            let contentId = content["courseModuleContentId"];
+            $("#contentList").append(`<div id = \"${contentId}\"><h3>${contentHeading}</h3><p>${contentFilePath}</p>
+            <button class = \"moduleContentFile\" id = \"${contentId}\"> Download File</button> </div>`);
+        } 
     }
     else{
         alert("adding course content failed");
@@ -83,7 +137,7 @@ class CreateCourseContentAddRequest {
 
   getAllContent(){
 
-    let url = "courseModuleDetails/getAllContents";
+    let url = "/professor/courseDetails/courseModuleDetails/getAllContents";
     let data=JSON.stringify({"courseId":this.courseId, "courseModuleId":this.courseModuleId});
     let qrReq=new XMLHttpRequest;
 
@@ -99,12 +153,23 @@ class CreateCourseContentAddRequest {
            let contentArray = responseText["contentList"] 
            for (var i = 0; i < contentArray.length; i++){
                 var courseContent = contentArray[i];
-                courseContentAddRequest.addContent(courseContent);
-            }
-          
+                $.when(courseContentAddRequest.addContent(courseContent)).done(
+                    function (){
+                        const buttons = document.querySelectorAll('button.moduleContentFile');
+                    
+                        document.querySelectorAll('button.moduleContentFile').forEach((button) => {
+                        button.onclick = function () {
+                            let buttonId = button.getAttribute('id');
+                            courseContentAddRequest.getModuleContentFile(buttonId);
+                        };
+                        });
+                    }
+                    );
+            };
         }
+          
+    }
 
-      };
       console.log("data is " + data);
       console.log(this.courseId, this.courseModuleId, "tesst")
     qrReq.send(data);
@@ -155,7 +220,18 @@ class CreateCourseContentAddRequest {
     XMLHttpRequest.responseType="json";
     qrReq.onload = function(){
 
-          courseContentAddRequest.addContent(JSON.parse(qrReq.responseText));
+          $.when(courseContentAddRequest.addContent(JSON.parse(qrReq.responseText))).done(
+                function (){
+                        const buttons = document.querySelectorAll('button.moduleContentFile');
+                    
+                        document.querySelectorAll('button.moduleContentFile').forEach((button) => {
+                        button.onclick = function () {
+                            let buttonId = button.getAttribute('id');
+                            courseContentAddRequest.getModuleContentFile(buttonId);
+                        };
+                        });
+                    }
+            );
 
     }
     qrReq.send(dataToSend);
@@ -189,8 +265,9 @@ $(document).ready(function () {
   ToggleHideTextorFileInput();
 });
 
-
 });
+
+
 
 
 

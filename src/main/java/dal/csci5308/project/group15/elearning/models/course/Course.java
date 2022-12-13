@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistenceSingleton;
 
 import java.sql.SQLException;
 
@@ -17,7 +17,8 @@ public class Course implements ICourse{
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
-    Course(String courseId){
+    Course(String courseId)  {
+        gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
 
     }
 

@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistence;
 
 import java.sql.SQLException;
 import java.text.ParseException;

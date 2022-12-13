@@ -1,11 +1,11 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
-import dal.csci5308.project.group15.elearning.persistence.CourseModulePersistence;
-import dal.csci5308.project.group15.elearning.persistence.CourseModulePersistenceSingleton;
-import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CoursePersistence;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -84,6 +84,20 @@ public class BaseCourse {
             }
         }
         throw new SQLException("Module with Id not Found");
+    }
+
+    public FileCourseContent GetContentFilePath(int courseModuleId, int courseModuleContentId) throws SQLException {
+        LoadModulesArrayList();
+        for(CourseModule module : moduleArrayList){
+            if(module.GetCourseModuleId().equals(courseModuleId)){
+                CourseContent courseContent = module.LoadModuleContent(courseModuleContentId);
+                if(!courseContent.IsTextContent()){
+                    FileCourseContent fileCourseContent = (FileCourseContent) courseContent;
+                    return fileCourseContent;
+                }
+            }
+        }
+        return null;
     }
 
 }

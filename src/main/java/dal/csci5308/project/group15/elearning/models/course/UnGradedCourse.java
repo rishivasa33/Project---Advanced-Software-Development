@@ -1,8 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
 
-import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.UnGradedCoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.UnGradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.UnGradedCoursePersistenceSingleton;
 
 import java.sql.SQLException;
 
