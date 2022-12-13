@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.coursepersistence;
 
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
@@ -18,7 +18,7 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
     }
 
     public CourseByTerm loadByID(String course_instance_id) throws ParseException, SQLException {
-        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         Course course = courseFactory.createCourseInstanceForLoad("CSCI5100");
         course = course.Load("CSCI5100");
         return courseFactory.CreateCourseInstance("TestCInstID",course, "15/01/2023", "15/04/2022", "F22", 10, 20);
@@ -27,7 +27,7 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
     @Override
     public ArrayList<ICourseByTerm> loadByTerm(String courseTerm) throws ParseException, SQLException {
         ArrayList<ICourseByTerm> coursesByTerm = new ArrayList<>();
-        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
 
         Course course = courseFactory.createCourseInstanceForLoad("CSCI5100");
         course = course.Load("CSCI5100");

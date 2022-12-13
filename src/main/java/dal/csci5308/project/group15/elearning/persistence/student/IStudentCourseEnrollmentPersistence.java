@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.persistence;
+package dal.csci5308.project.group15.elearning.persistence.student;
 
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollment;

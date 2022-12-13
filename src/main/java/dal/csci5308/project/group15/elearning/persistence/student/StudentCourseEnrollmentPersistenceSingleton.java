@@ -1,8 +1,8 @@
-package dal.csci5308.project.group15.elearning.persistence;
+package dal.csci5308.project.group15.elearning.persistence.student;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockStudentCourseEnrollment;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlStudentCourseEnrollment;
+import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.student.MockStudentCourseEnrollment;
+import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.student.MySqlStudentCourseEnrollment;
 
 public class StudentCourseEnrollmentPersistenceSingleton {
 
@@ -34,7 +34,7 @@ public class StudentCourseEnrollmentPersistenceSingleton {
         return mySqlStudentCourseEnrollment_instance;
     }
 
-    public static MockStudentCourseEnrollment GetMockDBGradedCoursePersistenceInstance() {
+    public static MockStudentCourseEnrollment GetMockDBStudentCourseEnrollmentPersistenceInstance() {
         if (mockStudentCourseEnrollment_instance == null) {
             mockStudentCourseEnrollment_instance = CreateMockStudentCourseEnrollmentPersistence();
         }
