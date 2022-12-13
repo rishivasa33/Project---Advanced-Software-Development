@@ -24,6 +24,11 @@ public class CourseFactory implements ICourseFactory {
         return new CourseByTerm(courseInstanceID, course, start_date, end_date, courseTerm, enrolledSeats, totalSeats);
     }
 
+    @Override
+    public CourseByTerm CreateCourseInstanceForLoadByTerm(String term) {
+        return new CourseByTerm(term);
+    }
+
     public Course createCourseInstanceForLoad(String courseID){
         return new Course(courseID);
     }

@@ -9,7 +9,6 @@ import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
-import dal.csci5308.project.group15.elearning.utility.SqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +23,8 @@ public class ForumHandler implements IForumHandler
     {   }
 
     @Override
-    public Map<String, ForumTopic> getAllTopics(String courseId)
+    public Map<String, ForumTopic> getAllTopics(IDatabaseOperations databaseOperations, String courseId)
     {
-        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         List<ForumTopic> forumTopicList = ForumFactory.instance().makeForumTopicList();
         Map<String, ForumTopic> forumTopicMap = new HashMap<>();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
@@ -36,7 +34,6 @@ public class ForumHandler implements IForumHandler
             Map<String, List<Object>> resultSet = databaseOperations.read(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_GET_FORUM_LIST"), courseId);
 
-            //  iterate through the resultSet and put items in forumTopicList
             for(int row = 0; row < databaseOperations.getRowCount(resultSet); row++)
             {
                 ForumTopic topic = ForumFactory.instance().makeForumTopic();
@@ -58,14 +55,12 @@ public class ForumHandler implements IForumHandler
 
                 if(forumTopicMap.containsKey(topic.getId()))
                 {
-                    //  topic exists. add response to this topic
                     ForumTopic updatedTopic = forumTopicMap.get(topic.getId());
                     updatedTopic.getReplyList().add(response);
                     forumTopicMap.put(topic.getId(), updatedTopic);
                 }
                 else
                 {
-                    //  topic does not exist. create new topic and add response to this topic
                     topic.setReplyList(new LinkedList<>());
                     topic.getReplyList().add(response);
                     forumTopicMap.put(topic.getId(), topic);
@@ -82,12 +77,11 @@ public class ForumHandler implements IForumHandler
     }
 
     @Override
-    public int createNewTopic(String courseId, ForumTopic topic)
+    public int createNewTopic(IDatabaseOperations databaseOperations, String courseId, ForumTopic topic)
     {
         try
         {
             IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
-            IDatabaseOperations databaseOperations = DatabaseOperations.instance();
             return databaseOperations.create(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC"),
                     courseId, topic.getTopic(), AuthUser.getUsername());
@@ -100,7 +94,7 @@ public class ForumHandler implements IForumHandler
     }
 
     @Override
-    public int createNewResponse(Map<String, ForumTopic> forumTopicMap, ForumComment comment)
+    public int createNewResponse(IDatabaseOperations databaseOperations, Map<String, ForumTopic> forumTopicMap, ForumComment comment)
     {
         String[] commentArray = comment.getComment().split(",");
 
@@ -117,7 +111,6 @@ public class ForumHandler implements IForumHandler
 
         try
         {
-            IDatabaseOperations databaseOperations = DatabaseOperations.instance();
             return databaseOperations.create(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_INSERT_NEW_COMMENT"),
                     topic.getId(), commentToAdd, AuthUser.getUsername());

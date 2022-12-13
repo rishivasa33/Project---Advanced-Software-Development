@@ -11,7 +11,7 @@ public class TestStudentCourseEnrollment {
     @Test
     void TestStudentCourseEnrollmentCreation() {
 
-        IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
         IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstance("F22CSCI5100", "B00901111", "F22");
 
         assertEquals(studentCourseEnrollment.getCourseInstanceID(), "F22CSCI5100");
@@ -22,7 +22,7 @@ public class TestStudentCourseEnrollment {
     @Test
     void TestStudentCourseEnrollmentCreationForLoad() {
 
-        IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
         IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad("B00901111");
 
         assertEquals(studentCourseEnrollment.getCourseInstanceID(), null);
@@ -34,7 +34,7 @@ public class TestStudentCourseEnrollment {
     @Test
     void TestStudentCourseEnrollmentSave() {
 
-        /*IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+        /*IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
         */
     }
 
@@ -43,7 +43,7 @@ public class TestStudentCourseEnrollment {
         /*try {
             String studentNumber = "B00901111";
             String currentTerm = "F22";
-            IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+            IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
             IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad(studentNumber);
 
             ArrayList<IStudentCourseEnrollment> studentCourseEnrollments = new ArrayList<>();
