@@ -79,9 +79,6 @@ public class Assignment {
         this.filepath = filepath;
     }
 
-
-
-
     public Assignment(AssignmentParams assObj){
         subId =assObj.getSubId();
         assignmentId = assObj.getAssignmentId();
