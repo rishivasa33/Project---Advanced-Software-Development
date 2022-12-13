@@ -7,6 +7,11 @@ public class StudentFactory implements IStudentFactory {
     }
 
     @Override
+    public StudentCourseEnrollment createStudentCourseEnrollmentInstanceForSave(String courseInstanceID, String studentNumber, String courseTerm, Integer enrolledSeats, Integer totalSeats) {
+        return new StudentCourseEnrollment(courseInstanceID, studentNumber, courseTerm, enrolledSeats, totalSeats);
+    }
+
+    @Override
     public StudentCourseEnrollment createStudentCourseEnrollmentInstanceForLoad(String studentNumber) {
         return new StudentCourseEnrollment(studentNumber);
     }

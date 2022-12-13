@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface IStudentCourseEnrollmentPersistence {
 
-    void save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException;
+    String save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException;
 
     ArrayList<IStudentCourseEnrollment> loadByStudentNumber(String studentNumber) throws SQLException, ParseException;
 
