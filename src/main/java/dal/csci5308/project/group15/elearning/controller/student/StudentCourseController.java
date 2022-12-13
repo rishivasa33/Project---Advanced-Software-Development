@@ -2,7 +2,7 @@ package dal.csci5308.project.group15.elearning.controller.student;
 
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
-import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollmentFactory;
+import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
@@ -46,7 +46,7 @@ public class StudentCourseController {
         try {
             ArrayList<IStudentCourseEnrollment> enrolledCoursesByTerm;
             //TODO: Update hardcoded values to fetch from SessionContext
-            IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+            IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
             IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad("B00901111");
 
             enrolledCoursesByTerm = studentCourseEnrollment.loadByTermAndStudentNumber(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance(), "B00901111", termID);

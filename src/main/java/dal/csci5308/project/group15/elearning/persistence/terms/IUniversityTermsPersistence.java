@@ -13,5 +13,5 @@ public interface IUniversityTermsPersistence {
 
     ArrayList<IUniversityTerms> loadOpenForRegistrationTerms(Date currentDate);
 
-    ArrayList<IUniversityTerms> loadCurrentTerm(Date currentDate);
+    IUniversityTerms loadCurrentTerm(Date currentDate);
 }
