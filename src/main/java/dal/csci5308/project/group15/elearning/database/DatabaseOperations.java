@@ -152,8 +152,11 @@ public class DatabaseOperations implements IDatabaseOperations
     @Override
     public int getRowCount(Map<String, List<Object>> map)
     {
+        if(map.isEmpty()) {
+            return 0;
+        }
         Iterator<String> iterator = map.keySet().iterator();
         String columnName = iterator.next();
-        return  map.get(columnName).size();
+        return map.get(columnName).size();
     }
 }

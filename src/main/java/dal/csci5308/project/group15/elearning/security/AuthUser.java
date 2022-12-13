@@ -44,4 +44,19 @@ public class AuthUser implements IAuthUser
 
         return false;
     }
+
+
+    public static boolean isProfessor()
+    {
+        for(GrantedAuthority role: auth.getAuthorities())
+        {
+            if(role.getAuthority().contains("professor"))
+                return true;
+        }
+
+        return false;
+    }
+
+
+
 }

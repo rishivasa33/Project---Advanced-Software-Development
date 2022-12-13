@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Assignment Details</h1>
+<li  th:each="assignment :${assignmentDetails}">
+
+         <p th:text="${assignment.assignmentTitle}"></p>
+         <p th:text="${assignment.assignmentDescription}"></p>
+         <p th:text="${{assignment.assignmentEndDate}}"></p>
+         <p th:text="${{assignment.assignmentStartDate}}"></p>
+
+  <hr/>
+</li>
+
+</body>
+</html>

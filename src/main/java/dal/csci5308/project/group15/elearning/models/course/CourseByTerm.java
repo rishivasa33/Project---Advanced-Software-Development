@@ -1,6 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistence;
+import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
+import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistence;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -28,6 +30,17 @@ public class CourseByTerm implements ICourseByTerm {
         this.totalSeats = totalSeats;
     }
 
+    CourseByTerm(ICourse course, UniversityTerms term, Integer totalSeats){
+        this.courseInstanceID = term.getTermID() + course.GetCourseID();
+        this.courseInstanceID =  this.courseInstanceID.replaceAll(" ", "");
+        this.courseStartDate = term.getTermStartDate();
+        this.courseEndDate = term.getTermEndDate();
+        this.courseTerm  = term.getTermID();
+        this.courseDetails = course;
+        this.enrolledSeats = totalSeats;
+        this.totalSeats = totalSeats;
+    }
+
     CourseByTerm(String courseInstanceID, ICourse courseDetails, String courseStartDate, String courseEndDate, String courseTerm, Integer enrolledSeats, Integer totalSeats) throws ParseException {
         this.courseInstanceID = courseInstanceID;
         this.courseDetails = courseDetails;
@@ -36,6 +49,10 @@ public class CourseByTerm implements ICourseByTerm {
         this.courseTerm = courseTerm;
         this.enrolledSeats = enrolledSeats;
         this.totalSeats = totalSeats;
+    }
+
+    CourseByTerm(String term){
+        this.courseTerm = term;
     }
 
 
