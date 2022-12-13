@@ -39,7 +39,6 @@
             <br/><br/>
 
             <form method="post" th:action="@{/forum/postForumComment}" th:object="${forumComment}">
-                <!-- th:each is thymeleaf loop -->
                 <div th:each="topicItem,iterator : ${forumTopicMap}">
                     <h5 th:text="${topicItem.value.topic} + ' (by ' + ${topicItem.value.createdBy} + ' on ' + ${topicItem.value.createdOn} + ')'"></h5>
 

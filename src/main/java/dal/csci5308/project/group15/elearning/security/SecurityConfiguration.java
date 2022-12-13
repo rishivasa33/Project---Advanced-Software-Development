@@ -31,6 +31,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Value("${aura.db.query.user.authorization}")
     private String userAuthorizationQuery;
 
+    @Value("${aura.db.max.idle}")
+    private int dbMaxIdle;
+
+    @Value("${aura.db.initial.size}")
+    private int dbInitialSize;
+
+    @Value("${aura.db.validation.query}")
+    private String dbValidationQuery;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
@@ -40,9 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         dataSource.setUsername(dbUsername);
         dataSource.setPassword(dbPassword);
         dataSource.setUrl(dbUrl);
-        dataSource.setMaxIdle(5);
-        dataSource.setInitialSize(5);
-        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setMaxIdle(dbMaxIdle);
+        dataSource.setInitialSize(dbInitialSize);
+        dataSource.setValidationQuery(dbValidationQuery);
 
         Database.instance().setDataSource(dataSource);
 

@@ -1,6 +1,9 @@
 package dal.csci5308.project.group15.elearning.forum;
 
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
+import dal.csci5308.project.group15.elearning.factory.forum.IForumFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
@@ -14,6 +17,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/forum")
+@SessionAttributes({"courseId"})
 public class ForumController
 {
     private List<ForumTopic> topicList;
@@ -28,16 +32,18 @@ public class ForumController
 
         topicList = new LinkedList<>();
 
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        IForumFactory forumFactory = ForumFactory.instance();
 
-        //  TODO:   remove hardcoding of courseId
-        forumTopicMap = forumHandler.getAllTopics(courseId);
+        forumTopicMap = forumHandler.getAllTopics(databaseOperations, courseId);
 
         model.addAttribute("forumTopicMap", forumTopicMap);
         model.addAttribute("topicList", topicList);
-        model.addAttribute("forumComment", new ForumComment());
-        model.addAttribute("newTopic", new ForumTopic());
+        model.addAttribute("forumComment", forumFactory.makeForumComment());
+        model.addAttribute("newTopic", forumFactory.makeForumTopic());
+        model.addAttribute("courseId", courseId);
 
         return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_FORUM_LIST");
     }
@@ -48,10 +54,12 @@ public class ForumController
     {
         logger.debug("New Comment to add: " + comment.getComment());
 
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+
         if(comment.getComment().length() > 0)
         {
             IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
-            forumHandler.createNewResponse(forumTopicMap, comment);
+            forumHandler.createNewResponse(databaseOperations, forumTopicMap, comment);
         }
 
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
@@ -59,17 +67,19 @@ public class ForumController
     }
 
     @PostMapping("/createNewTopic")
-    public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic)
+    public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic, Model model)
     {
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+
+        String courseId = String.valueOf(model.getAttribute("courseId"));
 
         if(newTopic.getTopic().length() > 0)
         {
-            //  TODO: Remove hardcoded value of course
-            forumHandler.createNewTopic("F22CSCI 5402", newTopic);
+            forumHandler.createNewTopic(databaseOperations,courseId, newTopic);
         }
 
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
-        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_FORUM_LIST");
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_FORUM_LIST") + "?courseId=" + courseId;
     }
 }
