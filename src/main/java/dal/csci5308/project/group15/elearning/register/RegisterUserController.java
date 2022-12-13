@@ -1,5 +1,7 @@
 package dal.csci5308.project.group15.elearning.register;
 
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
 import dal.csci5308.project.group15.elearning.models.Register.User;
 import org.slf4j.Logger;
@@ -26,7 +28,8 @@ public class RegisterUserController
         model.addAttribute("user", newUser);
         model.addAttribute("programMap", newUser.getProgramMap());
 
-        return "registerUser";
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_REGISTER_USER");
     }
 
     @PostMapping("/add")
@@ -51,7 +54,8 @@ public class RegisterUserController
             logger.error("User - " + user.getFirstName() + " " + user.getLastName() + " failed to register.");
         }
 
-        return "registerUser";
+        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_REGISTER_USER");
     }
 
     private User getInitUser()

@@ -81,6 +81,7 @@
                 <div class="sidebar-header">
                     <h3>Upcoming Deadlines</h3>
                 </div>
+                <br/>
                 <ul class="navbar-nav">
                     <div th:each="item : ${deadlines}">
                         <li class="nav-item active bg-light" th:text="'Course : ' + ${item.subjectId}"></li>
