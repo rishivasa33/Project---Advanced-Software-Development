@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.forum;
+package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.forum;
 
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;

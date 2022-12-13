@@ -1,13 +1,12 @@
 package dal.csci5308.project.group15.elearning.models.course.dashboard;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.models.User;
+import dal.csci5308.project.group15.elearning.models.User.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

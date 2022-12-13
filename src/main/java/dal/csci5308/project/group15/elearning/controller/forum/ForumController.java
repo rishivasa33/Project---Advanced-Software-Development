@@ -1,13 +1,13 @@
-package dal.csci5308.project.group15.elearning.forum;
+package dal.csci5308.project.group15.elearning.controller.forum;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
-import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.IForumFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
+import dal.csci5308.project.group15.elearning.forum.IForumHandler;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;

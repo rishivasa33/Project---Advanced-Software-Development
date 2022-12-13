@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.forum;
+package dal.csci5308.project.group15.elearning.persistence.mockDb.forum;
 
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
