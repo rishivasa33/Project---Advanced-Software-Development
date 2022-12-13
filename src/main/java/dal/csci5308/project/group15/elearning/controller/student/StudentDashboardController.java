@@ -16,6 +16,7 @@ import dal.csci5308.project.group15.elearning.security.AuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -24,13 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@SessionAttributes({"student_number"})
 public class StudentDashboardController {
 
     @GetMapping("student/dashboard")
     public String viewStudentDashboard(Model model) {
 
-        ArrayList<IStudentCourseEnrollment> studentCourseEnrollments = getCurrentEnrolledCourses(fetchCurrentStudentDetails().getStudentNumber(), fetchCurrentTerm().getTermID());
+        String studentNumber = fetchCurrentStudentDetails().getStudentNumber();
+        String currentTerm = fetchCurrentTerm().getTermID();
+        ArrayList<IStudentCourseEnrollment> studentCourseEnrollments = getCurrentEnrolledCourses(studentNumber, currentTerm);
         model.addAttribute("student_current_courses", studentCourseEnrollments);
+        model.addAttribute("student_number", studentNumber);
+        model.addAttribute("current_term", currentTerm);
 
         //Fetch Student's university-level announcements
 

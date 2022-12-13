@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 @Controller
+@SessionAttributes({"student_number"})
 public class StudentCourseController {
 
     @GetMapping("/student/course/{courseInstanceID}")
@@ -45,11 +47,11 @@ public class StudentCourseController {
     public String viewRegisteredCoursesByTerm(@PathVariable String termID, Model model) {
         try {
             ArrayList<IStudentCourseEnrollment> enrolledCoursesByTerm;
-            //TODO: Update hardcoded values to fetch from SessionContext
+            String studentNumber = String.valueOf(model.getAttribute("student_number"));
             IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
-            IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad("B00901111");
+            IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForLoad(studentNumber);
 
-            enrolledCoursesByTerm = studentCourseEnrollment.loadByTermAndStudentNumber(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance(), "B00901111", termID);
+            enrolledCoursesByTerm = studentCourseEnrollment.loadByTermAndStudentNumber(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance(), studentNumber, termID);
 
             model.addAttribute("enrolled_courses_by_term_list", enrolledCoursesByTerm);
             model.addAttribute("termID", termID);
