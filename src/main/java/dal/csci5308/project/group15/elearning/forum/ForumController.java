@@ -37,8 +37,7 @@ public class ForumController
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
         IForumFactory forumFactory = ForumFactory.instance();
-        IAuthFactory authFactory = AuthUserFactory.instance();
-        IAuthUser authUser = authFactory.makeAuthUser();
+        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
 
         forumTopicMap = forumHandler.getAllTopics(databaseOperations, authUser, courseId);
 
@@ -59,8 +58,7 @@ public class ForumController
 
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
-        IAuthFactory authFactory = AuthUserFactory.instance();
-        IAuthUser authUser = authFactory.makeAuthUser();
+        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
         String courseId = String.valueOf(model.getAttribute("courseId"));
 
         if(comment.getComment().length() > 0)
@@ -77,8 +75,7 @@ public class ForumController
     {
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-        IAuthFactory authFactory = AuthUserFactory.instance();
-        IAuthUser authUser = authFactory.makeAuthUser();
+        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
 
         String courseId = String.valueOf(model.getAttribute("courseId"));
 

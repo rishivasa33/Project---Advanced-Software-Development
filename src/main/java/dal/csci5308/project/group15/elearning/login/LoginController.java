@@ -27,13 +27,13 @@ public class LoginController
         if(authUser.isAdmin())
         {
             System.out.println("admin");
+            return "redirect:/registerUser";
+        }
+        else if(authUser.isProfessor()){
+            System.out.println("professor");
             return "redirect:/professor";
         }
-        else if(AuthUser.isProfessor()){
-            System.out.println("professor");
-            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_PROFESSOR_DASHBOARD");
-        }
-        else if(AuthUser.isStudent())
+        else if(authUser.isStudent())
         {
             System.out.println("student");
             return "redirect:/student/dashboard";
