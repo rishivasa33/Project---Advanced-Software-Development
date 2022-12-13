@@ -1,8 +1,7 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
 
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
@@ -26,7 +25,7 @@ public class MockDBGradedCoursePersistence implements GradedCoursePersistence {
 
     public Course Load(String course_id){
         BaseCourse baseCourse = coursePersistence_.Load(course_id);
-        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         return courseFactory.CreateGradedCourse(baseCourse.GetCourseID(), baseCourse.GetName(), baseCourse.GetDescription(), 10);
     }
 

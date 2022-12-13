@@ -1,9 +1,15 @@
 package dal.csci5308.project.group15.elearning.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.security.MessageDigest;
 
-public class Encoder
+//  Code referenced from
+//  https://www.tutorialspoint.com/java_cryptography/java_cryptography_message_digest.htm
+public class Encoder implements IEncoder
 {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public Encoder()
     {
 
@@ -13,21 +19,12 @@ public class Encoder
     {
         String encodedString = "";
 
-        System.out.println("Plaintextpassword: " + plainTextPassword.toString());
-
         try
         {
-            //Creating the MessageDigest object
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-
-            //Passing data to the created MessageDigest Object
             md.update(plainTextPassword.toString().getBytes());
 
-            //Compute the message digest
             byte[] digest = md.digest();
-            System.out.println(digest);
-
-            //Converting the byte array in to HexString format
             StringBuffer hexString = new StringBuffer();
 
             for (int i = 0; i < digest.length; i++)
@@ -36,8 +33,6 @@ public class Encoder
             }
 
             encodedString = hexString.toString();
-
-            System.out.println("Hex format here: " + encodedString);
         }
         catch (Exception e)
         {

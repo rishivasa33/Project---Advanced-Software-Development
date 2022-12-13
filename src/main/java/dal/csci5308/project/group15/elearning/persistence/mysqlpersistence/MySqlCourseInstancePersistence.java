@@ -1,10 +1,9 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistence;
@@ -79,7 +78,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
                 Integer enrolledSeats = resultSet.getInt("enrolled_seats");
                 Integer totalSeats = resultSet.getInt("total_seats");
 
-                ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+                ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
                 Course course = courseFactory.createCourseInstanceForLoad(courseId);
                 course = course.Load(courseId);
 
@@ -109,7 +108,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
                 Integer enrolledSeats = resultSet.getInt("enrolled_seats");
                 Integer totalSeats = resultSet.getInt("total_seats");
 
-                ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+                ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
                 Course course = courseFactory.createCourseInstanceForLoad(courseId);
                 course = course.Load(courseId);
 

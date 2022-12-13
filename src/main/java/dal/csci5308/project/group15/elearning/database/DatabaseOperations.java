@@ -101,8 +101,14 @@ public class DatabaseOperations implements IDatabaseOperations
     public String prepareProceduralQuery(String procedureName, int paramsLength)
     {
         StringBuffer query = new StringBuffer("call ");
+        query.append(procedureName);
 
-        query.append(procedureName).append("(");
+        if(paramsLength == 0)
+        {
+            return query.append("()").toString();
+        }
+
+        query.append("(");
 
         int i = 0;
 
@@ -140,7 +146,6 @@ public class DatabaseOperations implements IDatabaseOperations
     @Override
     public Object getValueAt(Map<String, List<Object>> map, String columnName, int row)
     {
-        System.out.println();
         return map.get(columnName).get(row);
     }
 

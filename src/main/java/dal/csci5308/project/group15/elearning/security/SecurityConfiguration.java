@@ -31,6 +31,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Value("${aura.db.query.user.authorization}")
     private String userAuthorizationQuery;
 
+    @Value("${aura.db.max.idle}")
+    private int dbMaxIdle;
+
+    @Value("${aura.db.initial.size}")
+    private int dbInitialSize;
+
+    @Value("${aura.db.validation.query}")
+    private String dbValidationQuery;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
@@ -40,9 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         dataSource.setUsername(dbUsername);
         dataSource.setPassword(dbPassword);
         dataSource.setUrl(dbUrl);
-        dataSource.setMaxIdle(5);
-        dataSource.setInitialSize(5);
-        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setMaxIdle(dbMaxIdle);
+        dataSource.setInitialSize(dbInitialSize);
+        dataSource.setValidationQuery(dbValidationQuery);
 
         Database.instance().setDataSource(dataSource);
 
@@ -62,9 +71,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                .antMatchers("/admin").hasAnyAuthority("ADMIN")
-                .antMatchers("/user").hasAnyAuthority("USER")
-                .antMatchers("/forum/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/forum/**").hasAnyAuthority("admin", "student", "professor", "superuser")
+                .antMatchers("/registerUser/**").hasAuthority("admin")
+                .antMatchers("/student/**").hasAnyAuthority("student", "admin")
+                .antMatchers("/professor/**").hasAnyAuthority("professor", "admin")
                 .antMatchers("/", "static/css", "static/js").permitAll()
                 .and().formLogin();
     }

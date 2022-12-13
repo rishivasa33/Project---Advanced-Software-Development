@@ -1,8 +1,7 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
 
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.CoursePersistence;
 
@@ -16,7 +15,7 @@ public class MockDBCoursePersistence implements CoursePersistence {
 
     public BaseCourse Load(String course_id){
 
-        ICourseFactory courseFactory = FactoryInitializer.instance().getCourseFactory();
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         return courseFactory.CreateCourse(course_id, "test" + course_id, "test description");
     }
 

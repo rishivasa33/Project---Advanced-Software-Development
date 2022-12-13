@@ -8,7 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class ProfessorController {
 
-    @GetMapping("/")
+    @GetMapping("/professor")
     public RedirectView redirectWithUsingRedirectView(
             RedirectAttributes attributes) {
         attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
