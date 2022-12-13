@@ -4,16 +4,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class AuthUser
+public class AuthUser implements IAuthUser
 {
-    public static Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    private Authentication auth;
 
-    public static String getUsername()
+    public AuthUser()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    public String getUsername()
     {
         return auth.getName();
     }
 
-    public static boolean isAdmin()
+    public boolean isAdmin()
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {
@@ -24,7 +29,7 @@ public class AuthUser
         return false;
     }
 
-    public static boolean isStudent()
+    public boolean isStudent()
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {

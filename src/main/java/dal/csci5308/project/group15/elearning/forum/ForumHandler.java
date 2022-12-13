@@ -1,6 +1,5 @@
 package dal.csci5308.project.group15.elearning.forum;
 
-import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
@@ -8,7 +7,7 @@ import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFacto
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
-import dal.csci5308.project.group15.elearning.security.AuthUser;
+import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +22,7 @@ public class ForumHandler implements IForumHandler
     {   }
 
     @Override
-    public Map<String, ForumTopic> getAllTopics(IDatabaseOperations databaseOperations, String courseId)
+    public Map<String, ForumTopic> getAllTopics(IDatabaseOperations databaseOperations, IAuthUser authUser, String courseId)
     {
         List<ForumTopic> forumTopicList = ForumFactory.instance().makeForumTopicList();
         Map<String, ForumTopic> forumTopicMap = new HashMap<>();
@@ -77,14 +76,14 @@ public class ForumHandler implements IForumHandler
     }
 
     @Override
-    public int createNewTopic(IDatabaseOperations databaseOperations, String courseId, ForumTopic topic)
+    public int createNewTopic(IDatabaseOperations databaseOperations, IAuthUser authUser, String courseId, ForumTopic topic)
     {
         try
         {
             IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
             return databaseOperations.create(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_ADD_NEW_TOPIC"),
-                    courseId, topic.getTopic(), AuthUser.getUsername());
+                    courseId, topic.getTopic(), authUser.getUsername());
         }
         catch (SQLException sqlException)
         {
@@ -94,7 +93,7 @@ public class ForumHandler implements IForumHandler
     }
 
     @Override
-    public int createNewResponse(IDatabaseOperations databaseOperations, Map<String, ForumTopic> forumTopicMap, ForumComment comment)
+    public int createNewResponse(IDatabaseOperations databaseOperations, IAuthUser authUser, Map<String, ForumTopic> forumTopicMap, ForumComment comment)
     {
         String[] commentArray = comment.getComment().split(",");
 
@@ -113,7 +112,7 @@ public class ForumHandler implements IForumHandler
         {
             return databaseOperations.create(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_FORUM_INSERT_NEW_COMMENT"),
-                    topic.getId(), commentToAdd, AuthUser.getUsername());
+                    topic.getId(), commentToAdd, authUser.getUsername());
         }
         catch (SQLException sqlException)
         {
@@ -137,12 +136,12 @@ public class ForumHandler implements IForumHandler
 
     private ForumTopic getTopicToUpdate(Map<String, ForumTopic> forumTopicMap, int topicIdToUpdate)
     {
-        Iterator iterator = forumTopicMap.values().iterator();
+        Iterator<ForumTopic> iterator = forumTopicMap.values().iterator();
         ForumTopic topic = null;
 
         for(int i = 0; i < forumTopicMap.size(); i++)
         {
-            topic = (ForumTopic) iterator.next();
+            topic = iterator.next();
 
             if(i == topicIdToUpdate)
             {

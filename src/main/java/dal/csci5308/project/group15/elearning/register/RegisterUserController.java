@@ -35,8 +35,6 @@ public class RegisterUserController
     @PostMapping("/add")
     public String registerNewUser(@ModelAttribute("user") User user, Model model)
     {
-        System.out.println(user);
-
         IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
         int result = registerUserHandler.createNewUser(user);
 
