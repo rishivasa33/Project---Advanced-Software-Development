@@ -43,7 +43,7 @@ public class UnGradedCourse implements ICourse {
         return baseCourse_.GetDescription();
     }
     public boolean IsGradedCourse(){
-        return  true;
+        return  false;
     }
 
 }

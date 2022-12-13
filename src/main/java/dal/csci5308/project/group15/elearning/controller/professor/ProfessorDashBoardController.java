@@ -20,10 +20,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("professor/")
 public class ProfessorDashBoardController {
 
-    @GetMapping("dashboard/professor")
+    @GetMapping("dashboard")
     public String DashboardView(Model model)  {
         try {
             GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();

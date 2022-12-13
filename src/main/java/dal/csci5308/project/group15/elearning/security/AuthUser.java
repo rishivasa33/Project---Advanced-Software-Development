@@ -36,4 +36,17 @@ public class AuthUser
     }
 
 
+    public static boolean isProfessor()
+    {
+        for(GrantedAuthority role: auth.getAuthorities())
+        {
+            if(role.getAuthority().equals("professor"))
+                return true;
+        }
+
+        return false;
+    }
+
+
+
 }

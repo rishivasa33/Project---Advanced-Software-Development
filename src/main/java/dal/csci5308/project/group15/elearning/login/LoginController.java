@@ -17,6 +17,10 @@ public class LoginController
             System.out.println("admin");
             return "redirect:/professor";
         }
+        else if(AuthUser.isProfessor()){
+
+            return "redirect:/professor/dashboard";
+        }
         else if(AuthUser.isStudent())
         {
             System.out.println("student");

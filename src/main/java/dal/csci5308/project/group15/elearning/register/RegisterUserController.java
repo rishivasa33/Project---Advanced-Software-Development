@@ -41,7 +41,12 @@ public class RegisterUserController
         {
             User newUser = getInitUser();
             model.addAttribute("user", newUser);
-            model.addAttribute("programMap", newUser.getProgramMap());
+            if(newUser.getProgramMap() == null){
+                model.addAttribute("programMap", null);
+            }
+            else {
+                model.addAttribute("programMap", newUser.getProgramMap());
+            }
             model.addAttribute("message", "success");
             logger.debug("User - " + user.getFirstName() + " " + user.getLastName() + " registered successfully.");
         }

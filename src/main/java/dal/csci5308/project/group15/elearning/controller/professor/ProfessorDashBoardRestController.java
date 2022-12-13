@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.controller.professor;
 
-import dal.csci5308.project.group15.elearning.factory.FactoryInitializer;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
@@ -18,10 +18,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("professor/")
 public class ProfessorDashBoardRestController {
 
-    @PostMapping("professor/courseDetails/courseModuleDetails/addCourseModuleContent")
+    @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent")
     public String AddCourseContentToModuleView(@RequestBody String requestBody)
     {
         System.out.println(requestBody);
@@ -42,7 +42,7 @@ public class ProfessorDashBoardRestController {
         }
     }
 
-    @PostMapping("professor/courseDetails/courseModuleDetails/addCourseModuleContent/fileUpload")
+    @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent/fileUpload")
     public String AddCourseContentWithFileToModuleView(@RequestParam("course_content_heading") String courseContentHeading,
                                                        @RequestParam String courseContentType,
                                                        @RequestParam String courseId,
@@ -68,7 +68,7 @@ public class ProfessorDashBoardRestController {
         }
     }
 
-    @PostMapping("professor/courseDetails/courseModuleDetails/getAllContents")
+    @PostMapping("courseDetails/courseModuleDetails/getAllContents")
     public String CourseModuleContentView(@RequestBody String requestBody)
     {
         try {
@@ -102,7 +102,7 @@ public class ProfessorDashBoardRestController {
             FetchModuleContentFileRequestView fetchModuleContentFileRequestView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchModuleContentFileRequestView(
                     jsonObject
             );
-           Course course =  FactoryInitializer.instance().getCourseFactory().createCourseInstanceForLoad(fetchModuleContentFileRequestView.getCourseId());
+           Course course =  FactoryFacade.instance().getCourseFactory().createCourseInstanceForLoad(fetchModuleContentFileRequestView.getCourseId());
            course = course.Load(fetchModuleContentFileRequestView.getCourseId());
            FileCourseContent fileCourseContent =  course.GetCourseBase().GetContentFilePath(fetchModuleContentFileRequestView.getModuleId(), fetchModuleContentFileRequestView.getModuleContentId());
            FetchFileContentResponseView fetchFileContentResponseView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchFileContentResponseView(fileCourseContent);
