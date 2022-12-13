@@ -1,8 +1,11 @@
 package dal.csci5308.project.group15.elearning.login;
 
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
+import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +16,18 @@ public class LoginController
     @RequestMapping("/")
     public String login()
     {
-        IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        System.out.println("in login");
 
-        if(AuthUser.isAdmin())
+        // IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser authUser = authFactory.makeAuthUser();
+
+        System.out.println(authUser);
+
+        if(authUser.isAdmin())
         {
             System.out.println("admin");
-            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_PROFESSOR_DASHBOARD");
+            return "redirect:/professor";
         }
         else if(AuthUser.isProfessor()){
             System.out.println("professor");
@@ -27,9 +36,9 @@ public class LoginController
         else if(AuthUser.isStudent())
         {
             System.out.println("student");
-            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_STUDENT_DASHBOARD");
+            return "redirect:/student/dashboard";
         }
 
-        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_LOGIN");
+        return "redirect:/login";
     }
 }

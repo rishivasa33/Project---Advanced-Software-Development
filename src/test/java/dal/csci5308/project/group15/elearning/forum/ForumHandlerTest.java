@@ -1,34 +1,45 @@
 package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
+import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
+import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@SpringBootTest
 public class ForumHandlerTest
 {
     @Test
     public void loadEmptyForumTopicList()
     {
-        IForumPersistence mockDb = new ForumMockDatabase();
-        List<ForumTopic> forumTopicList = mockDb.loadAllForumTopics();
+        IDatabaseOperations mockDb = new ForumMockDatabase();
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
 
-        Assertions.assertNotNull(forumTopicList);
-        Assertions.assertEquals(0, forumTopicList.size());
+        Map<String, ForumTopic> forumTopicMap = forumHandler.getAllTopics(mockDb, mockAuthUser, "1");
+
+        Assertions.assertNotNull(forumTopicMap);
+        Assertions.assertEquals(0, forumTopicMap.size());
     }
 
     @Test
     public void createForumTopicListWithOneElementNoReplyList()
     {
-        IForumPersistence mockDb = new ForumMockDatabase();
-
+        IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
 
         forumTopic.setId("1");
         forumTopic.setTopic("Test Topic 1");
@@ -36,7 +47,7 @@ public class ForumHandlerTest
         forumTopic.setCreatedBy("Test User");
         forumTopic.setCreatedOn("Test Date");
 
-        int result = mockDb.createForumTopic(forumTopic);
+        int result = forumHandler.createNewTopic(mockDb, mockAuthUser,"COURSE_1", forumTopic);
 
         Assertions.assertEquals(1, result);
     }
@@ -44,9 +55,11 @@ public class ForumHandlerTest
     @Test
     public void createForumTopicListWithOneElementOneReplyList()
     {
-        IForumPersistence mockDb = new ForumMockDatabase();
-
+        IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
 
         forumTopic.setId("1");
@@ -62,17 +75,23 @@ public class ForumHandlerTest
 
         forumTopic.getReplyList().add(response);
 
-        int result = mockDb.createForumTopic(forumTopic);
+        int result = forumHandler.createNewTopic(mockDb, mockAuthUser, "COURSE_2", forumTopic);
 
         Assertions.assertEquals(1, result);
+
+        Map<String, ForumTopic> forumTopicMap = forumHandler.getAllTopics(mockDb, mockAuthUser, "COURSE_2");
+
+        Assertions.assertEquals(1, forumTopicMap.size());
     }
 
     @Test
     public void createAndLoadForumTopicList()
     {
-        IForumPersistence mockDb = new ForumMockDatabase();
-
+        IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
 
         forumTopic.setId("1");
@@ -88,77 +107,58 @@ public class ForumHandlerTest
 
         forumTopic.getReplyList().add(response);
 
-        int result1 = mockDb.createForumTopic(forumTopic);
+        int result = forumHandler.createNewTopic(mockDb, mockAuthUser, "COURSE_1", forumTopic);
 
-        Assertions.assertEquals(1, result1);
+        Assertions.assertEquals(1, result);
 
-        ForumTopic forumTopic2 = ForumFactory.instance().makeForumTopic();
         ForumTopicResponse response2 = ForumFactory.instance().makeForumTopicResponse();
-
-        forumTopic.setId("2");
-        forumTopic.setTopic("Test Topic 2");
-        forumTopic.setCourseId("Test Course ID 2");
-        forumTopic.setCreatedBy("Test User2");
-        forumTopic.setCreatedOn("Test Date2");
 
         response.setId("2");
         response.setReply("Reply 2");
         response.setCreatedBy("Test User2");
         response.setCreatedOn("Test Date2");
 
-        forumTopic2.getReplyList().add(response2);
+        forumTopic.getReplyList().add(response2);
 
-        int result2 = mockDb.createForumTopic(forumTopic);
+        int result2 = forumHandler.createNewTopic(mockDb, mockAuthUser, "COURSE_1", forumTopic);
 
         Assertions.assertEquals(1, result2);
 
-        List<ForumTopic> forumTopicList = mockDb.loadAllForumTopics();
+        Map<String, ForumTopic> forumTopicMap = forumHandler.getAllTopics(mockDb, mockAuthUser, "COURSE_1");
 
-        System.out.println(forumTopicList);
+        System.out.println(forumTopicMap);
 
-        Assertions.assertNotNull(forumTopicList);
-        Assertions.assertEquals(2, forumTopicList.size());
+        Assertions.assertNotNull(forumTopicMap);
+        Assertions.assertEquals(2, forumTopicMap.size());
     }
 
     @Test
-    public void addResponseToTopicWhichDoesNotExist()
+    public void addCommentToTopic()
     {
-        IForumPersistence mockDb = new ForumMockDatabase();
-
+        IDatabaseOperations mockDb = new ForumMockDatabase();
+        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
+        ForumTopic topic = ForumFactory.instance().makeForumTopic();
+        ForumComment comment = ForumFactory.instance().makeForumComment();
+
+        comment.setComment("myComment");
+
+        topic.setId("1");
+        topic.setTopic("Topic");
 
         response.setId("1");
         response.setReply("Reply 1");
         response.setCreatedBy("Test User");
         response.setCreatedOn("Test Date");
 
-        int result = mockDb.createForumTopicResponse("1", response);
-        Assertions.assertEquals(0, result);
-    }
+        topic.getReplyList().add(response);
 
-    @Test
-    public void addResponseToTopicWhichExists()
-    {
-        IForumPersistence mockDb = new ForumMockDatabase();
+        Map<String, ForumTopic> forumTopicMap = new HashMap<>();
+        forumTopicMap.put(topic.getId(), topic);
 
-        ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-
-        forumTopic.setId("1");
-        forumTopic.setTopic("Test Topic 1");
-        forumTopic.setCourseId("Test Course ID");
-        forumTopic.setCreatedBy("Test User");
-        forumTopic.setCreatedOn("Test Date");
-
-        mockDb.createForumTopic(forumTopic);
-
-        ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
-
-        response.setId("1");
-        response.setReply("Reply 1");
-        response.setCreatedBy("Test User");
-        response.setCreatedOn("Test Date");
-
-        int result = mockDb.createForumTopicResponse("1", response);
+        int result = forumHandler.createNewResponse(mockDb, mockAuthUser, forumTopicMap, comment);
         Assertions.assertEquals(1, result);
     }
 
