@@ -30,6 +30,11 @@
         <li class="nav-item active">
             <a class="nav-link" href="#">View Calendar</a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link"
+               th:href="@{/forum/list(courseId=${courseInstanceID})}"
+               th:text="'View Forums'"></a>
+        </li>
     </ul>
 </nav>
 

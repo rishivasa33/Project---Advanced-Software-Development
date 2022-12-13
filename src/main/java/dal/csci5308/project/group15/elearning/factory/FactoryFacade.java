@@ -2,8 +2,8 @@ package dal.csci5308.project.group15.elearning.factory;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
-import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollmentFactory;
-import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollmentFactory;
+import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
+import dal.csci5308.project.group15.elearning.models.student.StudentFactory;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTermsFactory;
 
@@ -12,12 +12,12 @@ public class FactoryFacade {
     static FactoryFacade uniqueInstance = null;
     private static ICourseFactory courseFactory;
 
-    private static IStudentCourseEnrollmentFactory studentCourseEnrollmentFactory;
+    private static IStudentFactory studentFactory;
     private static IUniversityTermsFactory universityTermsFactory;
 
     private FactoryFacade() {
         courseFactory = new CourseFactory();
-        studentCourseEnrollmentFactory = new StudentCourseEnrollmentFactory();
+        studentFactory = new StudentFactory();
         universityTermsFactory = new UniversityTermsFactory();
     }
 
@@ -35,8 +35,8 @@ public class FactoryFacade {
         return courseFactory;
     }
 
-    public IStudentCourseEnrollmentFactory getStudentCourseEnrollmentFactory() {
-        return studentCourseEnrollmentFactory;
+    public IStudentFactory getStudentFactory() {
+        return studentFactory;
     }
 
     public IUniversityTermsFactory getUniversityTermsFactory(){
