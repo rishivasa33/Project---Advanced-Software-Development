@@ -63,6 +63,7 @@ public class MySqlCreateAssignmentPersistence implements CreateAssignmentPersist
             assignment_model.setAssignmentDescription(rs.getString(4));
             assignment_model.setAssignmentStartDate(rs.getDate(5));
             assignment_model.setAssignmentEndDate(rs.getDate(6));
+            assignment_model.setFilepath(rs.getString(7));
             assignmentList.add(assignment_model);
             System.out.println(assignment_model.getAssignmentTitle());
 

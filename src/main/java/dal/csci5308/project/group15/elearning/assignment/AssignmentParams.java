@@ -20,6 +20,9 @@ public class AssignmentParams {
     private MultipartFile file ;
 
 
+    String studentNumber;
+
+
     public MultipartFile getFile() {
         return file;
     }

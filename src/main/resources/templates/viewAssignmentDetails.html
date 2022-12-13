@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <h1>Assignment Details</h1>
-<li  th:each="assignment :${assignmentDetails}">
+<li th:each="assignment :${assignmentDetails}">
 
-         <p th:text="${assignment.assignmentTitle}"></p>
-         <p th:text="${assignment.assignmentDescription}"></p>
-         <p th:text="${{assignment.assignmentEndDate}}"></p>
-         <p th:text="${{assignment.assignmentStartDate}}"></p>
+    <p th:text="${assignment.assignmentTitle}"></p>
+    <p th:text="${assignment.assignmentDescription}"></p>
+<!--    <p th:text="${{assignment.assignmentStartDate}}"></p>-->
+    <p>Due Date</p>
+    <p th:text="${{assignment.assignmentEndDate}}"></p>
+    <a th:href="${{assignment.filepath}}"><span th:text="${{assignment.filepath}}"></span></a>
 
-  <hr/>
+
+<!--    <button th:href="@{/{assignmentId}(assignmentId=${assignment.assignmentId})}" >Submit your assignment</button>-->
+    <form
+            role="form"
+            method="post"
+            th:action="@{/student/submitStudentAssignment}"
+            th:object="${assignment}"
+            enctype="multipart/form-data"
+    >
+        <input type="file" th:field = "*{file}">
+        </br>
+        <button type="submit">Submit Your Assignment</button>
+    </form>
+    <hr/>
+
+
+
+
 </li>
+
 
 </body>
 </html>
