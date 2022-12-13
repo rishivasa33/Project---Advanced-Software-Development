@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence;
+package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.assignment;
 
 import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
