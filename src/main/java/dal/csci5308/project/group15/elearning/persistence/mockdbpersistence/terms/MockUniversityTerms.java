@@ -27,4 +27,8 @@ public class MockUniversityTerms implements IUniversityTermsPersistence {
     public IUniversityTerms loadCurrentTerm(Date currentDate) {
         return null;
     }
+
+    public IUniversityTerms loadTermByTermId(String termId){
+        return null;
+    }
 }

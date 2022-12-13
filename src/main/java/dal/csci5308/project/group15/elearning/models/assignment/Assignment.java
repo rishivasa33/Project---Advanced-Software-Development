@@ -3,12 +3,11 @@ package dal.csci5308.project.group15.elearning.models.assignment;
 import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistenceSingleton;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCreateAssignmentPersistence;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Assignment {
 
@@ -79,9 +78,6 @@ public class Assignment {
         this.filepath = filepath;
     }
 
-
-
-
     public Assignment(AssignmentParams assObj){
         subId =assObj.getSubId();
         assignmentId = assObj.getAssignmentId();
@@ -101,9 +97,9 @@ public class Assignment {
         createAssignmentPersistence.save(this);
     }
 
-    public Assignment Load(String assignmentId){
-      Assignment assignment = createAssignmentPersistence.load(assignmentId);
-      return assignment;
+    public List<String> loadAssignmentList(String assignmentId) throws SQLException{
+      List<String> assignmentList = createAssignmentPersistence.loadAssignmentList(assignmentId);
+      return assignmentList;
     }
 
     public ArrayList<Assignment> LoadBySubjectId(String subId){
@@ -111,5 +107,8 @@ public class Assignment {
     }
 
 
-
+    public List<Assignment> loadAssignmentDetails(String assignmentId) throws SQLException {
+        List<Assignment> assignmentList = createAssignmentPersistence.loadAssignmentDetails(assignmentId);
+        return assignmentList;
+    }
 }

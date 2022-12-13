@@ -4,6 +4,7 @@ import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface IUniversityTermsPersistence {
@@ -13,5 +14,7 @@ public interface IUniversityTermsPersistence {
 
     ArrayList<IUniversityTerms> loadOpenForRegistrationTerms(Date currentDate);
 
+
+    IUniversityTerms loadTermByTermId(String termId) throws SQLException;
     IUniversityTerms loadCurrentTerm(Date currentDate);
 }

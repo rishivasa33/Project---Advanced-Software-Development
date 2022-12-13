@@ -2,6 +2,8 @@ package dal.csci5308.project.group15.elearning.deadlineNotification;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.ICourseMaterialDeadlineNotificationFactory;
@@ -10,10 +12,12 @@ import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFacto
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.security.AuthUser;
+import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +36,14 @@ public class CourseMaterialDeadlineNotificationHandler implements ICourseMateria
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
         List<CourseMaterialDeadlineNotification> notificationList = new LinkedList<>();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser authUser = authFactory.makeAuthUser();
 
         try
         {
             Map<String, List<Object>> resultSet = databaseOperations.read(
-                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_DEADLINE_NOTIFICATION"), AuthUser.getUsername());
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_DEADLINE_NOTIFICATION"),
+                    authUser.getUsername());
 
             if(resultSet.size() == 0)
             {
@@ -60,7 +67,7 @@ public class CourseMaterialDeadlineNotificationHandler implements ICourseMateria
         catch (SQLException sqlException)
         {
             logger.error(sqlException.getMessage());
-            logger.debug(sqlException.getStackTrace().toString());
+            logger.debug(Arrays.toString(sqlException.getStackTrace()));
         }
 
         return notificationList;

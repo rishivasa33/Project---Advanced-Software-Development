@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistenceSingleton;
 
 import java.sql.SQLException;
 
@@ -32,7 +32,9 @@ public class Course implements ICourse{
 
 
     public Course Load(String course_id) throws SQLException {
-        return gradedCoursePersistence_.Load(course_id);
+        Course course =  gradedCoursePersistence_.Load(course_id);
+        course.GetCourseBase().SetCourseID(course_id);
+        return course;
     }
 
     public int GetCredits(){

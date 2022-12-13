@@ -7,7 +7,7 @@ import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrol
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
-import dal.csci5308.project.group15.elearning.persistence.CourseInstancePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
 import org.springframework.stereotype.Controller;

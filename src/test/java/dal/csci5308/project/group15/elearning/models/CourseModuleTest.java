@@ -2,8 +2,8 @@ package dal.csci5308.project.group15.elearning.models;
 
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
-import dal.csci5308.project.group15.elearning.persistence.CourseModulePersistence;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCourseModulePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistence;
+import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.MySqlCourseModulePersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -94,4 +94,8 @@ public class UniversityTerms implements IUniversityTerms {
                 ", registrationEndDate=" + registrationEndDate +
                 '}';
     }
+
+    public IUniversityTerms loadTermByTermId(IUniversityTermsPersistence iUniversityTermsPersistence, String termId) throws SQLException {
+        return iUniversityTermsPersistence.loadTermByTermId(termId);
+    }
 }

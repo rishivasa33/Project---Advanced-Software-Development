@@ -39,6 +39,10 @@
 </nav>
 
 
+<h1 th:text="'Selected Course Is: ' + ${courseInstanceID}"></h1>
+<p><a  th:href="@{/loadAssignment/{courseInstanceID}(courseInstanceID=${courseInstanceID})}">View Assignment</a></p>
+<br/>
+<p><a th:href="@{/quiz}"> View Quiz </a></p>
 </body>
 
 </html>

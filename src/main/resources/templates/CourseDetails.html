@@ -31,7 +31,7 @@
                     <tbody>
                     <tr th:each="course_module : ${course_module_list}">
                         <td th:text="${course_module[1]}"></td>
-                        <td> <a th:href ="@{/courseDetails/courseModuleDetails(courseModuleId=${course_module[0]}, courseId=${courseId})}"> Get Module Content Details </a></td>
+                        <td> <a th:href ="@{courseModuleDetails(courseModuleId=${course_module[0]}, courseId=${courseId})}"> Get Module Content Details </a></td>
                     </tr>
                     </tbody>
                 </table>

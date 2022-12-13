@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.persistence;
 
-import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.MockDBCreateAssignmentPersistence;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCreateAssignmentPersistence;
+import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.assignment.MockDBCreateAssignmentPersistence;
+import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.assignment.MySqlCreateAssignmentPersistence;
 
 
 public class CreateAssignmentPersistenceSingleton {
