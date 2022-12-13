@@ -16,13 +16,10 @@ public class Database
     {
         if(null == uniqueInstance)
         {
-            System.out.println("INSTANCE. Creating NEW instance of Database");
-
             uniqueInstance = new Database();
             return uniqueInstance;
         }
 
-        System.out.println("INSTANCE. OLD");
         return uniqueInstance;
     }
 

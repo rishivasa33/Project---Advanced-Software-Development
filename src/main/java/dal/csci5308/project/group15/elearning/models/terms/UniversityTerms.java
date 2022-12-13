@@ -32,26 +32,32 @@ public class UniversityTerms implements IUniversityTerms {
 
     }
 
+    @Override
     public String getTermID() {
         return termID;
     }
 
+    @Override
     public String getTermName() {
         return termName;
     }
 
+    @Override
     public Date getTermStartDate() {
         return termStartDate;
     }
 
+    @Override
     public Date getTermEndDate() {
         return termEndDate;
     }
 
+    @Override
     public Date getRegistrationStartDate() {
         return registrationStartDate;
     }
 
+    @Override
     public Date getRegistrationEndDate() {
         return registrationEndDate;
     }
@@ -73,7 +79,7 @@ public class UniversityTerms implements IUniversityTerms {
     }
 
     @Override
-    public ArrayList<IUniversityTerms> loadCurrentTerm(IUniversityTermsPersistence iUniversityTermsPersistence, Date currentDate) {
+    public IUniversityTerms loadCurrentTerm(IUniversityTermsPersistence iUniversityTermsPersistence, Date currentDate) {
         return iUniversityTermsPersistence.loadCurrentTerm(currentDate);
     }
 
@@ -87,5 +93,9 @@ public class UniversityTerms implements IUniversityTerms {
                 ", registrationStartDate=" + registrationStartDate +
                 ", registrationEndDate=" + registrationEndDate +
                 '}';
+    }
+
+    public IUniversityTerms loadTermByTermId(IUniversityTermsPersistence iUniversityTermsPersistence, String termId) throws SQLException {
+        return iUniversityTermsPersistence.loadTermByTermId(termId);
     }
 }

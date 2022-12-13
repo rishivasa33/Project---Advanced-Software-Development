@@ -38,7 +38,7 @@ public class CreateAssignmentTest {
 
         Assignment assignment = new Assignment();
 
-       assignment = assignment.Load("F22CSCI5308_A1");
+//       assignment = assignment.Load("F22CSCI5308_A1");
         assertEquals(assignment.getAssignmentId(), "F22CSCI5308_A1");
         assertEquals(assignment.getSubId(), "F22CSCI5308");
         assertEquals(assignment.getAssignmentTitle(), "Assignment 1");

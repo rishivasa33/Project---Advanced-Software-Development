@@ -1,5 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
+import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
+
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -15,5 +18,10 @@ public interface ICourseFactory {
 
     CourseByTerm CreateCourseInstance(String courseInstanceID, ICourse course, Date start_date, Date end_date, String courseTerm, Integer enrolledSeats, Integer totalSeats) throws ParseException;
 
-    Course createCourseInstanceForLoad(String courseID);
+    Course createCourseForLoad(String courseID) throws SQLException;
+
+    CourseByTerm createCourseByTermInstance(ICourse course, UniversityTerms terms, int capacity);
+    CourseByTerm CreateCourseInstanceForLoadByTerm(String term);
+
+    Course createCourseInstanceForLoad(String courseID) throws SQLException;
 }

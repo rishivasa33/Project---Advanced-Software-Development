@@ -1,9 +1,14 @@
 package dal.csci5308.project.group15.elearning.register;
 
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
 import dal.csci5308.project.group15.elearning.models.Register.User;
+import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,16 +40,25 @@ public class RegisterUserController
     @PostMapping("/add")
     public String registerNewUser(@ModelAttribute("user") User user, Model model)
     {
-        System.out.println(user);
-
         IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
-        int result = registerUserHandler.createNewUser(user);
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+
+        int result = registerUserHandler.createNewUser(databaseOperations, user);
 
         if(result > 0)
         {
             User newUser = getInitUser();
             model.addAttribute("user", newUser);
-            model.addAttribute("programMap", newUser.getProgramMap());
+
+            if(newUser.getProgramMap() == null)
+            {
+                model.addAttribute("programMap", null);
+            }
+            else
+            {
+                model.addAttribute("programMap", newUser.getProgramMap());
+            }
+
             model.addAttribute("message", "success");
             logger.debug("User - " + user.getFirstName() + " " + user.getLastName() + " registered successfully.");
         }
@@ -61,9 +75,12 @@ public class RegisterUserController
     private User getInitUser()
     {
         IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         User newUser = RegisterUserFactory.instance().makeUser();
-        Map<String, String> programMap = registerUserHandler.getAllProgramList();
+
+        Map<String, String> programMap = registerUserHandler.getAllProgramList(databaseOperations);
         newUser.setProgramMap(programMap);
+
         return newUser;
     }
 }

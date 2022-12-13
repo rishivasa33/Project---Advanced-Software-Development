@@ -2,8 +2,8 @@ package dal.csci5308.project.group15.elearning.models.course.courseContent;
 
 
 
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
-import dal.csci5308.project.group15.elearning.persistence.*;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistenceSingleton;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,8 +47,7 @@ public class CourseModule {
                 contentList = new ArrayList<>();
             }
             else {
-                TextCourseContentPersistence courseContentPersistence = CourseContentPersistenceSingleton.GetTextCourseContentPersistence();
-                contentList = courseContentPersistence.LoadAllContentsInModule(moduleId);
+                contentList = courseModulePersistence.GetAllContentsInAModule(moduleId);
             }
         }
         return contentList;
@@ -68,5 +67,9 @@ public class CourseModule {
         CourseModule courseModule = courseModulePersistence.Load(moduleId);
         courseModule.SetModuleID(moduleId);
         return courseModule;
+    }
+
+    public CourseContent LoadModuleContent(int courseContentId) throws SQLException {
+       return courseModulePersistence.LoadCourseContent(courseContentId);
     }
 }

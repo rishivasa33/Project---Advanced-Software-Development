@@ -3,7 +3,7 @@ package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.stud
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
-import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollmentFactory;
+import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
@@ -51,7 +51,7 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
                 String courseInstanceId = resultSet.getString("course_instance_id");
                 String courseTerm = resultSet.getString("course_term");
 
-                IStudentCourseEnrollmentFactory courseFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+                IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
 
                 IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstance(courseInstanceId, studentNumber, courseTerm);
                 studentCourses.add(studentCourseEnrollment);
@@ -77,7 +77,7 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
                 String studentNumber = resultSet.getString("student_number");
                 String courseTerm = resultSet.getString("course_term");
 
-                IStudentCourseEnrollmentFactory courseFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+                IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
 
                 IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstance(courseInstanceId, studentNumber, courseTerm);
                 studentCourses.add(studentCourseEnrollment);
@@ -101,7 +101,7 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
 
             while (resultSet.next()) {
                 String courseInstanceId = resultSet.getString("course_instance_id");
-                IStudentCourseEnrollmentFactory courseFactory = FactoryFacade.instance().getStudentCourseEnrollmentFactory();
+                IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
 
                 IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstance(courseInstanceId, studentNumber, courseTerm);
                 studentCourses.add(studentCourseEnrollment);

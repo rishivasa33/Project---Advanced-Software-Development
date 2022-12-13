@@ -1,29 +1,30 @@
 package dal.csci5308.project.group15.elearning.controller.professor;
 
-import dal.csci5308.project.group15.elearning.models.course.ICourse;
+import dal.csci5308.project.group15.elearning.models.course.*;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
-import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
-import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.GradedCoursePersistenceSingleton;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlGradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
+import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("professor/")
 public class ProfessorDashBoardController {
 
-    @GetMapping("dashboard/professor")
+    @GetMapping("dashboard")
     public String DashboardView(Model model)  {
         try {
             GradedCoursePersistence gradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
@@ -123,13 +124,61 @@ public class ProfessorDashBoardController {
         try {
             ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
             Course course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
-            MySqlGradedCoursePersistence mySqlGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMySqlGradedCoursePersistenceInstance();
             course.Save();
-            model.addAttribute("course_created", true);
+            model.addAttribute("actionDone", true);
+            model.addAttribute("actionName", "In Course Creation");
             return "courseCreationSuccess";
         }
         catch (SQLException exception){
-            model.addAttribute("course_created", null);
+            model.addAttribute("actionDone", null);
+            model.addAttribute("actionName", "In Course Creation");
+            return "courseCreationSuccess";
+        }
+    }
+
+    @GetMapping("createCourseByTerm")
+    public String CreateCourseByTermView(@RequestParam String courseId, Model model)
+    {
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
+        try {
+            Course course = courseFactory.createCourseForLoad(courseId);
+            UniversityTerms universityTerms = FactoryFacade.instance().getUniversityTermsFactory().createEmptyUniversityTermsInstance();
+            ArrayList<IUniversityTerms> universityTermsArrayList =  universityTerms.loadOpenForRegistrationTerms(UniversityTermsSingleton.GetMySqlUniversityTermsPersistenceInstance(), new Date(System.currentTimeMillis()));
+            System.out.println("university terms size" + universityTermsArrayList.size());
+            model.addAttribute("universityTermsList", universityTermsArrayList);
+            model.addAttribute("courseCode", course.GetCourseID());
+            model.addAttribute("courseName", course.GetCourseName());
+            return "createCourseByTerm";
+        }
+        catch(SQLException exception) {
+            model.addAttribute("actionDone", null);
+            model.addAttribute("actionName", "In Course Load Creation");
+            return "courseCreationSuccess";
+        }
+    }
+
+    @PostMapping("createCourseByTerm/addCourseByTerm")
+    public String CreateCourseByTermAddCourseByTerm(@RequestParam String courseId, @RequestParam String courseTerm,
+                                                    @RequestParam String capacity, Model model)
+    {
+        ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
+        try {
+            ICourse course = courseFactory.createCourseForLoad(courseId);
+            course = course.Load(courseId);
+            int capacityNumber = Integer.parseInt(capacity);
+
+            IUniversityTerms universityTerms = FactoryFacade.instance().getUniversityTermsFactory().createUniversityTermsInstanceForLoadByID(courseTerm);
+            universityTerms = universityTerms.loadTermByTermId(UniversityTermsSingleton.GetMySqlUniversityTermsPersistenceInstance(), courseTerm);
+
+            CourseByTerm courseByTerm = FactoryFacade.instance().getCourseFactory().createCourseByTermInstance(course,(UniversityTerms) universityTerms, capacityNumber);
+            courseByTerm.save(CourseInstancePersistenceSingleton.GetMySqlCourseInstancePersistenceInstance());
+            model.addAttribute("actionDone", true);
+            model.addAttribute("actionName", "In Course Term Creation");
+            return "courseCreationSuccess";
+        }
+        catch(SQLException exception) {
+            model.addAttribute("actionDone", null);
+            model.addAttribute("actionName", "In Course Term Creation");
             return "courseCreationSuccess";
         }
     }

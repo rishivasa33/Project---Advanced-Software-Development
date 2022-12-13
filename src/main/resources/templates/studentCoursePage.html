@@ -22,13 +22,18 @@
             <a class="nav-link" href="/student/dashboard">Dashboard</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/student/viewRegisteredCoursesByTerm">View Courses By Term</a>
+            <a class="nav-link" href="/student/viewRegisteredCoursesByTerm">View Registered Courses By Term</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="#">Register for Courses</a>
+            <a class="nav-link" href="/student/viewTermsOpenForRegistration">Register for Courses</a>
         </li>
         <li class="nav-item active">
             <a class="nav-link" href="#">View Calendar</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link"
+               th:href="@{/forum/list(courseId=${courseInstanceID})}"
+               th:text="'View Forums'"></a>
         </li>
     </ul>
 </nav>
