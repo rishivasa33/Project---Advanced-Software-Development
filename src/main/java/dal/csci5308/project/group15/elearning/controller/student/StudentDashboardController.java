@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
-import dal.csci5308.project.group15.elearning.deadlineNotification.CourseMaterialDeadlineNotification;
-import dal.csci5308.project.group15.elearning.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
+import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
+import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
@@ -13,7 +13,6 @@ import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFacto
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentDetailsSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
-import dal.csci5308.project.group15.elearning.security.AuthUser;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

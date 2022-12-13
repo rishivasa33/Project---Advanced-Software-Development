@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.factory.forum;
 
-import dal.csci5308.project.group15.elearning.forum.ForumHandler;
-import dal.csci5308.project.group15.elearning.forum.IForumHandler;
+import dal.csci5308.project.group15.elearning.models.forum.ForumHandler;
+import dal.csci5308.project.group15.elearning.models.forum.IForumHandler;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;

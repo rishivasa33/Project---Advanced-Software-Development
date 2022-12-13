@@ -1,9 +1,7 @@
-package dal.csci5308.project.group15.elearning.factory.registerUser;
+package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.registerUser;
 
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 
 import java.sql.SQLException;
 import java.util.*;
