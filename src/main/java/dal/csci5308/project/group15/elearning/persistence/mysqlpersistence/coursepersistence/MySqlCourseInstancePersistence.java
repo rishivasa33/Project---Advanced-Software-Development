@@ -103,8 +103,8 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
             while (resultSet.next()) {
                 String courseInstanceId = resultSet.getString("course_instance_id");
                 String courseId = resultSet.getString("course_id");
-                Date startDate = resultSet.getDate("start_date");
-                Date endDate = resultSet.getDate("end_date");
+                Date startDate = resultSet.getDate("course_start_date");
+                Date endDate = resultSet.getDate("course_end_date");
                 Integer enrolledSeats = resultSet.getInt("enrolled_seats");
                 Integer totalSeats = resultSet.getInt("total_seats");
 

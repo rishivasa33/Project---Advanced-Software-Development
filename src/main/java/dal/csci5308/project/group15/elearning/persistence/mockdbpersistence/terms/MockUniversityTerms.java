@@ -24,7 +24,7 @@ public class MockUniversityTerms implements IUniversityTermsPersistence {
     }
 
     @Override
-    public ArrayList<IUniversityTerms> loadCurrentTerm(Date currentDate) {
+    public IUniversityTerms loadCurrentTerm(Date currentDate) {
         return null;
     }
 

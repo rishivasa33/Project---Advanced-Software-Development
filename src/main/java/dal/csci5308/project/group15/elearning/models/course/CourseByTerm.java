@@ -51,6 +51,10 @@ public class CourseByTerm implements ICourseByTerm {
         this.totalSeats = totalSeats;
     }
 
+    CourseByTerm(String term){
+        this.courseTerm = term;
+    }
+
 
     @Override
     public String getCourseInstanceID() {

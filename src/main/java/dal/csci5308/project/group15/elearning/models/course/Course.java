@@ -17,10 +17,8 @@ public class Course implements ICourse{
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
-    Course(String courseId)  {
+    Course(String courseId){
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
-
-
     }
 
     public BaseCourse GetCourseBase(){

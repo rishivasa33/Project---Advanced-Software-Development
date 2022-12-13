@@ -1,9 +1,8 @@
 package dal.csci5308.project.group15.elearning.quiz;
 
-import java.util.ArrayList;
 import java.sql.Date;
 
-public class Quiz {
+public class QuizParams {
     String id;
     String quizId;
     String name;
@@ -13,19 +12,34 @@ public class Quiz {
     String questionId;
     Date endDate;
     int markingType;
-
-
-
     String answer;
     Date startDate;
-
     String option1;
-
     String option2;
-
     String option3;
-
     String option4;
+
+    String quizIdFk;
+
+    String questionIdFk;
+
+    public String getQuizIdFk() {
+        return quizIdFk;
+    }
+
+    public void setQuizIdFk(String quizIdFk) {
+        this.quizIdFk = quizIdFk;
+    }
+
+    public String getQuestionIdFk() {
+        return questionIdFk;
+    }
+
+    public void setQuestionIdFk(String questionIdFk) {
+        this.questionIdFk = questionIdFk;
+    }
+
+
 
     public String getAnswer() {
         return answer;
@@ -138,11 +152,11 @@ public class Quiz {
     }
 
 
-    public Quiz() {
+    public QuizParams() {
 
     }
 
-    public Quiz(String id, String name) {
+    public QuizParams(String id, String name) {
         this.id = id;
         this.name = name;
     }

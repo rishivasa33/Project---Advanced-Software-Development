@@ -63,20 +63,36 @@ public class MySqlUniversityTerms implements IUniversityTermsPersistence {
     }
 
     @Override
-    public ArrayList<IUniversityTerms> loadCurrentTerm(Date currentDate) {
-        ArrayList<IUniversityTerms> universityTerms;
+    public IUniversityTerms loadCurrentTerm(Date currentDate) {
+        IUniversityTerms universityTerm;
 
         Map<String, List<Object>> resultSet;
         try {
             resultSet = databaseOperations.read(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_TERMS_GET_CURRENT_TERM"), currentDate);
 
-            universityTerms = parseTermFieldsToList(resultSet);
+            universityTerm = parseCurrentTermFields(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return universityTerms;
+        return universityTerm;
+    }
+
+    private IUniversityTerms parseCurrentTermFields(Map<String, List<Object>> resultSet) {
+        IUniversityTermsFactory termsFactory = FactoryFacade.instance().getUniversityTermsFactory();
+        IUniversityTerms currentUniversityTerm = null;
+        for (int row = 0; row < databaseOperations.getRowCount(resultSet); row++) {
+            String termID = String.valueOf(databaseOperations.getValueAt(resultSet, "term_id", row));
+            String termName = String.valueOf(databaseOperations.getValueAt(resultSet, "term_name", row));
+            Date termStartDate = (Date) databaseOperations.getValueAt(resultSet, "term_start_date", row);
+            Date termEndDate = (Date) databaseOperations.getValueAt(resultSet, "term_end_date", row);
+            Date registrationStartDate = (Date) databaseOperations.getValueAt(resultSet, "registration_start_date", row);
+            Date registrationEndDate = (Date) databaseOperations.getValueAt(resultSet, "registration_end_date", row);
+
+            currentUniversityTerm = termsFactory.createUniversityTermsInstance(termID, termName, termStartDate, termEndDate, registrationStartDate, registrationEndDate);
+        }
+        return currentUniversityTerm;
     }
 
     private ArrayList<IUniversityTerms> parseTermFieldsToList(Map<String, List<Object>> resultSet) {

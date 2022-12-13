@@ -17,7 +17,7 @@ public class AuthUser
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {
-            if(role.getAuthority().equals("admin"))
+            if(role.getAuthority().contains("admin"))
                 return true;
         }
 

@@ -21,4 +21,7 @@ public interface ICourseFactory {
     Course createCourseForLoad(String courseID) throws SQLException;
 
     CourseByTerm createCourseByTermInstance(ICourse course, UniversityTerms terms, int capacity);
+    CourseByTerm CreateCourseInstanceForLoadByTerm(String term);
+
+    Course createCourseInstanceForLoad(String courseID);
 }

@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.factory.properties;
 
 import dal.csci5308.project.group15.elearning.utility.PropertiesUtility;
+import dal.csci5308.project.group15.elearning.utility.RedirectionsProperties;
 import dal.csci5308.project.group15.elearning.utility.SqlProperties;
 
 public class PropertiesFactory implements IPropertiesFactory
@@ -25,5 +26,10 @@ public class PropertiesFactory implements IPropertiesFactory
     public PropertiesUtility makeSqlProperties()
     {
         return SqlProperties.instance();
+    }
+
+    @Override
+    public PropertiesUtility makeRedirectionsProperties() {
+        return RedirectionsProperties.instance();
     }
 }
