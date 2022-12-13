@@ -7,4 +7,5 @@ public interface IAuthUser
     public boolean isAdmin();
 
     public boolean isStudent();
+    public boolean isProfessor();
 }

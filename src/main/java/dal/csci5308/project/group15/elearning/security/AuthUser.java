@@ -45,8 +45,7 @@ public class AuthUser implements IAuthUser
         return false;
     }
 
-
-    public static boolean isProfessor()
+    public boolean isProfessor()
     {
         for(GrantedAuthority role: auth.getAuthorities())
         {
@@ -56,7 +55,4 @@ public class AuthUser implements IAuthUser
 
         return false;
     }
-
-
-
 }
