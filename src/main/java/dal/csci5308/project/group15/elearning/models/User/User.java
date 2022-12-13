@@ -1,8 +1,7 @@
-package dal.csci5308.project.group15.elearning.models;
+package dal.csci5308.project.group15.elearning.models.User;
 
 public class User
 {
-
     private String id;
     private String username;
     private String email;

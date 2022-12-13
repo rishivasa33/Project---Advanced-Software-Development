@@ -1,14 +1,12 @@
-package dal.csci5308.project.group15.elearning.register;
+package dal.csci5308.project.group15.elearning.controller.registerUser;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
-import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
 import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.models.Register.IRegisterUserHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,6 +40,8 @@ public class RegisterUserController
     {
         IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+
+        System.out.println(user);
 
         int result = registerUserHandler.createNewUser(databaseOperations, user);
 

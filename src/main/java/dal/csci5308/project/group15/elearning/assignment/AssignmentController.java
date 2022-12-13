@@ -4,10 +4,7 @@ import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -15,6 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
+@SessionAttributes({"student_number"})
+
 public class AssignmentController {
 
     @GetMapping("/assignment")
@@ -26,7 +25,7 @@ public class AssignmentController {
     @PostMapping("/saveAssignment")
     public String postAssignment(@ModelAttribute("assignment") AssignmentParams assignment, Model model) throws SQLException, IOException {
 
-        String fileName = StringUtils.cleanPath(assignment.getFile().getOriginalFilename());
+       // String fileName = StringUtils.cleanPath(assignment.getFile().getOriginalFilename());
 
         Assignment assignment_model = new Assignment(assignment);
         try {
@@ -55,8 +54,10 @@ public class AssignmentController {
     }
 
     @GetMapping("/loadAssignmentDetails/{assignmentId}")
-    public String loadAssignmentDetails(@PathVariable String assignmentId, Model model) {
+    public String loadAssignmentDetails(@PathVariable String assignmentId,@ModelAttribute("assignment") AssignmentParams assignment ,Model model) {
 
+        model.addAttribute(assignment);
+        model.addAttribute("assignmentId",assignmentId);
         Assignment assignment_model = new Assignment();
         try {
             List<Assignment> assignmentDetails = assignment_model.loadAssignmentDetails(assignmentId);
@@ -68,6 +69,32 @@ public class AssignmentController {
             return "viewAssignmentDetails";
         }
     }
+
+    @PostMapping("/student/submitStudentAssignment")
+    public String submitStudentAssignment( @ModelAttribute("assignment") AssignmentParams assignment, Model model) throws SQLException, IOException {
+
+     // model.addAttribute("assignmentId",assignmentId);
+     //  model.addAttribute("studentNumber","student_number");
+        String courseId = String.valueOf(model.getAttribute("assignmentId"));
+        String student_number = String.valueOf(model.getAttribute("student_number"));
+      //  String fileName = StringUtils.cleanPath(assignment.getFile().getOriginalFilename());
+
+        System.out.println("Debug session attributes " + courseId + "  " +student_number);
+
+//        Assignment assignment_model = new Assignment(assignment);
+//        try {
+//            assignment_model.Save();
+//            return "assignmentDefault";
+//        } catch (SQLException exception) {
+//            return "assignmentDefault";
+//        }
+
+        return "assignmentDefault";
+
+    }
+
+
+
 
 
 }
