@@ -6,11 +6,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthUser implements IAuthUser
 {
-    private Authentication auth;
+    private Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
     public AuthUser()
     {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    }
+
+    public Authentication getInstance()
+    {
+        return auth;
     }
 
     public String getUsername()

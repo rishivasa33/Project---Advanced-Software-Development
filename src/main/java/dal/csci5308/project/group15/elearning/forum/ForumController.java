@@ -61,6 +61,7 @@ public class ForumController
         IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser authUser = authFactory.makeAuthUser();
+        String courseId = String.valueOf(model.getAttribute("courseId"));
 
         if(comment.getComment().length() > 0)
         {
@@ -68,7 +69,7 @@ public class ForumController
         }
 
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
-        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_FORUM_LIST");
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("REDIRECT_FORUM_LIST") + "?courseId=" + courseId;
     }
 
     @PostMapping("/createNewTopic")
