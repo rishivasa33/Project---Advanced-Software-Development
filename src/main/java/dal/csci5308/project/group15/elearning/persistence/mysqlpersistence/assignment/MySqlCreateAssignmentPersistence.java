@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence;
+package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.assignment;
 
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;

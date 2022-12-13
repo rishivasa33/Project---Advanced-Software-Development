@@ -3,8 +3,6 @@ package dal.csci5308.project.group15.elearning.models.assignment;
 import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistenceSingleton;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.MySqlCreateAssignmentPersistence;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.SQLException;
