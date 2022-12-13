@@ -15,5 +15,7 @@ public interface ICourseFactory {
 
     CourseByTerm CreateCourseInstance(String courseInstanceID, ICourse course, Date start_date, Date end_date, String courseTerm, Integer enrolledSeats, Integer totalSeats) throws ParseException;
 
+    CourseByTerm CreateCourseInstanceForLoadByTerm(String term);
+
     Course createCourseInstanceForLoad(String courseID);
 }
