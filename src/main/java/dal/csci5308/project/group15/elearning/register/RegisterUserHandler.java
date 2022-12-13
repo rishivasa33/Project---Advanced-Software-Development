@@ -24,7 +24,7 @@ public class RegisterUserHandler implements IRegisterUserHandler
     {   }
 
     @Override
-    public int createNewUser(User user)
+    public int createNewUser(IDatabaseOperations databaseOperations, User user)
     {
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
@@ -36,7 +36,6 @@ public class RegisterUserHandler implements IRegisterUserHandler
 
         try
         {
-            IDatabaseOperations databaseOperations = DatabaseOperations.instance();
             return databaseOperations.create(
                     propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_REGISTER_USER_STUDENT"),
                     user.getFirstName(),
@@ -53,10 +52,9 @@ public class RegisterUserHandler implements IRegisterUserHandler
     }
 
     @Override
-    public Map<String, String> getAllProgramList()
+    public Map<String, String> getAllProgramList(IDatabaseOperations databaseOperations)
     {
         Map<String, String> programMap = new HashMap<>();
-        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
         try
