@@ -19,9 +19,7 @@ import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsS
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -177,7 +175,7 @@ public class StudentCourseController {
         IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstanceForSave(courseInstanceID, studentNumber, courseTerm, enrolledSeats, totalSeats);
 
         try {
-            registrationResult = studentCourseEnrollment.saveAfterValidations(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance());
+            registrationResult = studentCourseEnrollment.saveBasedOnCourseCount(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
