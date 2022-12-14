@@ -72,11 +72,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                .antMatchers("/forum/**").hasAnyAuthority("admin", "student", "professor", "superuser")
+                .antMatchers("/forum/**").hasAnyAuthority("admin", "student", "professor")
                 .antMatchers("/registerUser/**").hasAuthority("admin")
-                .antMatchers("/student/**").hasAnyAuthority("student", "admin")
+                .antMatchers("/student/**").hasAnyAuthority("student")
                 .antMatchers("/professor/**").hasAnyAuthority("professor", "admin")
-                .antMatchers("/professor/courseDetails/fetchModuleContentFile").permitAll()
+                .antMatchers("/professor/courseDetails/fetchModuleContentFile").hasAnyAuthority("admin", "student", "professor")
                 .antMatchers("/", "static/css", "static/js", "/login").permitAll()
                 .and().formLogin();
     }
