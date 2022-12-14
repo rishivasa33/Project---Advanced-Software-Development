@@ -1,7 +1,7 @@
 package dal.csci5308.project.group15.elearning.encoder;
 
 import dal.csci5308.project.group15.elearning.factory.encoder.EncoderFactory;
-import dal.csci5308.project.group15.elearning.security.IEncoder;
+import dal.csci5308.project.group15.elearning.security.encoder.IEncoder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

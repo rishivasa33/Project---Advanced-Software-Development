@@ -17,7 +17,7 @@ import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFacto
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentDetailsSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

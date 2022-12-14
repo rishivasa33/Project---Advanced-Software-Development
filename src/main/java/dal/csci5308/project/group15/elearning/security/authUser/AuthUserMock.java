@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.security;
+package dal.csci5308.project.group15.elearning.security.authUser;
 
 public class AuthUserMock implements IAuthUser
 {
