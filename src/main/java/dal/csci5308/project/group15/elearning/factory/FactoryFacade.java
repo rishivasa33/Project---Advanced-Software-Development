@@ -16,14 +16,9 @@ public class FactoryFacade {
     static FactoryFacade uniqueInstance = null;
     private static ICourseFactory courseFactory;
 
-
-
     private static IAssignmentFactory assignmentFactory;
 
-
-
     private static IQuizFactory quizFactory;
-
 
     private static IStudentFactory studentFactory;
     private static IUniversityTermsFactory universityTermsFactory;
@@ -54,7 +49,7 @@ public class FactoryFacade {
         return studentFactory;
     }
 
-    public IUniversityTermsFactory getUniversityTermsFactory(){
+    public IUniversityTermsFactory getUniversityTermsFactory() {
         return universityTermsFactory;
     }
 
@@ -65,7 +60,5 @@ public class FactoryFacade {
     public IQuizFactory getQuizFactory() {
         return quizFactory;
     }
-
-
 
 }

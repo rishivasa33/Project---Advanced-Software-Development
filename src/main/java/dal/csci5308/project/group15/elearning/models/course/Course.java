@@ -5,11 +5,10 @@ import dal.csci5308.project.group15.elearning.persistence.coursepersistence.Grad
 
 import java.sql.SQLException;
 
-public class Course implements ICourse{
+public class Course implements ICourse {
     BaseCourse course_;
-    private int total_credits_;
-
     GradedCoursePersistence gradedCoursePersistence_;
+    private int total_credits_;
 
     Course(String course_id, String course_name, String course_description, int total_credits) {
         course_ = new BaseCourse(course_id, course_name, course_description);
@@ -17,11 +16,11 @@ public class Course implements ICourse{
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
-    Course(String courseId){
+    Course(String courseId) {
         gradedCoursePersistence_ = GradedCoursePersistenceSingleton.GetGradedCoursePersistence();
     }
 
-    public BaseCourse GetCourseBase(){
+    public BaseCourse GetCourseBase() {
         return course_;
     }
 
@@ -32,28 +31,29 @@ public class Course implements ICourse{
 
 
     public Course Load(String course_id) throws SQLException {
-        Course course =  gradedCoursePersistence_.Load(course_id);
+        Course course = gradedCoursePersistence_.Load(course_id);
         course.GetCourseBase().SetCourseID(course_id);
         return course;
     }
 
-    public int GetCredits(){
+    public int GetCredits() {
         return total_credits_;
     }
 
-    public String GetCourseID(){
+    public String GetCourseID() {
         return GetCourseBase().GetCourseID();
     }
-    public String GetCourseName(){
+
+    public String GetCourseName() {
         return course_.GetName();
     }
-    public String GetCourseDescription(){
+
+    public String GetCourseDescription() {
         return course_.GetDescription();
     }
-    public boolean IsGradedCourse(){
-        return  true;
+
+    public boolean IsGradedCourse() {
+        return true;
     }
-
-
 
 }

@@ -1,6 +1,5 @@
 package dal.csci5308.project.group15.elearning.models.student;
 
-import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.EnrollmentValidatorByCourseCount;
 import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.EnrollmentValidatorByCreditsCount;
 import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.EnrollmentValidatorTemplate;
@@ -15,20 +14,11 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
 
     private String courseInstanceID;
     private String studentNumber;
-
     private String courseTerm;
-    private ICourseByTerm courseInstance;
-
     private Integer enrolledSeats;
     private Integer totalSeats;
 
     private IValidationState validationState;
-
-    public StudentCourseEnrollment(String courseInstanceID, String studentNumber, ICourseByTerm courseInstance) {
-        this.courseInstanceID = courseInstanceID;
-        this.studentNumber = studentNumber;
-        this.courseInstance = courseInstance;
-    }
 
     public StudentCourseEnrollment(String courseInstanceID, String studentNumber, String courseTerm) {
         this.courseInstanceID = courseInstanceID;
@@ -61,10 +51,6 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
     @Override
     public String getCourseTerm() {
         return courseTerm;
-    }
-
-    public ICourseByTerm getCourseInstance() {
-        return courseInstance;
     }
 
     public Integer getEnrolledSeats() {
@@ -142,7 +128,6 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
                 "courseInstanceID='" + courseInstanceID + '\'' +
                 ", studentNumber='" + studentNumber + '\'' +
                 ", courseTerm='" + courseTerm + '\'' +
-                ", courseInstance=" + courseInstance +
                 '}';
     }
 }

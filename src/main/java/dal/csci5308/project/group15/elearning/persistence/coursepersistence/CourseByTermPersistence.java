@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public interface CourseByTermPersistence {
 
-
     void save(CourseByTerm courseByTerm) throws SQLException;
 
     ICourseByTerm loadByID(String courseId) throws ParseException, SQLException;

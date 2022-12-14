@@ -3,20 +3,25 @@ package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.cour
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
-import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     private MySqlCoursePersistence mySqlCoursePersistence_;
     private Database database_;
-    public MySqlGradedCoursePersistence(MySqlCoursePersistence mySqlCoursePersistence, Database database){
+
+    public MySqlGradedCoursePersistence(MySqlCoursePersistence mySqlCoursePersistence, Database database) {
         mySqlCoursePersistence_ = mySqlCoursePersistence;
         database_ = database;
     }
+
     public void Save(Course gradedCourse) throws SQLException {
         mySqlCoursePersistence_.Save(gradedCourse.GetCourseBase());
 
@@ -64,7 +69,6 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
     }
 
 
-
     public ArrayList<Course> GetAllGradedCourses() throws SQLException {
         try (Connection connection = database_.getConnection()) {
             String sql_query = "SELECT gc.course_id, gc.course_name, gc.course_description, gc.course_credits FROM course as gc";
@@ -81,7 +85,6 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
                 String course_description = resultSet.getString("gc.course_description");
                 courseArrayList.add(courseFactory.CreateCourse(course_id, course_name, course_description, total_credits));
             }
-
 
             return courseArrayList;
 

@@ -21,6 +21,7 @@ public interface ICourseFactory {
     Course LoadCourseFromPersistence(String courseID) throws SQLException;
 
     CourseByTerm createCourseByTermInstance(ICourse course, UniversityTerms terms, int capacity);
+
     CourseByTerm CreateCourseInstanceForLoadByTerm(String term);
 
     ICourseByTerm LoadCourseByTermFromPersistence(String courseByTermId) throws SQLException, ParseException;

@@ -24,17 +24,6 @@ public class MySqlCourseByTermPersistence implements CourseByTermPersistence {
 
     public MySqlCourseByTermPersistence(Database database) {
         this.database = database;
-/*        try (Connection connection = this.database.getConnection()) {
-            String sql_query = "create table if not exists `course_by_term` (`course_instance_id` integer, `course_id` integer," +
-                    " `start_date` date, `end_date` date, course_term VARCHAR(50),   PRIMARY KEY(`course_instance_id`)," +
-                    "FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE));";
-
-            Statement statement = connection.createStatement();
-            statement.execute(sql_query);
-            connection.commit();
-        } catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }*/
     }
 
     private String GetMySqlDateString(Date date) {

@@ -17,12 +17,12 @@ public class StudentFactory implements IStudentFactory {
     }
 
     @Override
-    public StudentDetails createStudentDetailsInstance(Integer studentUserID, String studentNumber, String studentProgram){
+    public StudentDetails createStudentDetailsInstance(Integer studentUserID, String studentNumber, String studentProgram) {
         return new StudentDetails(studentUserID, studentNumber, studentProgram);
     }
 
     @Override
-    public StudentDetails createEmptyStudentDetailsInstance(){
+    public StudentDetails createEmptyStudentDetailsInstance() {
         return new StudentDetails();
     }
 }
