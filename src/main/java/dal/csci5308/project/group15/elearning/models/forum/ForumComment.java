@@ -1,5 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.forum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ForumComment
 {
     private String comment;
