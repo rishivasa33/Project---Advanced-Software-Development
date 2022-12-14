@@ -1,8 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
-import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistence;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -30,12 +29,12 @@ public class CourseByTerm implements ICourseByTerm {
         this.totalSeats = totalSeats;
     }
 
-    CourseByTerm(ICourse course, UniversityTerms term, Integer totalSeats){
+    CourseByTerm(ICourse course, UniversityTerms term, Integer totalSeats) {
         this.courseInstanceID = term.getTermID() + course.GetCourseID();
-        this.courseInstanceID =  this.courseInstanceID.replaceAll(" ", "");
+        this.courseInstanceID = this.courseInstanceID.replaceAll(" ", "");
         this.courseStartDate = term.getTermStartDate();
         this.courseEndDate = term.getTermEndDate();
-        this.courseTerm  = term.getTermID();
+        this.courseTerm = term.getTermID();
         this.courseDetails = course;
         this.enrolledSeats = totalSeats;
         this.totalSeats = totalSeats;
@@ -51,7 +50,7 @@ public class CourseByTerm implements ICourseByTerm {
         this.totalSeats = totalSeats;
     }
 
-    CourseByTerm(String term){
+    CourseByTerm(String term) {
         this.courseTerm = term;
     }
 
@@ -92,17 +91,19 @@ public class CourseByTerm implements ICourseByTerm {
     }
 
     @Override
-    public void save(CourseInstancePersistence courseInstancePersistence) throws SQLException {
+    public void save(CourseByTermPersistence courseInstancePersistence) throws SQLException {
+        courseDetails.Save();
         courseInstancePersistence.save(this);
     }
 
     @Override
-    public ICourseByTerm loadByID(CourseInstancePersistence courseInstancePersistence, String courseInstanceId) throws SQLException, ParseException {
-        return courseInstancePersistence.loadByID(courseInstanceId);
+    public ICourseByTerm loadByID(CourseByTermPersistence courseInstancePersistence, String courseInstanceId) throws SQLException, ParseException {
+        ICourseByTerm courseByTerm = courseInstancePersistence.loadByID(courseInstanceId);
+        return courseByTerm;
     }
 
     @Override
-    public ArrayList<ICourseByTerm> loadByTerm(CourseInstancePersistence courseInstancePersistence, String courseTerm) throws SQLException, ParseException {
+    public ArrayList<ICourseByTerm> loadByTerm(CourseByTermPersistence courseInstancePersistence, String courseTerm) throws SQLException, ParseException {
         return courseInstancePersistence.loadByTerm(courseTerm);
     }
 

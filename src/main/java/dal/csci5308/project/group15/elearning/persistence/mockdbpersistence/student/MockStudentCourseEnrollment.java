@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class MockStudentCourseEnrollment implements IStudentCourseEnrollmentPersistence {
     @Override
-    public String save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
+    public Integer save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
         System.out.println("Save MockStudentCourseEnrollment");
-        return "SUCCESS";
+        return 1;
     }
 
     @Override
@@ -27,6 +27,16 @@ public class MockStudentCourseEnrollment implements IStudentCourseEnrollmentPers
 
     @Override
     public ArrayList<IStudentCourseEnrollment> loadByTermAndStudentNumber(String studentNumber, String courseTerm) throws SQLException, ParseException {
+        return null;
+    }
+
+    @Override
+    public Integer loadStudentCourseCountByTerm(String studentNumber, String courseTerm) {
+        return null;
+    }
+
+    @Override
+    public Integer loadStudentCreditCountByTerm(String studentNumber, String courseTerm) {
         return null;
     }
 }

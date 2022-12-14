@@ -1,8 +1,6 @@
 package dal.csci5308.project.group15.elearning.database;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-import org.springframework.stereotype.Repository;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;

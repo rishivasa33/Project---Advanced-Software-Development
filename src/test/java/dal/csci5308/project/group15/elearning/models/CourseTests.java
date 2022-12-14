@@ -24,7 +24,7 @@ public class CourseTests {
     void TestGradedCourseCreation(){
 
         CourseFactory courseFactory = new CourseFactory();
-        Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 10);
+        Course course = courseFactory.CreateCourse("5308", "test", "test2", 10);
         assertEquals(course.GetCourseBase().GetName(), "test");
         assertEquals(course.GetCourseBase().GetCourseID(), "5308");
         assertEquals(course.GetCourseBase().GetDescription(), "test2");
@@ -34,14 +34,14 @@ public class CourseTests {
     @Test
     void TestGradedCourseCredits(){
         CourseFactory courseFactory = new CourseFactory();
-        Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
+        Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
         assertEquals(course.GetCredits(), 20);
     }
 
     @Test
     void TestGradedCourseSave() throws SQLException {
         CourseFactory courseFactory = new CourseFactory();
-        Course course = courseFactory.CreateGradedCourse("5308", "test", "test2", 20);
+        Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         course.Save();
     }
