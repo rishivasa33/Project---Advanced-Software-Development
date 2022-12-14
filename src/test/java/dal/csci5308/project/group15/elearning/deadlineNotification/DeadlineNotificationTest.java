@@ -5,7 +5,6 @@ import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
 import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.deadlineNotification.DeadlineNotificationMockDb;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +21,7 @@ public class DeadlineNotificationTest
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
 
-        ICourseMaterialDeadlineNotificationHandler registerUserHandler = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotificationHandler();
+        CourseMaterialDeadlineNotification registerUserHandler = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotification();
         List<CourseMaterialDeadlineNotification> courseMaterialDeadlineNotificationList = registerUserHandler.getCourseMaterialDeadlineNotifications(mockDb, mockAuthUser);
         Assertions.assertEquals(1, courseMaterialDeadlineNotificationList.size());
     }

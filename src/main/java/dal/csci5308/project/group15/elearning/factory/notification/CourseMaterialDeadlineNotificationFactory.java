@@ -1,8 +1,6 @@
 package dal.csci5308.project.group15.elearning.factory.notification;
 
 import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotificationHandler;
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
 
 public class CourseMaterialDeadlineNotificationFactory implements ICourseMaterialDeadlineNotificationFactory
 {
@@ -23,14 +21,8 @@ public class CourseMaterialDeadlineNotificationFactory implements ICourseMateria
         return uniqueInstance;
     }
 
-
     @Override
     public CourseMaterialDeadlineNotification makeCourseMaterialDeadlineNotification() {
         return new CourseMaterialDeadlineNotification();
-    }
-
-    @Override
-    public ICourseMaterialDeadlineNotificationHandler makeCourseMaterialDeadlineNotificationHandler() {
-        return new CourseMaterialDeadlineNotificationHandler();
     }
 }

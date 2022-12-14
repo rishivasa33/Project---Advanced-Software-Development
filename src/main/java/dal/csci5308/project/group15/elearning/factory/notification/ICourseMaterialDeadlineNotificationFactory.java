@@ -6,5 +6,4 @@ import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICours
 public interface ICourseMaterialDeadlineNotificationFactory
 {
     public CourseMaterialDeadlineNotification makeCourseMaterialDeadlineNotification();
-    public ICourseMaterialDeadlineNotificationHandler makeCourseMaterialDeadlineNotificationHandler();
 }
