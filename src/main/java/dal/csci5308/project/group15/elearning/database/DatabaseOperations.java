@@ -33,8 +33,6 @@ public class DatabaseOperations implements IDatabaseOperations
     {
         Map<String, List<Object>> resultSetMap = new HashMap<>();
 
-        System.out.println("in Read: " + procedureName);
-
         try(Connection connection = Database.instance().getConnection();
             CallableStatement statement = prepareCallableStatement(connection, procedureName, params);
             ResultSet resultSet = statement.executeQuery();
