@@ -14,6 +14,8 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
 
     private String courseTerm;
     private ICourseByTerm courseInstance;
+    private Integer enrolledSeats;
+    private Integer totalSeats;
 
     public StudentCourseEnrollment(String courseInstanceID, String studentNumber, ICourseByTerm courseInstance) {
         this.courseInstanceID = courseInstanceID;
@@ -31,14 +33,25 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
         this.studentNumber = studentNumber;
     }
 
+    public StudentCourseEnrollment(String courseInstanceID, String studentNumber, String courseTerm, Integer enrolledSeats, Integer totalSeats) {
+        this.courseInstanceID = courseInstanceID;
+        this.studentNumber = studentNumber;
+        this.courseTerm = courseTerm;
+        this.enrolledSeats = enrolledSeats;
+        this.totalSeats = totalSeats;
+    }
+
+    @Override
     public String getCourseInstanceID() {
         return courseInstanceID;
     }
 
+    @Override
     public String getStudentNumber() {
         return studentNumber;
     }
 
+    @Override
     public String getCourseTerm() {
         return courseTerm;
     }
@@ -48,8 +61,11 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
     }
 
     @Override
-    public void save(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException {
-        iStudentCourseEnrollmentPersistence.save(this);
+    public String saveAfterValidations(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException {
+        String saveResult = "SUCCESS";
+        //TODO: Validation Template
+        saveResult = iStudentCourseEnrollmentPersistence.save(this);
+        return saveResult;
     }
 
     @Override

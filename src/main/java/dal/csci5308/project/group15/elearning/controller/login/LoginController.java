@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.login;
+package dal.csci5308.project.group15.elearning.controller.login;
 
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
@@ -16,22 +16,18 @@ public class LoginController
     @RequestMapping("/")
     public String login()
     {
-        System.out.println("in login");
-
-        // IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser authUser = authFactory.makeAuthUser();
-
-        System.out.println(authUser);
 
         if(authUser.isAdmin())
         {
             System.out.println("admin");
             return "redirect:/registerUser";
         }
-        else if(authUser.isProfessor()){
+        else if(authUser.isProfessor())
+        {
             System.out.println("professor");
-            return "redirect:/professor";
+            return "redirect:/professor/dashboard";
         }
         else if(authUser.isStudent())
         {

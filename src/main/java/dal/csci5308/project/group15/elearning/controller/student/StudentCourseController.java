@@ -13,7 +13,10 @@ import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsS
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.Date;
@@ -67,7 +70,7 @@ public class StudentCourseController {
     }
 
     @GetMapping("/student/viewTermsOpenForRegistration")
-    public String viewTermsOpenForRegistration(Model model){
+    public String viewTermsOpenForRegistration(Model model) {
         IUniversityTermsFactory universityTermsFactory = FactoryFacade.instance().getUniversityTermsFactory();
         IUniversityTerms universityTerms = universityTermsFactory.createEmptyUniversityTermsInstance();
 
@@ -79,7 +82,7 @@ public class StudentCourseController {
     }
 
     @GetMapping("/student/viewAvailableCoursesByTerm/{termID}")
-    public String viewAvailableCoursesByTerm(@PathVariable String termID, Model model){
+    public String viewAvailableCoursesByTerm(@PathVariable String termID, Model model) {
         ArrayList<ICourseByTerm> availableCourses = null;
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         ICourseByTerm courseByTerm = courseFactory.CreateCourseInstanceForLoadByTerm(termID);
@@ -95,5 +98,26 @@ public class StudentCourseController {
         model.addAttribute("available_courses_by_term_list", availableCourses);
         model.addAttribute("termID", termID);
         return "studentRegisterNewCoursesForTerm";
+    }
+
+    @GetMapping("/student/registerForCourse")
+    public String registerForCourse(@RequestParam("courseInstanceID") String courseInstanceID, @RequestParam("courseTerm") String courseTerm, @RequestParam("enrolledSeats") Integer enrolledSeats, @RequestParam("totalSeats") Integer totalSeats, Model model) {
+        String registrationResult = "";
+        String studentNumber = String.valueOf(model.getAttribute("student_number"));
+
+        IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
+        IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstanceForSave(courseInstanceID, studentNumber, courseTerm, enrolledSeats, totalSeats);
+
+        try {
+            registrationResult = studentCourseEnrollment.saveAfterValidations(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        model.addAttribute("registrationResult", registrationResult);
+        model.addAttribute("courseInstanceID", courseInstanceID);
+        model.addAttribute("studentNumber", studentNumber);
+        model.addAttribute("courseTerm", courseTerm);
+        return "studentRegisterNewCourseResult";
     }
 }

@@ -10,8 +10,9 @@ import java.util.ArrayList;
 
 public class MockStudentCourseEnrollment implements IStudentCourseEnrollmentPersistence {
     @Override
-    public void save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
+    public String save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
         System.out.println("Save MockStudentCourseEnrollment");
+        return "SUCCESS";
     }
 
     @Override

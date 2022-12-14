@@ -1,16 +1,10 @@
 package dal.csci5308.project.group15.elearning.registerUser;
 
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
-import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
-import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
-import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserMockDb;
-import dal.csci5308.project.group15.elearning.forum.ForumMockDatabase;
-import dal.csci5308.project.group15.elearning.forum.IForumHandler;
+import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.registerUser.RegisterUserMockDb;
 import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.register.IRegisterUserHandler;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.models.Register.IRegisterUserHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
