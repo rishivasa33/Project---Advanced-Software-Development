@@ -29,12 +29,12 @@ public class CourseByTerm implements ICourseByTerm {
         this.totalSeats = totalSeats;
     }
 
-    CourseByTerm(ICourse course, UniversityTerms term, Integer totalSeats){
+    CourseByTerm(ICourse course, UniversityTerms term, Integer totalSeats) {
         this.courseInstanceID = term.getTermID() + course.GetCourseID();
-        this.courseInstanceID =  this.courseInstanceID.replaceAll(" ", "");
+        this.courseInstanceID = this.courseInstanceID.replaceAll(" ", "");
         this.courseStartDate = term.getTermStartDate();
         this.courseEndDate = term.getTermEndDate();
-        this.courseTerm  = term.getTermID();
+        this.courseTerm = term.getTermID();
         this.courseDetails = course;
         this.enrolledSeats = totalSeats;
         this.totalSeats = totalSeats;
@@ -50,7 +50,7 @@ public class CourseByTerm implements ICourseByTerm {
         this.totalSeats = totalSeats;
     }
 
-    CourseByTerm(String term){
+    CourseByTerm(String term) {
         this.courseTerm = term;
     }
 
@@ -98,7 +98,7 @@ public class CourseByTerm implements ICourseByTerm {
 
     @Override
     public ICourseByTerm loadByID(CourseByTermPersistence courseInstancePersistence, String courseInstanceId) throws SQLException, ParseException {
-        ICourseByTerm courseByTerm =  courseInstancePersistence.loadByID(courseInstanceId);
+        ICourseByTerm courseByTerm = courseInstancePersistence.loadByID(courseInstanceId);
         return courseByTerm;
     }
 

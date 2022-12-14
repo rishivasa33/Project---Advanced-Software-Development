@@ -56,7 +56,6 @@ public abstract class EnrollmentValidatorTemplate {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
         return true;
     }
 

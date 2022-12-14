@@ -21,7 +21,7 @@ public class MockDBCourseByTermPersistence implements CourseByTermPersistence {
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         Course course = courseFactory.LoadCourseFromPersistence("CSCI5100");
         course = course.Load("CSCI5100");
-        return courseFactory.CreateCourseInstance("TestCInstID",course, "15/01/2023", "15/04/2022", "F22", 10, 20);
+        return courseFactory.CreateCourseInstance("TestCInstID", course, "15/01/2023", "15/04/2022", "F22", 10, 20);
     }
 
     @Override

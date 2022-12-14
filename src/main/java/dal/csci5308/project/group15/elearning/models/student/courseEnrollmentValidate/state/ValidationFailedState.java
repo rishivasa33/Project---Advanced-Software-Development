@@ -1,8 +1,8 @@
 package dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.state;
 
-public class ValidationFailedState implements IValidationState{
+public class ValidationFailedState implements IValidationState {
 
-    String validationResult  = "";
+    String validationResult = "";
 
     @Override
     public Boolean isValid() {

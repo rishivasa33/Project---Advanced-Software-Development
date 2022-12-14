@@ -2,7 +2,7 @@ package dal.csci5308.project.group15.elearning.models.student;
 
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentDetailsPersistence;
 
-public class StudentDetails implements IStudentDetails{
+public class StudentDetails implements IStudentDetails {
     private Integer studentUserID;
     private String studentNumber;
     private String studentProgram;
@@ -32,12 +32,12 @@ public class StudentDetails implements IStudentDetails{
     }
 
     @Override
-    public void save(IStudentDetailsPersistence iStudentDetailsPersistence){
+    public void save(IStudentDetailsPersistence iStudentDetailsPersistence) {
         iStudentDetailsPersistence.save(this);
     }
 
     @Override
-    public IStudentDetails loadByUserID(IStudentDetailsPersistence iStudentDetailsPersistence, Integer userID)  {
+    public IStudentDetails loadByUserID(IStudentDetailsPersistence iStudentDetailsPersistence, Integer userID) {
         return iStudentDetailsPersistence.loadByStudentID(userID);
     }
 

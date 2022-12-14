@@ -84,6 +84,11 @@ public class UniversityTerms implements IUniversityTerms {
     }
 
     @Override
+    public IUniversityTerms loadTermByTermId(IUniversityTermsPersistence iUniversityTermsPersistence, String termId) throws SQLException {
+        return iUniversityTermsPersistence.loadTermByTermId(termId);
+    }
+
+    @Override
     public String toString() {
         return "UniversityTerms{" +
                 "termID='" + termID + '\'' +
@@ -93,9 +98,5 @@ public class UniversityTerms implements IUniversityTerms {
                 ", registrationStartDate=" + registrationStartDate +
                 ", registrationEndDate=" + registrationEndDate +
                 '}';
-    }
-
-    public IUniversityTerms loadTermByTermId(IUniversityTermsPersistence iUniversityTermsPersistence, String termId) throws SQLException {
-        return iUniversityTermsPersistence.loadTermByTermId(termId);
     }
 }

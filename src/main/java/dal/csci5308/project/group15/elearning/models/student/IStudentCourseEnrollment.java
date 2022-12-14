@@ -16,8 +16,6 @@ public interface IStudentCourseEnrollment {
 
     String getCourseTerm();
 
-    ICourseByTerm getCourseInstance();
-
     Integer getEnrolledSeats();
 
     Integer getTotalSeats();

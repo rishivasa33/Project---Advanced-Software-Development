@@ -1,7 +1,8 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
-import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
@@ -32,14 +33,16 @@ import java.util.ArrayList;
 @SessionAttributes({"student_number"})
 public class StudentCourseController {
 
+    IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+
     @GetMapping("/student/course/{courseInstanceID}")
     public String openCoursePage(@PathVariable String courseInstanceID, Model model) {
         try {
-            ICourseByTerm courseByTerm =  FactoryFacade.instance().getCourseFactory().LoadCourseByTermFromPersistence(courseInstanceID);
+            ICourseByTerm courseByTerm = FactoryFacade.instance().getCourseFactory().LoadCourseByTermFromPersistence(courseInstanceID);
             ICourse course = courseByTerm.getCourseDetails();
             ArrayList<CourseModule> courseModuleArrayList = course.GetCourseBase().GetAllModules();
             ArrayList<ArrayList<String>> arrayLists = new ArrayList<>();
-            for(CourseModule courseModule : courseModuleArrayList){
+            for (CourseModule courseModule : courseModuleArrayList) {
                 ArrayList<String> courseModuleDetails = new ArrayList<>();
                 courseModuleDetails.add(courseModule.GetModuleName());
                 courseModuleDetails.add(Integer.toString(courseModule.GetCourseModuleId()));
@@ -50,12 +53,11 @@ public class StudentCourseController {
             model.addAttribute("courseModules", arrayLists);
             model.addAttribute("courseInstanceID", courseInstanceID);
             model.addAttribute("success", true);
-            return "studentCoursePage";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_COURSE_PAGE");
+        } catch (Exception exception) {
+            model.addAttribute("success", false);
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_DASHBOARD");
 
-        }
-        catch (Exception exception){
-                model.addAttribute("success", false);
-                return "studentCoursePage";
         }
     }
 
@@ -63,21 +65,20 @@ public class StudentCourseController {
     public String viewStudentDashboard(@PathVariable String courseId, @PathVariable String courseModuleId, Model model) {
 
         try {
-            ICourse course =  FactoryFacade.instance().getCourseFactory().LoadCourseFromPersistence(courseId);
+            ICourse course = FactoryFacade.instance().getCourseFactory().LoadCourseFromPersistence(courseId);
             Integer courseModuleNumericId = Integer.parseInt(courseModuleId);
             ArrayList<CourseContent> courseContents = course.GetCourseBase().GetAllContentsInAModule(Integer.parseInt(courseModuleId));
             String courseModuleName = course.GetCourseBase().GetModuleName(courseModuleNumericId);
             ArrayList<ArrayList<String>> arrayLists = new ArrayList<>();
-            for(CourseContent courseContent : courseContents){
+            for (CourseContent courseContent : courseContents) {
                 ArrayList<String> courseContentDetails = new ArrayList<>();
-                if(courseContent.IsTextContent()){
+                if (courseContent.IsTextContent()) {
                     courseContentDetails.add("TEXT");
                     courseContentDetails.add(courseContent.GetContentHeading());
                     TextCourseContent textCourseContent = (TextCourseContent) courseContent;
                     courseContentDetails.add(textCourseContent.GetTextContent());
                     courseContentDetails.add(Integer.toString(textCourseContent.GetContentId()));
-                }
-                else{
+                } else {
                     courseContentDetails.add("FILE");
                     courseContentDetails.add(courseContent.GetContentHeading());
                     FileCourseContent fileCourseContent = (FileCourseContent) courseContent;
@@ -92,12 +93,12 @@ public class StudentCourseController {
             model.addAttribute("courseModuleName", courseModuleName);
             model.addAttribute("courseContentList", arrayLists);
             model.addAttribute("success", true);
-            return "studentCourseContentPage";
 
-        }
-        catch (Exception exception){
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_COURSE_CONTENT_PAGE");
+
+        } catch (Exception exception) {
             model.addAttribute("success", false);
-            return "studentCourseContentPage";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_COURSE_CONTENT_PAGE");
         }
     }
 
@@ -111,7 +112,7 @@ public class StudentCourseController {
 
         model.addAttribute("terms_list", listOfAvailableTerms);
 
-        return "studentRegisteredCourses";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_REGISTERED_COURSES");
     }
 
     @GetMapping("/student/viewRegisteredCoursesByTerm/{termID}")
@@ -132,7 +133,7 @@ public class StudentCourseController {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        return "studentRegisteredCoursesByTerm";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_REGISTERED_COURSES_BY_TERM");
     }
 
     @GetMapping("/student/viewTermsOpenForRegistration")
@@ -144,7 +145,8 @@ public class StudentCourseController {
         listOfTermsOpenForRegistration = universityTerms.loadOpenForRegistrationTerms(UniversityTermsSingleton.GetMySqlUniversityTermsPersistenceInstance(), new Date(System.currentTimeMillis()));
 
         model.addAttribute("terms_open_for_registration_list", listOfTermsOpenForRegistration);
-        return "studentTermsOpenForRegistration";
+
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_TERMS_OPEN_FOR_REGISTRATION");
     }
 
     @GetMapping("/student/viewAvailableCoursesByTerm/{termID}")
@@ -163,7 +165,8 @@ public class StudentCourseController {
 
         model.addAttribute("available_courses_by_term_list", availableCourses);
         model.addAttribute("termID", termID);
-        return "studentRegisterNewCoursesForTerm";
+
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_REGISTER_NEW_COURSES_FOR_TERM");
     }
 
     @GetMapping("/student/registerForCourse")
@@ -184,6 +187,7 @@ public class StudentCourseController {
         model.addAttribute("courseInstanceID", courseInstanceID);
         model.addAttribute("studentNumber", studentNumber);
         model.addAttribute("courseTerm", courseTerm);
-        return "studentRegisterNewCourseResult";
+
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_REGISTER_NEW_COURSE_RESULT");
     }
 }
