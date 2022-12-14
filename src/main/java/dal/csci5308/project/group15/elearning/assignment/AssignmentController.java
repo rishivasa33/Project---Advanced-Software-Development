@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -57,6 +58,8 @@ public class AssignmentController {
             return model;
         } catch (SQLException exception) {
             return model;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
