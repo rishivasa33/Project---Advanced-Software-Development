@@ -1,11 +1,9 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.assignment;
 
-import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
+import dal.csci5308.project.group15.elearning.models.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +34,7 @@ public class MockDBCreateAssignmentPersistence implements CreateAssignmentPersis
         assignmentParams.setAssignmentDescription("Assignment 1 Content");
         assignmentParams.setAssignmentStartDate(new Date(1969-12-31));
         assignmentParams.setAssignmentEndDate(new Date(1969-12-31));
-        String filePath = System.getProperty("user.dir")+"\\src\\test\\java\\dal\\csci5308\\project\\group15\\elearning\\models\\CourseTests.java";
+        String filePath = System.getProperty("user.dir")+"\\src\\test\\java\\dal\\csci5308\\project\\group15\\elearning\\models\\course\\CourseTests.java";
         System.out.println("filePath: "+filePath);
         File file = new File( filePath);
         FileInputStream inputStream = new FileInputStream(file);

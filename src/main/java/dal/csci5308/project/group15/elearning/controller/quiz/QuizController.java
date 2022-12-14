@@ -1,9 +1,11 @@
-package dal.csci5308.project.group15.elearning.quiz;
+package dal.csci5308.project.group15.elearning.controller.quiz;
 
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.quiz.IQuizFactory;
 import dal.csci5308.project.group15.elearning.models.quiz.Quiz;
+import dal.csci5308.project.group15.elearning.models.quiz.QuizData;
+import dal.csci5308.project.group15.elearning.models.quiz.QuizParams;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,7 @@ public class QuizController {
     @PostMapping("/saveQuiz")
     public String saveQuiz(@ModelAttribute("quiz") QuizParams quiz, Model model) throws SQLException {
 
-        quizData.setQuizIdFk(quiz.quizId);
+        quizData.setQuizIdFk(quiz.getQuizId());
         IQuizFactory quizFactory = FactoryFacade.instance().getQuizFactory();
         Quiz quizModel = quizFactory.createQuiz(quiz);
         quizModel.SaveQuizInfo();
@@ -43,7 +45,7 @@ public class QuizController {
     @PostMapping("/saveQuizQuestion")
     public String saveQuizQuestion(@ModelAttribute("quiz") QuizParams quiz, Model model) throws SQLException {
 
-        quizData.setQuestionIdFk(quiz.questionId);
+        quizData.setQuestionIdFk(quiz.getQuestionId());
         IQuizFactory quizFactory = FactoryFacade.instance().getQuizFactory();
         Quiz quizModel = quizFactory.createQuiz(quiz);
         quizModel.saveQuizQuestion(quizData.getQuizIdFk(), quizData.getQuestionIdFk());

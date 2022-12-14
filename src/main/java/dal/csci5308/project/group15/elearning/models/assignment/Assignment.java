@@ -1,6 +1,5 @@
 package dal.csci5308.project.group15.elearning.models.assignment;
 
-import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistenceSingleton;
 

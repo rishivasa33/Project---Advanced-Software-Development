@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.assignment;
+package dal.csci5308.project.group15.elearning.models.assignment;
 
 import org.springframework.web.multipart.MultipartFile;
 
