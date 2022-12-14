@@ -3,8 +3,8 @@ package dal.csci5308.project.group15.elearning.models;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistence;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistenceSingleton;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +20,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceCreation() {
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022";
 
@@ -37,7 +37,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceCreationInvalidStartDate(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("test", "test", "test2", 10);
         String start_date = "05/09/202233";
         String end_date = "20/12/2022";
         try{
@@ -53,7 +53,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceCreationInvalidEndDate(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022323";
         try{
@@ -69,7 +69,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceGetCourseNameFall(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("test", "test", "test2", 10);
         String start_date = "05/09/2022";
         String end_date = "20/12/2022323";
         try{
@@ -87,7 +87,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceGetCourseNameSummer(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("test", "test", "test2", 10);
         String start_date = "05/05/2022";
         String end_date = "20/08/2022";
         try{
@@ -105,7 +105,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceGetCourseNameWinter(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("Test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("Test", "test", "test2", 10);
         String start_date = "05/01/2022";
         String end_date = "20/04/2022";
         try{
@@ -123,7 +123,7 @@ public class BaseCourseByTermTest
     void TestCourseInstanceSave(){
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("test", "test", "test2", 10);
+        ICourse course = courseFactory.CreateCourse("test", "test", "test2", 10);
         String start_date = "05/01/2022";
         String end_date = "20/04/2022";
         try{
@@ -131,7 +131,7 @@ public class BaseCourseByTermTest
             //String course_instance_name = courseByTerm.GetName();
             String expected_name = "2022 Winter test";
             //assertEquals(course_instance_name, expected_name);
-            CourseInstancePersistence courseInstancePersistence = CourseInstancePersistenceSingleton.GetMockDBCourseInstancePersistenceInstance();
+            CourseByTermPersistence courseInstancePersistence = CourseByTermPersistenceSingleton.GetMockDBCourseInstancePersistenceInstance();
             //courseByTerm.Save(courseInstancePersistence);
         }
         catch (Exception exception){
@@ -144,7 +144,7 @@ public class BaseCourseByTermTest
 
 
         try{
-            CourseInstancePersistence courseInstancePersistence =  CourseInstancePersistenceSingleton.GetMockDBCourseInstancePersistenceInstance();
+            CourseByTermPersistence courseInstancePersistence =  CourseByTermPersistenceSingleton.GetMockDBCourseInstancePersistenceInstance();
             String test_course_id = "test";
 //            CourseByTerm courseByTerm =  courseInstancePersistence.loadByID(test_course_id);
 //            assertEquals(courseByTerm.GetCourse().GetCourseID(), test_course_id);

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public interface CourseInstancePersistence {
+public interface CourseByTermPersistence {
 
 
     void save(CourseByTerm courseByTerm) throws SQLException;

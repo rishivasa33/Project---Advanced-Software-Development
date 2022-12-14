@@ -1,6 +1,8 @@
 package dal.csci5308.project.group15.elearning.assignment;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
+import dal.csci5308.project.group15.elearning.models.assignment.IAssignmentFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"student_number"})
+@SessionAttributes({"assignmentId","student_number"})
 
 public class AssignmentController {
 
@@ -27,7 +29,9 @@ public class AssignmentController {
 
        // String fileName = StringUtils.cleanPath(assignment.getFile().getOriginalFilename());
 
-        Assignment assignment_model = new Assignment(assignment);
+        //Assignment assignment_model = new Assignment(assignment);
+        IAssignmentFactory assignmentFactory = FactoryFacade.instance().getAssignmentFactory();
+        Assignment assignment_model = assignmentFactory.createAssignment(assignment);
         try {
             assignment_model.Save();
             return "assignmentDefault";
@@ -42,7 +46,10 @@ public class AssignmentController {
 
 
         ModelAndView model = new ModelAndView("viewAssignment");
-        Assignment assignment_model = new Assignment();
+        //Assignment assignment_model = new Assignment();
+        IAssignmentFactory assignmentFactory = FactoryFacade.instance().getAssignmentFactory();
+        Assignment assignment_model = assignmentFactory.createAssignment();
+
         try {
             List<String> assignmentList = assignment_model.loadAssignmentList(courseInstanceID);
             System.out.println(assignmentList);
@@ -58,7 +65,9 @@ public class AssignmentController {
 
         model.addAttribute(assignment);
         model.addAttribute("assignmentId",assignmentId);
-        Assignment assignment_model = new Assignment();
+       // Assignment assignment_model = new Assignment();
+        IAssignmentFactory assignmentFactory = FactoryFacade.instance().getAssignmentFactory();
+        Assignment assignment_model = assignmentFactory.createAssignment();
         try {
             List<Assignment> assignmentDetails = assignment_model.loadAssignmentDetails(assignmentId);
             model.addAttribute("assignmentDetails", assignmentDetails);
@@ -71,27 +80,20 @@ public class AssignmentController {
     }
 
     @PostMapping("/student/submitStudentAssignment")
-    public String submitStudentAssignment( @ModelAttribute("assignment") AssignmentParams assignment, Model model) throws SQLException, IOException {
+    public String submitStudentAssignment( @ModelAttribute("assignment") AssignmentParams assignment, Model model) throws SQLException {
 
-     // model.addAttribute("assignmentId",assignmentId);
-     //  model.addAttribute("studentNumber","student_number");
-        String courseId = String.valueOf(model.getAttribute("assignmentId"));
+        String assignment_id = String.valueOf(model.getAttribute("assignmentId"));
         String student_number = String.valueOf(model.getAttribute("student_number"));
-      //  String fileName = StringUtils.cleanPath(assignment.getFile().getOriginalFilename());
+        System.out.println("Debug session attributes " + assignment_id + "  " +student_number);
 
-        System.out.println("Debug session attributes " + courseId + "  " +student_number);
-
-//        Assignment assignment_model = new Assignment(assignment);
-//        try {
-//            assignment_model.Save();
-//            return "assignmentDefault";
-//        } catch (SQLException exception) {
-//            return "assignmentDefault";
-//        }
-
-        return "assignmentDefault";
+        IAssignmentFactory assignmentFactory = FactoryFacade.instance().getAssignmentFactory();
+        Assignment assignment_model = assignmentFactory.createAssignment(assignment);
+        //Assignment assignment_model = new Assignment(assignment);
+        assignment_model.SaveStudentAssignment(assignment_id, student_number);
+        return "submittedAssignmentDefault";
 
     }
+
 
 
 

@@ -33,6 +33,11 @@ public class MockDBCreateAssignmentPersistence implements CreateAssignmentPersis
     }
 
     @Override
+    public void saveStudentAssignment(Assignment assignment, String studentNumber, String assignmentId) {
+
+    }
+
+    @Override
     public List<Assignment> loadAssignmentDetails(String assignmentId) throws SQLException {
         return null;
     }

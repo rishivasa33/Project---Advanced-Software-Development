@@ -6,7 +6,6 @@ import dal.csci5308.project.group15.elearning.models.course.BaseCourse;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
-import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.MySqlCoursePersistence;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
             }
 
             ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-            return courseFactory.CreateGradedCourse(course_id, baseCourse.GetName(), baseCourse.GetDescription(), course_credits);
+            return courseFactory.CreateCourse(course_id, baseCourse.GetName(), baseCourse.GetDescription(), course_credits);
 
         } catch (SQLException sqlException) {
             throw new RuntimeException(sqlException);
@@ -80,7 +79,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
                 int total_credits = resultSet.getInt("gc.course_credits");
                 String course_name = resultSet.getString("gc.course_name");
                 String course_description = resultSet.getString("gc.course_description");
-                courseArrayList.add(courseFactory.CreateGradedCourse(course_id, course_name, course_description, total_credits));
+                courseArrayList.add(courseFactory.CreateCourse(course_id, course_name, course_description, total_credits));
             }
 
 

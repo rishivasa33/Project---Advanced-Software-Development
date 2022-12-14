@@ -13,5 +13,9 @@ public interface CreateAssignmentPersistence {
 
     public List<String> loadAssignmentList(String courseInstanceId) throws SQLException;
 
+    void saveStudentAssignment(Assignment assignment, String studentNumber, String assignmentId) throws SQLException;
+
     List<Assignment> loadAssignmentDetails(String assignmentId) throws SQLException;
+
+
 }

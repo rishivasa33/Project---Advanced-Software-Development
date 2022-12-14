@@ -3,6 +3,10 @@ package dal.csci5308.project.group15.elearning.quiz;
 import java.sql.*;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
+import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
+import dal.csci5308.project.group15.elearning.models.assignment.IAssignmentFactory;
+import dal.csci5308.project.group15.elearning.models.quiz.IQuizFactory;
 import dal.csci5308.project.group15.elearning.models.quiz.Quiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class QuizController {
-    QuizData quizdata = new QuizData();
+   // QuizData quizdata = new QuizData();
+    IQuizFactory quizFactory = FactoryFacade.instance().getQuizFactory();
+    QuizData quizData = quizFactory.quizData();
+
 
     @GetMapping("/a")
     public String createQuiz(){
@@ -30,8 +37,10 @@ public class QuizController {
     @PostMapping("/saveQuiz")
     public String saveQuiz(@ModelAttribute("quiz") QuizParams quiz, Model model) throws SQLException {
 
-        quizdata.setQuizIdFk(quiz.quizId);
-        Quiz quizModel = new Quiz(quiz);
+        quizData.setQuizIdFk(quiz.quizId);
+       // Quiz quizModel = new Quiz(quiz);
+        IQuizFactory quizFactory = FactoryFacade.instance().getQuizFactory();
+        Quiz quizModel = quizFactory.createQuiz(quiz);
         quizModel.SaveQuizInfo();
         return "createQuizQuestion";
     }
@@ -39,9 +48,11 @@ public class QuizController {
     @PostMapping("/saveQuizQuestion")
     public String saveQuizQuestion(@ModelAttribute("quiz") QuizParams quiz, Model model) throws SQLException {
 
-        quizdata.setQuestionIdFk(quiz.questionId);
-        Quiz quizModel = new Quiz(quiz);
-        quizModel.saveQuizQuestion(quizdata.getQuizIdFk(),quizdata.getQuestionIdFk());
+        quizData.setQuestionIdFk(quiz.questionId);
+        IQuizFactory quizFactory = FactoryFacade.instance().getQuizFactory();
+        Quiz quizModel = quizFactory.createQuiz(quiz);
+     //   Quiz quizModel = new Quiz(quiz);
+        quizModel.saveQuizQuestion(quizData.getQuizIdFk(),quizData.getQuestionIdFk());
 
             return "addQuestion";
 

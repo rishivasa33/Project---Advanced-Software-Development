@@ -43,6 +43,11 @@ public class CourseContentViewFactory {
         return new FetchModuleContentFileRequestView(jsonObject);
     }
 
+    public FetchModuleContentFileRequestView CreateFetchModuleContentFileRequestView(String courseId, String courseModuleId,
+                                                                                     String courseModuleContentId){
+        return new FetchModuleContentFileRequestView(courseId, courseModuleId, courseModuleContentId);
+    }
+
     public FetchFileContentResponseView CreateFetchFileContentResponseView(FileCourseContent fileCourseContent){
         return new FetchFileContentResponseView(fileCourseContent);
     }
