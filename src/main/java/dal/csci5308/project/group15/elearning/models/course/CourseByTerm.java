@@ -36,7 +36,7 @@ public class CourseByTerm implements ICourseByTerm {
         this.courseEndDate = term.getTermEndDate();
         this.courseTerm = term.getTermID();
         this.courseDetails = course;
-        this.enrolledSeats = totalSeats;
+        this.enrolledSeats = 0;
         this.totalSeats = totalSeats;
     }
 
