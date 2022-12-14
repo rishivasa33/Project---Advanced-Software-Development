@@ -11,6 +11,7 @@ import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseE
 public class EnrollmentValidatorByCourseCount extends EnrollmentValidatorTemplate {
 
     IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+
     @Override
     IValidationState validateStudentEligibility(IStudentCourseEnrollment studentCourseEnrollment, IValidationState validationState) {
         Integer studentEnrolledCourseCount = studentCourseEnrollment.loadStudentCourseCountByTerm(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance(), studentCourseEnrollment.getStudentNumber(), studentCourseEnrollment.getCourseTerm());

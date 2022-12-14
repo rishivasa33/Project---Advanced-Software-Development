@@ -13,7 +13,7 @@ public class MockDBGradedCoursePersistence implements GradedCoursePersistence {
 
     MockDBCoursePersistence coursePersistence_;
 
-    public MockDBGradedCoursePersistence(){
+    public MockDBGradedCoursePersistence() {
         coursePersistence_ = new MockDBCoursePersistence();
     }
 
@@ -21,9 +21,7 @@ public class MockDBGradedCoursePersistence implements GradedCoursePersistence {
 
     }
 
-
-
-    public Course Load(String course_id){
+    public Course Load(String course_id) {
         BaseCourse baseCourse = coursePersistence_.Load(course_id);
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         return courseFactory.CreateCourse(baseCourse.GetCourseID(), baseCourse.GetName(), baseCourse.GetDescription(), 10);
