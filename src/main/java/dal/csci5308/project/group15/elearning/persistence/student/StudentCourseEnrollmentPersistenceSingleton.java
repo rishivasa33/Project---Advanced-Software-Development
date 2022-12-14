@@ -11,13 +11,12 @@ public class StudentCourseEnrollmentPersistenceSingleton {
     private static MockStudentCourseEnrollment mockStudentCourseEnrollment_instance;
 
     private StudentCourseEnrollmentPersistenceSingleton() {
-        this.database = null;
         this.mockStudentCourseEnrollment_instance = null;
         this.mySqlStudentCourseEnrollment_instance = null;
     }
 
     private static MySqlStudentCourseEnrollment CreateMySqlStudentCourseEnrollmentPersistence() {
-        return new MySqlStudentCourseEnrollment(database);
+        return new MySqlStudentCourseEnrollment();
     }
 
     private static MockStudentCourseEnrollment CreateMockStudentCourseEnrollmentPersistence() {
