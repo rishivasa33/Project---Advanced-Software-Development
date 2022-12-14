@@ -2,8 +2,8 @@ package dal.csci5308.project.group15.elearning.forum;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
-import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ForumHandlerTest
+public class ForumTest
 {
     @Test
     public void loadEmptyForumTopicList()
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
-        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUserFactory authFactory = AuthUserUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopic topic = ForumFactory.instance().makeForumTopic();
 
@@ -37,7 +37,7 @@ public class ForumHandlerTest
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUserFactory authFactory = AuthUserUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
 
         forumTopic.setId("1");
@@ -56,7 +56,7 @@ public class ForumHandlerTest
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUserFactory authFactory = AuthUserUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
 
@@ -87,7 +87,7 @@ public class ForumHandlerTest
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUserFactory authFactory = AuthUserUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
 
@@ -133,7 +133,7 @@ public class ForumHandlerTest
     public void addCommentToTopic()
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
-        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUserFactory authFactory = AuthUserUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
         ForumTopic topic = ForumFactory.instance().makeForumTopic();

@@ -3,18 +3,18 @@ package dal.csci5308.project.group15.elearning.registerUser;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
 import dal.csci5308.project.group15.elearning.models.register.RegisterUser;
-import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.registerUser.RegisterUserMockDb;
+import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.registerUser.RegisterUserMockDatabase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-public class RegisterRegisterUserTest
+public class RegisterUserTest
 {
     @Test
     public void createNewUserTest()
     {
-        IDatabaseOperations mockDb = new RegisterUserMockDb();
+        IDatabaseOperations mockDb = new RegisterUserMockDatabase();
         RegisterUser registerUserHandler = RegisterUserFactory.instance().makeUser();
 
         RegisterUser user = new RegisterUser();
@@ -33,7 +33,7 @@ public class RegisterRegisterUserTest
     @Test
     public void getAllProgramListEmptyTest()
     {
-        IDatabaseOperations mockDb = new RegisterUserMockDb();
+        IDatabaseOperations mockDb = new RegisterUserMockDatabase();
         RegisterUser registerUserHandler = RegisterUserFactory.instance().makeUser();
 
         Map<String, String> programList = registerUserHandler.getAllProgramList(mockDb);
@@ -44,7 +44,7 @@ public class RegisterRegisterUserTest
     @Test
     public void getAllProgramListTest()
     {
-        IDatabaseOperations mockDb = new RegisterUserMockDb();
+        IDatabaseOperations mockDb = new RegisterUserMockDatabase();
         RegisterUser registerUserHandler = RegisterUserFactory.instance().makeUser();
 
         Map<String, String> programList = registerUserHandler.getAllProgramList(mockDb);
