@@ -3,7 +3,7 @@ package dal.csci5308.project.group15.elearning.models.forum;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

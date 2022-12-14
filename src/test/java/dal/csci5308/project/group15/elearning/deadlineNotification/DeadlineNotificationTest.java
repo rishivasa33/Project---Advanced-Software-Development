@@ -6,7 +6,7 @@ import dal.csci5308.project.group15.elearning.factory.authUser.IAuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
 import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.deadlineNotification.DeadlineNotificationMockDatabase;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

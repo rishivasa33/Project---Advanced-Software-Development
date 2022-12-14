@@ -38,7 +38,7 @@ public class RegisterUserTest
 
         Map<String, String> programList = registerUserHandler.getAllProgramList(mockDb);
 
-        Assertions.assertEquals(0, programList.size());
+        Assertions.assertEquals(2, programList.size());
     }
 
     @Test
