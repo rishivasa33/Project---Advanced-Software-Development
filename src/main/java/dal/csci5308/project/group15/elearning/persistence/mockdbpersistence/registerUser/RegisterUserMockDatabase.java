@@ -6,12 +6,12 @@ import dal.csci5308.project.group15.elearning.models.register.RegisterUser;
 import java.sql.SQLException;
 import java.util.*;
 
-public class RegisterUserMockDb implements IDatabaseOperations
+public class RegisterUserMockDatabase implements IDatabaseOperations
 {
     List<RegisterUser> registeredUsers;
     Map<String, String> programMap;
 
-    public RegisterUserMockDb()
+    public RegisterUserMockDatabase()
     {
         registeredUsers = new LinkedList<>();
         programMap = new HashMap<>();

@@ -6,11 +6,11 @@ import dal.csci5308.project.group15.elearning.models.deadlineNotification.Course
 import java.sql.SQLException;
 import java.util.*;
 
-public class DeadlineNotificationMockDb implements IDatabaseOperations
+public class DeadlineNotificationMockDatabase implements IDatabaseOperations
 {
     List<CourseMaterialDeadlineNotification> courseMaterialDeadlineNotificationList;
 
-    public DeadlineNotificationMockDb()
+    public DeadlineNotificationMockDatabase()
     {
         courseMaterialDeadlineNotificationList = new LinkedList<>();
     }

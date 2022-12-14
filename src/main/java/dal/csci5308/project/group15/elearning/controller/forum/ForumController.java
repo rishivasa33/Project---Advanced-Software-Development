@@ -2,7 +2,7 @@ package dal.csci5308.project.group15.elearning.controller.forum;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserUserFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.IForumFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
@@ -36,7 +36,7 @@ public class ForumController
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
         IForumFactory forumFactory = ForumFactory.instance();
-        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
+        IAuthUser authUser = AuthUserUserFactory.instance().makeAuthUser();
         ForumTopic forumTopic = forumFactory.makeForumTopic();
 
         forumTopicMap = forumTopic.getAllTopics(databaseOperations, authUser, courseId);
@@ -57,7 +57,7 @@ public class ForumController
         logger.debug("New Comment to add: " + comment.getComment());
 
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
+        IAuthUser authUser = AuthUserUserFactory.instance().makeAuthUser();
         String courseId = String.valueOf(model.getAttribute("courseId"));
         IForumFactory forumFactory = ForumFactory.instance();
         ForumTopicResponse response = forumFactory.makeForumTopicResponse();
@@ -75,7 +75,7 @@ public class ForumController
     public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic, Model model)
     {
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
+        IAuthUser authUser = AuthUserUserFactory.instance().makeAuthUser();
         IForumFactory forumFactory = ForumFactory.instance();
         ForumTopic forumTopic = forumFactory.makeForumTopic();
 

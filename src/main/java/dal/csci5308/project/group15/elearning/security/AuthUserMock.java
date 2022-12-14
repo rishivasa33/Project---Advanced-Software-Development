@@ -1,6 +1,6 @@
 package dal.csci5308.project.group15.elearning.security;
 
-public class MockAuthUser implements IAuthUser
+public class AuthUserMock implements IAuthUser
 {
     @Override
     public String getUsername()
