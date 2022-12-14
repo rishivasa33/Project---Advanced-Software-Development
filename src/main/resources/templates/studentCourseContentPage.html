@@ -28,12 +28,14 @@
             <a class="nav-link" href="/student/viewTermsOpenForRegistration">Register for Courses</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="#">View Calendar</a>
-        </li>
-        <li class="nav-item active">
             <a class="nav-link"
                th:href="@{/forum/list(courseId=${courseInstanceID})}"
                th:text="'View Forums'"></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link"
+               th:href="@{/loadAssignment/{courseInstanceID}(courseInstanceID=${courseInstanceID})}"
+               th:text="'View Assignments'"></a>
         </li>
     </ul>
 </nav>
@@ -63,11 +65,5 @@
     </div>
 </div>
 
-
-<h1 th:text="'Selected Course Is: ' + ${courseInstanceID}"></h1>
-<p><a  th:href="@{/loadAssignment/{courseInstanceID}(courseInstanceID=${courseInstanceID})}">View Assignment</a></p>
-<br/>
-<p><a th:href="@{/quiz}"> View Quiz </a></p>
-</body>
 
 </html>

@@ -9,23 +9,23 @@ import java.util.Random;
 
 public class MockDBCoursePersistence implements CoursePersistence {
 
-    public void Save(BaseCourse baseCourse){
+    public void Save(BaseCourse baseCourse) {
 
     }
 
-    public BaseCourse Load(String course_id){
+    public BaseCourse Load(String course_id) {
 
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         return courseFactory.CreateBaseCourse(course_id, "test" + course_id, "test description");
     }
 
-    public int GenerateUniqueCourseID(){
+    public int GenerateUniqueCourseID() {
         int minimum = 0;
         int maximum = Integer.MAX_VALUE - 10;
         Random rand = new Random();
         int n = maximum - minimum + 1;
         int i = rand.nextInt() % n;
-        int randomNum =  minimum + i;
+        int randomNum = minimum + i;
         return randomNum;
     }
 }

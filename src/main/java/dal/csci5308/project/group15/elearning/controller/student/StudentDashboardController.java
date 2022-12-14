@@ -1,10 +1,14 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
-import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
+import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentDetails;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
@@ -13,12 +17,10 @@ import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFacto
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentDetailsSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.Date;
@@ -30,6 +32,7 @@ import java.util.List;
 @Controller
 @SessionAttributes({"student_number"})
 public class StudentDashboardController {
+    IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
     @GetMapping("student/dashboard")
     public String viewStudentDashboard(Model model) {
@@ -41,20 +44,17 @@ public class StudentDashboardController {
         model.addAttribute("student_number", studentNumber);
         model.addAttribute("current_term", currentTerm);
 
-        //Fetch Student's university-level announcements
-
         List<CourseMaterialDeadlineNotification> notificationList = fetchUpcomingDeadlines();
         model.addAttribute("deadlines", notificationList);
 
-        return "studentDashboard";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_DASHBOARD");
     }
-
 
 
     private IStudentDetails fetchCurrentStudentDetails() {
         IStudentFactory studentFactory = FactoryFacade.instance().getStudentFactory();
         IStudentDetails studentDetails = studentFactory.createEmptyStudentDetailsInstance();
-        IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
+        IAuthUser authUser = AuthUserUserFactory.instance().makeAuthUser();
         studentDetails = studentDetails.loadByUserName(StudentDetailsSingleton.GetMySqlStudentDetailsInstance(), authUser.getUsername());
 
         return studentDetails;
@@ -83,8 +83,12 @@ public class StudentDashboardController {
     }
 
     private List<CourseMaterialDeadlineNotification> fetchUpcomingDeadlines() {
-        ICourseMaterialDeadlineNotificationHandler courseMaterialDeadlineNotificationHandler = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotificationHandler();
-        return courseMaterialDeadlineNotificationHandler.getCourseMaterialDeadlineNotifications();
+        CourseMaterialDeadlineNotification courseMaterialDeadlineNotification = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotification();
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+        IAuthUserFactory authFactory = AuthUserUserFactory.instance();
+        IAuthUser authUser = authFactory.makeAuthUser();
+
+        return courseMaterialDeadlineNotification.getCourseMaterialDeadlineNotifications(databaseOperations, authUser);
     }
 
 

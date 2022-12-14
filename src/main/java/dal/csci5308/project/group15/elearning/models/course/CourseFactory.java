@@ -8,15 +8,15 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class CourseFactory implements ICourseFactory {
-    public Course CreateCourse(String course_id, String course_name, String course_description, int total_credits){
+    public Course CreateCourse(String course_id, String course_name, String course_description, int total_credits) {
         return new Course(course_id, course_name, course_description, total_credits);
     }
 
-    public UnGradedCourse CreateUngradedCourse(String course_id, String course_name, String course_description){
+    public UnGradedCourse CreateUngradedCourse(String course_id, String course_name, String course_description) {
         return new UnGradedCourse(course_id, course_name, course_description);
     }
 
-    public BaseCourse CreateBaseCourse(String course_id, String course_name, String course_description){
+    public BaseCourse CreateBaseCourse(String course_id, String course_name, String course_description) {
         return new BaseCourse(course_id, course_name, course_description);
     }
 
@@ -36,14 +36,13 @@ public class CourseFactory implements ICourseFactory {
     }
 
 
-
-    public CourseByTerm createCourseByTermInstance(ICourse course, UniversityTerms terms, int capacity){
+    public CourseByTerm createCourseByTermInstance(ICourse course, UniversityTerms terms, int capacity) {
         return new CourseByTerm(course, terms, capacity);
     }
 
     @Override
-    public CourseByTerm CreateCourseInstanceForLoadByTerm(String term){
-        CourseByTerm  courseByTerm = new CourseByTerm(term);
+    public CourseByTerm CreateCourseInstanceForLoadByTerm(String term) {
+        CourseByTerm courseByTerm = new CourseByTerm(term);
         return courseByTerm;
     }
 

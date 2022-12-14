@@ -61,8 +61,5 @@ public class MySqlQuizPersistence implements QuizPersistence {
 
     }
 
-    @Override
-    public Quiz load(String quizId) {
-        return null;
-    }
+
 }

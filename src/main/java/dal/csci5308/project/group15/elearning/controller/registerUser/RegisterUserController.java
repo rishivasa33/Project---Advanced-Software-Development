@@ -5,8 +5,7 @@ import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
-import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.models.Register.IRegisterUserHandler;
+import dal.csci5308.project.group15.elearning.models.register.RegisterUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,7 @@ public class RegisterUserController
     @GetMapping("")
     public String loadRegisterPage(Model model)
     {
-        User newUser = getInitUser();
+        RegisterUser newUser = getInitUser();
         model.addAttribute("user", newUser);
         model.addAttribute("programMap", newUser.getProgramMap());
 
@@ -36,18 +35,18 @@ public class RegisterUserController
     }
 
     @PostMapping("/add")
-    public String registerNewUser(@ModelAttribute("user") User user, Model model)
+    public String registerNewUser(@ModelAttribute("user") RegisterUser user, Model model)
     {
-        IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
+        RegisterUser registerUser = RegisterUserFactory.instance().makeUser();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
 
         System.out.println(user);
 
-        int result = registerUserHandler.createNewUser(databaseOperations, user);
+        int result = registerUser.createNewUser(databaseOperations, user);
 
         if(result > 0)
         {
-            User newUser = getInitUser();
+            RegisterUser newUser = getInitUser();
             model.addAttribute("user", newUser);
 
             if(newUser.getProgramMap() == null)
@@ -72,13 +71,12 @@ public class RegisterUserController
         return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_REGISTER_USER");
     }
 
-    private User getInitUser()
+    private RegisterUser getInitUser()
     {
-        IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-        User newUser = RegisterUserFactory.instance().makeUser();
+        RegisterUser newUser = RegisterUserFactory.instance().makeUser();
 
-        Map<String, String> programMap = registerUserHandler.getAllProgramList(databaseOperations);
+        Map<String, String> programMap = newUser.getAllProgramList(databaseOperations);
         newUser.setProgramMap(programMap);
 
         return newUser;

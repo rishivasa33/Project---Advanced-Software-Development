@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.security;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.security.encoder.AuraPasswordEncoder;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -71,11 +72,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                .antMatchers("/forum/**").hasAnyAuthority("admin", "student", "professor", "superuser")
+                .antMatchers("/forum/**").hasAnyAuthority("admin", "student", "professor")
                 .antMatchers("/registerUser/**").hasAuthority("admin")
-                .antMatchers("/student/**").hasAnyAuthority("student", "admin")
+                .antMatchers("/student/**").hasAnyAuthority("student")
+                .antMatchers("/professor/courseDetails/fetchModuleContentFile/**").hasAnyAuthority("admin", "student", "professor")
                 .antMatchers("/professor/**").hasAnyAuthority("professor", "admin")
-                .antMatchers("/professor/courseDetails/fetchModuleContentFile").permitAll()
                 .antMatchers("/", "static/css", "static/js", "/login").permitAll()
                 .and().formLogin();
     }
