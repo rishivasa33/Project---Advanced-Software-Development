@@ -1,10 +1,8 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.*;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistence;
 
 import java.sql.*;
@@ -53,7 +51,7 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
 
 
     public CourseModule Load(int courseModuleID) throws SQLException {
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         try (Connection connection = database.getConnection()) {
             String sql_query = "SELECT * FROM course_module WHERE course_module_id = ?;";
@@ -77,7 +75,7 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
 
     public ArrayList<CourseContent> GetAllContentsInAModule(int courseModuleId) throws SQLException{
         ArrayList<CourseContent> courseContents = new ArrayList<>();
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         //CALL `CSCI5308_15_DEVINT`.`GetAllContentsInModule`(<{IN courseModuleId INT}>);
 
@@ -98,7 +96,7 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
                     courseContents.add(courseContent);
                 }
                 else {
-                    CourseContent courseContent = courseContentFactory.CreatePdfCourseContent(courseModuleContentId, courseModuleHeading, courseModuleContentFilePath);
+                    CourseContent courseContent = courseContentFactory.CreateFileCourseContent(courseModuleContentId, courseModuleHeading, courseModuleContentFilePath);
                     courseContents.add(courseContent);
                 }
             }
@@ -112,7 +110,7 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
 
 
     public ArrayList<CourseModule> GetAllModulesInCourse(String courseId) throws SQLException {
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
         ArrayList<CourseModule> courseModuleArrayList = new ArrayList<>();
 
         try (Connection connection = database.getConnection()) {
@@ -140,7 +138,7 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
     }
 
     public CourseContent LoadCourseContent(int courseContentId) throws SQLException {
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         try (Connection connection = database.getConnection()) {
             String sql_query = "SELECT * FROM course_module_content WHERE courseModuleContentId = ?;";
@@ -161,7 +159,7 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
                      return courseContent;
                 }
                 else {
-                    CourseContent courseContent = courseContentFactory.CreatePdfCourseContent(courseModuleContentId, courseModuleHeading, courseModuleContentFilePath);
+                    CourseContent courseContent = courseContentFactory.CreateFileCourseContent(courseModuleContentId, courseModuleHeading, courseModuleContentFilePath);
                     return courseContent;
                 }
             }

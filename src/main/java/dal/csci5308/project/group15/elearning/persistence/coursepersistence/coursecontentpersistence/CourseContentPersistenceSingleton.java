@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.coursepersistence.MockDBFileCourseContentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.coursepersistence.MockDBTextCourseContentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.coursecontentpersistence.MySqlFileCourseContentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.coursecontentpersistence.MySqlTextCourseContentPersistence;
@@ -13,6 +14,8 @@ public class CourseContentPersistenceSingleton {
     private  static MySqlTextCourseContentPersistence mySqlTextContentPersistenceInstance;
 
     private  static MySqlFileCourseContentPersistence mySqlFileContentPersistenceInstance;
+
+    private  static MockDBFileCourseContentPersistence mockDBFileContentPersistenceInstance;
 
 
     private static MockDBTextCourseContentPersistence CreateMockDBTextCourseContentPersistence(){
@@ -32,6 +35,7 @@ public class CourseContentPersistenceSingleton {
         mySqlTextContentPersistenceInstance = null;
         mySqlFileContentPersistenceInstance = null;
         mockDBCourseTextContentPersistenceInstance = null;
+        mockDBFileContentPersistenceInstance = null;
     }
 
 
@@ -41,6 +45,13 @@ public class CourseContentPersistenceSingleton {
           mockDBCourseTextContentPersistenceInstance = CreateMockDBTextCourseContentPersistence();
         }
         return mockDBCourseTextContentPersistenceInstance;
+    }
+
+    public static FileCourseContentPersistence GetMockDBFileCourseContentPersistence(){
+        if(mockDBFileContentPersistenceInstance == null){
+            mockDBFileContentPersistenceInstance = new MockDBFileCourseContentPersistence();
+        }
+        return mockDBFileContentPersistenceInstance;
     }
 
     public static TextCourseContentPersistence GetMySqlTextCourseContentPersistence(){
@@ -70,7 +81,7 @@ public class CourseContentPersistenceSingleton {
     public static FileCourseContentPersistence GetFileCourseContentPersistence(){
         String is_test_mode = System.getenv().getOrDefault("IS_TEST_MODE", null);
         if(is_test_mode != null && is_test_mode.equals("TRUE")){
-            return null;
+            return GetMockDBFileCourseContentPersistence();
         }
         else{
             return GetMySqlFileCourseContentPersistence();

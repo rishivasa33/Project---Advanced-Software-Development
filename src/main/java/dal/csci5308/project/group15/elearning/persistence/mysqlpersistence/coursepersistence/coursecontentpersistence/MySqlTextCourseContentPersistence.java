@@ -1,8 +1,10 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.coursecontentpersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.TextCourseContentPersistence;
 
@@ -83,7 +85,7 @@ public class MySqlTextCourseContentPersistence implements TextCourseContentPersi
     }
 
     public TextCourseContent Load(int courseContentId) throws SQLException {
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         try (Connection connection = database.getConnection()) {
             String sql_query = "SELECT * FROM course_module_content WHERE courseModuleContentId = ?;";
@@ -110,7 +112,7 @@ public class MySqlTextCourseContentPersistence implements TextCourseContentPersi
     public ArrayList<CourseContent> LoadAllContentsInModule(int courseModuleId) throws SQLException {
 
         ArrayList<CourseContent> courseContents = new ArrayList<>();
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         //CALL `CSCI5308_15_DEVINT`.`GetAllContentsInModule`(<{IN courseModuleId INT}>);
 
