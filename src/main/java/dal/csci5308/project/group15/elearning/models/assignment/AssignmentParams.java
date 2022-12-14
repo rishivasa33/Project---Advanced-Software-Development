@@ -1,7 +1,6 @@
 package dal.csci5308.project.group15.elearning.models.assignment;
 
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +34,6 @@ public class AssignmentParams {
     public void setSubId(String subId) {
         this.subId = subId;
     }
-
 
     public String getAssignmentId() {
         return assignmentId;
@@ -84,7 +82,6 @@ public class AssignmentParams {
             pathvalue = path.toString();
             Files.copy(getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return pathvalue;
     }
@@ -96,10 +93,7 @@ public class AssignmentParams {
             pathvalue = path.toString();
             Files.copy(getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return pathvalue;
     }
-
-
 }
