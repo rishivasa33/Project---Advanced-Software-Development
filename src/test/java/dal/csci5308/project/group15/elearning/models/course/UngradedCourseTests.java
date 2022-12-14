@@ -1,5 +1,6 @@
-package dal.csci5308.project.group15.elearning.models;
+package dal.csci5308.project.group15.elearning.models.course;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.UnGradedCoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.UnGradedCoursePersistence;
@@ -30,17 +31,32 @@ public class UngradedCourseTests {
     @Test
     void TestUnGradedCourseSave() throws SQLException {
 
-        CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
-        UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
-        course.Save();
+        try {
+
+            CourseFactory courseFactory = new CourseFactory();
+            UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
+            UnGradedCoursePersistence coursePersistence = UnGradedCoursePersistenceSingleton.GetMockDBUnGradedCoursePersistenceInstance();
+            course.Save();
+
+        }
+        catch (Exception exception){
+            Assertions.fail();
+        }
     }
 
     @Test
     void TestUnGradedCourseCreation(){
 
-        CourseFactory courseFactory = new CourseFactory();
-        UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
+        try {
+
+            ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
+            UnGradedCourse course = courseFactory.CreateUngradedCourse("5308", "test", "test2");
+            Assertions.assertTrue(true);
+
+        }
+        catch (Exception exception){
+            Assertions.fail();
+        }
     }
 
 

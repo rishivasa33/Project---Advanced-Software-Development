@@ -1,6 +1,8 @@
-package dal.csci5308.project.group15.elearning.models;
+package dal.csci5308.project.group15.elearning.models.course.coursecontent;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +18,8 @@ public class TextCourseContentTest {
         @Test
         void TestTextCourseContentCreation(){
 
-            CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
-            TextCourseContent textCourseContent = courseContentFactoryFactory.CreateTextCourseContent("content1", "text");
+            ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+            TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent("content1", "text");
             assertEquals(textCourseContent.GetContentHeading(), "content1");
             assertEquals(textCourseContent.GetTextContent(), "text");
 
@@ -26,8 +28,8 @@ public class TextCourseContentTest {
     @Test
     void TestTextCourseContentSave() throws SQLException {
 
-        CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
-        TextCourseContent textCourseContent = courseContentFactoryFactory.CreateTextCourseContent("content1", "text");
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+        TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent("content1", "text");
         textCourseContent.Save(1);
         assertEquals(textCourseContent.GetContentId(), 1);
 
@@ -38,8 +40,8 @@ public class TextCourseContentTest {
     @Test
     void TestTextCourseContentLoad() throws SQLException {
 
-        CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
-        TextCourseContent textCourseContent = courseContentFactoryFactory.CreateTextCourseContent("content1", "text");
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+        TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent("content1", "text");
         textCourseContent = (TextCourseContent) textCourseContent.Load(1);
         assertEquals(textCourseContent.GetContentHeading(), "content heading");
         assertEquals(textCourseContent.GetTextContent(), "content text");

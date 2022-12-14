@@ -1,7 +1,9 @@
-package dal.csci5308.project.group15.elearning.models;
+package dal.csci5308.project.group15.elearning.models.course.coursecontent;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistence;
 import dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.MySqlCourseModulePersistence;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,8 @@ public class CourseModuleTest {
     @Test
     void TestTextCourseModuleCreation(){
 
-        CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
-        CourseModule courseModule = courseContentFactoryFactory.CreateCourseModule("module1");
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+        CourseModule courseModule = courseContentFactory.CreateCourseModule("module1");
         assertEquals(courseModule.GetModuleName(), "module1");
 
 
@@ -27,8 +29,8 @@ public class CourseModuleTest {
     @Test
     void TestTextCourseModuleSave() throws SQLException {
 
-        CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
-        CourseModule courseModule = courseContentFactoryFactory.CreateCourseModule("module1");
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+        CourseModule courseModule = courseContentFactory.CreateCourseModule("module1");
         String course_code_id = "CSCI 5000";
         courseModule.Save(course_code_id);
         assertEquals(courseModule.GetModuleName(), "module1");
@@ -41,8 +43,8 @@ public class CourseModuleTest {
     @Test
     void TestTextCourseModuleLoad() throws SQLException {
 
-        CourseContentFactory courseContentFactoryFactory = new CourseContentFactory();
-        CourseModule courseModule = courseContentFactoryFactory.CreateCourseModule("empty");
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+        CourseModule courseModule = courseContentFactory.CreateCourseModule("empty");
         courseModule = courseModule.Load(1);
         assertEquals(courseModule.GetModuleName(), "module1");
         assertEquals(courseModule.GetCourseModuleId(), 1);

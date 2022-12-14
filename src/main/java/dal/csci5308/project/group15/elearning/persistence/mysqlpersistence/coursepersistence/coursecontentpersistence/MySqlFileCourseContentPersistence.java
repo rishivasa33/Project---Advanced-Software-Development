@@ -1,8 +1,9 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.coursepersistence.coursecontentpersistence;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.FileCourseContentPersistence;
 
 import java.sql.*;
@@ -65,7 +66,7 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
     }
 
     public FileCourseContent Load(int pdfFileCourseContentId) throws SQLException {
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         try (Connection connection = database.getConnection()) {
             String sql_query = "SELECT * FROM course_module_content WHERE courseModuleContentId = ?;";
@@ -82,7 +83,7 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
                 course_module_content_file_path = resultSet.getString("courseModuleContentFilePath");
             }
 
-            return courseContentFactory.CreatePdfCourseContent(course_module_content_name, course_module_content_file_path);
+            return courseContentFactory.CreateFileCourseContent(course_module_content_name, course_module_content_file_path);
 
         } catch (SQLException sqlException) {
             throw sqlException;

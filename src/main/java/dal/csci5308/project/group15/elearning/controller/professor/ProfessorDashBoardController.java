@@ -4,6 +4,7 @@ import dal.csci5308.project.group15.elearning.models.course.*;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistenceSingleton;
@@ -103,7 +104,7 @@ public class ProfessorDashBoardController {
     @PostMapping("courseDetails/AddModule")
     public RedirectView AddModuleView(@RequestParam String courseId, @RequestParam String course_module_name, RedirectAttributes redirectAttributes)
     {
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
         CourseModule courseModule = courseContentFactory.CreateCourseModule(course_module_name);
         try{
             courseModule.Save(courseId);
