@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.utility;
+package dal.csci5308.project.group15.elearning.properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

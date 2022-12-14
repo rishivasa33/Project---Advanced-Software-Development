@@ -26,13 +26,10 @@ public class CourseMaterialDeadlineNotificationHandler implements ICourseMateria
 
     }
 
-    public List<CourseMaterialDeadlineNotification> getCourseMaterialDeadlineNotifications()
+    public List<CourseMaterialDeadlineNotification> getCourseMaterialDeadlineNotifications(IDatabaseOperations databaseOperations, IAuthUser authUser)
     {
-        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
         List<CourseMaterialDeadlineNotification> notificationList = new LinkedList<>();
-        IAuthFactory authFactory = AuthUserFactory.instance();
-        IAuthUser authUser = authFactory.makeAuthUser();
 
         try
         {

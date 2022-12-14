@@ -1,5 +1,8 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
 import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
@@ -80,7 +83,10 @@ public class StudentDashboardController {
 
     private List<CourseMaterialDeadlineNotification> fetchUpcomingDeadlines() {
         ICourseMaterialDeadlineNotificationHandler courseMaterialDeadlineNotificationHandler = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotificationHandler();
-        return courseMaterialDeadlineNotificationHandler.getCourseMaterialDeadlineNotifications();
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser authUser = authFactory.makeAuthUser();
+        return courseMaterialDeadlineNotificationHandler.getCourseMaterialDeadlineNotifications(databaseOperations, authUser);
     }
 
 
