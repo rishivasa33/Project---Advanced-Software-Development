@@ -48,6 +48,22 @@ public class MySqlCreateAssignmentPersistence implements CreateAssignmentPersist
         return assignmentList;
     }
 
+    @Override
+    public void saveStudentAssignment(Assignment assignment, String studentNumber, String assignmentId) throws SQLException {
+
+        Connection connection = Database.instance().getConnection();
+        CallableStatement stmt = connection.prepareCall("call put_assignment_submission_details(?,?,?)");
+        stmt.setString(1, studentNumber);
+        stmt.setString(2, assignmentId);
+        stmt.setString(3, assignment.getStudentFilePath());
+
+        int result = stmt.executeUpdate();
+        System.out.println(result);
+        connection.commit();
+        connection.close();
+
+    }
+
     public List<Assignment> loadAssignmentDetails(String assignmentId) throws SQLException {
         Connection connection = Database.instance().getConnection();
         PreparedStatement stmt = connection.prepareStatement("call getAssignmentDetails(?)");
