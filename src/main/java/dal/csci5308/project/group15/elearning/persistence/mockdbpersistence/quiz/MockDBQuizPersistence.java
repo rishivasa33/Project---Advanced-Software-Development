@@ -19,10 +19,8 @@ public class MockDBQuizPersistence implements QuizPersistence {
     @Override
     public void saveQuizQuestion(Quiz quiz, String quizIdFk, String questionIdFk) {
 
+
     }
 
-    @Override
-    public Quiz load(String quizId) {
-        return null;
-    }
+
 }

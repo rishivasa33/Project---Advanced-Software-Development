@@ -11,9 +11,5 @@ public interface QuizPersistence {
     void saveQuizInfo(Quiz quiz) throws SQLException;
 
 
-
-    public Quiz load(String quizId);
-
-
     void saveQuizQuestion(Quiz quiz, String quizIdFk, String questionIdFk) throws SQLException;
 }
