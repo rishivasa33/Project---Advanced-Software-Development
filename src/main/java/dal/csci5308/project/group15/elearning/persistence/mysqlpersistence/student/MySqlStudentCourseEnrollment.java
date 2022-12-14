@@ -1,21 +1,32 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.student;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollment;
+import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
+import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPersistence {
 
+    IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+    IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
     Database database;
 
     public MySqlStudentCourseEnrollment(Database database) {
@@ -23,19 +34,14 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
     }
 
     @Override
-    public String save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
-        try (Connection connection = database.getConnection()) {
-            String query = "insert into student_course_enrollment (student_number, course_instance_id, course_term) values(?, ? ,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, studentCourseEnrollment.getStudentNumber());
-            preparedStatement.setString(2, studentCourseEnrollment.getCourseInstanceID());
-            preparedStatement.setString(3, studentCourseEnrollment.getCourseTerm());
-            int modifiedRows = preparedStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException sqlException) {
-            throw new RuntimeException();
+    public Integer save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
+        try {
+            return databaseOperations.create(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_COURSE_ENROLLMENT_SAVE"),
+                    studentCourseEnrollment.getStudentNumber(), studentCourseEnrollment.getCourseInstanceID(), studentCourseEnrollment.getCourseTerm());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return "SUCCESS";
     }
 
     @Override
@@ -113,4 +119,45 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public Integer loadStudentCourseCountByTerm(String studentNumber, String courseTerm) {
+        Integer courseCount = 0;
+        Map<String, List<Object>> resultSet;
+        try {
+            resultSet = databaseOperations.read(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_COURSE_ENROLLMENT_VALIDATE_BY_COURSE_COUNT"), studentNumber, courseTerm);
+
+            courseCount = parseValidationResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courseCount;
+    }
+
+    @Override
+    public Integer loadStudentCreditCountByTerm(String studentNumber, String courseTerm) {
+        Integer creditsCount = 0;
+        Map<String, List<Object>> resultSet;
+        try {
+            resultSet = databaseOperations.read(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_COURSE_ENROLLMENT_VALIDATE_BY_CREDIT_COUNT"), studentNumber, courseTerm);
+
+            creditsCount = parseValidationResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return creditsCount;
+    }
+
+    private Integer parseValidationResultSet(Map<String, List<Object>> resultSet) {
+        Integer courseCount = 0;
+        for (int row = 0; row < databaseOperations.getRowCount(resultSet); row++) {
+            Long count = (Long) (databaseOperations.getValueAt(resultSet, "COUNT", row));
+            courseCount = count.intValue();
+        }
+        return courseCount;
+    }
+
+
 }
