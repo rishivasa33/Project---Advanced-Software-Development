@@ -1,6 +1,10 @@
 package dal.csci5308.project.group15.elearning.models.student;
 
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
+import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.EnrollmentValidatorByCourseCount;
+import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.EnrollmentValidatorByCreditsCount;
+import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.EnrollmentValidatorTemplate;
+import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.state.IValidationState;
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
 import java.sql.SQLException;
@@ -14,8 +18,11 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
 
     private String courseTerm;
     private ICourseByTerm courseInstance;
+
     private Integer enrolledSeats;
     private Integer totalSeats;
+
+    private IValidationState validationState;
 
     public StudentCourseEnrollment(String courseInstanceID, String studentNumber, ICourseByTerm courseInstance) {
         this.courseInstanceID = courseInstanceID;
@@ -60,12 +67,48 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
         return courseInstance;
     }
 
+    public Integer getEnrolledSeats() {
+        return enrolledSeats;
+    }
+
+    public Integer getTotalSeats() {
+        return totalSeats;
+    }
+
     @Override
-    public String saveAfterValidations(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException {
-        String saveResult = "SUCCESS";
-        //TODO: Validation Template
-        saveResult = iStudentCourseEnrollmentPersistence.save(this);
-        return saveResult;
+    public String saveBasedOnCourseCount(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException {
+        if (validateSaveByCourseCount().isValid()) {
+            iStudentCourseEnrollmentPersistence.save(this);
+        }
+        return validationState.getValidationResult();
+    }
+
+    @Override
+    public String saveBasedOnCreditCount(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException {
+        if (validateSaveByCreditsCount().isValid()) {
+            iStudentCourseEnrollmentPersistence.save(this);
+        }
+        return validationState.getValidationResult();
+    }
+
+
+    @Override
+    public IValidationState validateSaveByCourseCount() {
+
+        EnrollmentValidatorTemplate registrationValidator = new EnrollmentValidatorByCourseCount();
+
+        validationState = registrationValidator.validateStudentRegistration(this);
+
+        return validationState;
+    }
+
+    @Override
+    public IValidationState validateSaveByCreditsCount() {
+        EnrollmentValidatorTemplate registrationValidator = new EnrollmentValidatorByCreditsCount();
+
+        validationState = registrationValidator.validateStudentRegistration(this);
+
+        return validationState;
     }
 
     @Override
@@ -81,6 +124,16 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
     @Override
     public ArrayList<IStudentCourseEnrollment> loadByTermAndStudentNumber(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence, String studentNumber, String courseTerm) throws SQLException, ParseException {
         return iStudentCourseEnrollmentPersistence.loadByTermAndStudentNumber(studentNumber, courseTerm);
+    }
+
+    @Override
+    public Integer loadStudentCourseCountByTerm(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence, String studentNumber, String courseTerm) {
+        return iStudentCourseEnrollmentPersistence.loadStudentCourseCountByTerm(studentNumber, courseTerm);
+    }
+
+    @Override
+    public Integer loadStudentCreditCountByTerm(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence, String studentNumber, String courseTerm) {
+        return iStudentCourseEnrollmentPersistence.loadStudentCreditCountByTerm(studentNumber, courseTerm);
     }
 
     @Override

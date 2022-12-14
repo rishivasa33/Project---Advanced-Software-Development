@@ -175,7 +175,7 @@ public class StudentCourseController {
         IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstanceForSave(courseInstanceID, studentNumber, courseTerm, enrolledSeats, totalSeats);
 
         try {
-            registrationResult = studentCourseEnrollment.saveAfterValidations(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance());
+            registrationResult = studentCourseEnrollment.saveBasedOnCourseCount(StudentCourseEnrollmentPersistenceSingleton.GetMySqlStudentCourseEnrollmentPersistenceInstance());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
