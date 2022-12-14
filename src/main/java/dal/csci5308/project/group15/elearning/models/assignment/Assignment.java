@@ -4,6 +4,7 @@ import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistenceSingleton;
 
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class Assignment {
         createAssignmentPersistence.save(this);
     }
 
-    public List<String> loadAssignmentList(String assignmentId) throws SQLException{
+    public List<String> loadAssignmentList(String assignmentId) throws SQLException, FileNotFoundException {
       List<String> assignmentList = createAssignmentPersistence.loadAssignmentList(assignmentId);
       return assignmentList;
     }
