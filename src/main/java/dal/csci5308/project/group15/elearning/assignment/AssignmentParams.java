@@ -17,12 +17,7 @@ public class AssignmentParams {
     private String assignmentDescription;
     private Date assignmentEndDate;
     private Date assignmentStartDate;
-    private MultipartFile file ;
-    private MultipartFile studentfile ;
-
-
-    String studentNumber;
-
+    private MultipartFile file;
 
     public MultipartFile getFile() {
         return file;
@@ -78,7 +73,11 @@ public class AssignmentParams {
         return assignmentStartDate;
     }
 
-    public String getAssignmentFilePath(){
+    public void setAssignmentStartDate(Date assignmentStartDate) {
+        this.assignmentStartDate = assignmentStartDate;
+    }
+
+    public String getAssignmentFilePath() {
         String pathvalue = null;
         try {
             Path path = Paths.get("AssignmentProffAttachments/" + file.getOriginalFilename());
@@ -90,7 +89,7 @@ public class AssignmentParams {
         return pathvalue;
     }
 
-    public String getStudentAssignmentFilePath(){
+    public String getStudentAssignmentFilePath() {
         String pathvalue = null;
         try {
             Path path = Paths.get("StudentAssignmentAttachments/" + file.getOriginalFilename());
@@ -101,12 +100,6 @@ public class AssignmentParams {
         }
         return pathvalue;
     }
-
-    public void setAssignmentStartDate(Date assignmentStartDate) {
-        this.assignmentStartDate = assignmentStartDate;
-    }
-
-
 
 
 }
