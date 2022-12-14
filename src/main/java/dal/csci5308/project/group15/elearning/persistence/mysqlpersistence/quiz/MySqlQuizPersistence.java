@@ -2,9 +2,7 @@ package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.quiz
 
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.quiz.Quiz;
-import dal.csci5308.project.group15.elearning.models.quiz.QuizData;
 import dal.csci5308.project.group15.elearning.persistence.QuizPersistence;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;

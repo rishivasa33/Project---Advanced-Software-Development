@@ -3,7 +3,11 @@ package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.assi
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
