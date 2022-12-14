@@ -21,7 +21,6 @@ public class ProfessorDashBoardRestController {
     @PostMapping("courseDetails/courseModuleDetails/addCourseModuleContent")
     public String AddCourseContentToModuleView(@RequestBody String requestBody)
     {
-        System.out.println(requestBody);
         try {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
