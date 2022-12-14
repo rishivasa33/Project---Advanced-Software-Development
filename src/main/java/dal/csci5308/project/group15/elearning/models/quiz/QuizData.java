@@ -2,11 +2,10 @@ package dal.csci5308.project.group15.elearning.models.quiz;
 
 public class QuizData {
 
-    public QuizData() {
-    }
-
     private String questionIdFk;
     private String quizIdFk;
+    public QuizData() {
+    }
 
     public String getQuizIdFk() {
         return quizIdFk;

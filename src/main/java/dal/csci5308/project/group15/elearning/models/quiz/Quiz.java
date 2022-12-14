@@ -2,7 +2,6 @@ package dal.csci5308.project.group15.elearning.models.quiz;
 
 import dal.csci5308.project.group15.elearning.persistence.QuizPersistence;
 import dal.csci5308.project.group15.elearning.persistence.QuizPersistenceSingleton;
-
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -23,6 +22,28 @@ public class Quiz {
     String option4;
     String quizIdFk;
     String questionIdFk;
+    QuizPersistence quizPersistence;
+
+    public Quiz(QuizParams quizObj) {
+        id = quizObj.getId();
+        quizId = quizObj.getQuizId();
+        name = quizObj.getName();
+        question = quizObj.getQuestion();
+        description = quizObj.getDescription();
+        questionId = quizObj.getQuestionId();
+        answer = quizObj.getAnswer();
+        endDate = quizObj.getEndDate();
+        startDate = quizObj.getStartDate();
+        option1 = quizObj.getOption1();
+        option2 = quizObj.getOption2();
+        option3 = quizObj.getOption3();
+        option4 = quizObj.getOption4();
+        quizPersistence = QuizPersistenceSingleton.GetQuizPersistence();
+    }
+
+    public Quiz() {
+        quizPersistence = QuizPersistenceSingleton.GetQuizPersistence();
+    }
 
     public String getQuizIdFk() {
         return quizIdFk;
@@ -39,10 +60,6 @@ public class Quiz {
     public void setQuestionIdFk(String questionIdFk) {
         this.questionIdFk = questionIdFk;
     }
-
-
-
-    QuizPersistence quizPersistence;
 
     public String getId() {
         return id;
@@ -156,36 +173,11 @@ public class Quiz {
         this.option4 = option4;
     }
 
-    public Quiz(QuizParams quizObj){
-        id = quizObj.getId();
-        quizId = quizObj.getQuizId();
-        name = quizObj.getName();
-        question = quizObj.getQuestion();
-        description = quizObj.getDescription();
-        questionId = quizObj.getQuestionId();
-        answer = quizObj.getAnswer();
-        endDate = quizObj.getEndDate();
-        startDate = quizObj.getStartDate();
-        option1 = quizObj.getOption1();
-        option2 = quizObj.getOption2();
-        option3 = quizObj.getOption3();
-        option4 = quizObj.getOption4();
-
-
-        quizPersistence = QuizPersistenceSingleton.GetQuizPersistence();
-    }
-
-    public Quiz(){
-        quizPersistence = QuizPersistenceSingleton.GetQuizPersistence();
-    }
-
     public void SaveQuizInfo() throws SQLException {
-       quizPersistence.saveQuizInfo(this);
+        quizPersistence.saveQuizInfo(this);
     }
-
-
 
     public void saveQuizQuestion(String quizIdFk, String questionIdFk) throws SQLException {
-        quizPersistence.saveQuizQuestion(this,quizIdFk,questionIdFk);
+        quizPersistence.saveQuizQuestion(this, quizIdFk, questionIdFk);
     }
 }

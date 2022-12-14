@@ -1,7 +1,6 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.quiz;
 
 import dal.csci5308.project.group15.elearning.database.Database;
-import dal.csci5308.project.group15.elearning.models.quiz.IQuizFactory;
 import dal.csci5308.project.group15.elearning.models.quiz.Quiz;
 import dal.csci5308.project.group15.elearning.models.quiz.QuizData;
 import dal.csci5308.project.group15.elearning.persistence.QuizPersistence;
@@ -12,8 +11,7 @@ import java.sql.SQLException;
 
 public class MySqlQuizPersistence implements QuizPersistence {
 
-    public MySqlQuizPersistence(){
-
+    public MySqlQuizPersistence() {
     }
 
     @Override
@@ -25,27 +23,21 @@ public class MySqlQuizPersistence implements QuizPersistence {
         stmt.setString(3, quiz.getDescription());
         stmt.setDate(4, quiz.getStartDate());
         stmt.setDate(5, quiz.getEndDate());
-
-        int result = stmt.executeUpdate();
-        System.out.println(result);
+        stmt.executeUpdate();
         connection.commit();
         connection.close();
     }
-    QuizData quizdata = new QuizData();
+
     @Override
     public void saveQuizQuestion(Quiz quiz, String quizIdFk, String questionIdFk) throws SQLException {
 
-        System.out.println(quiz.toString());
-        Connection connection = Database.instance().getConnection();;
+        Connection connection = Database.instance().getConnection();
         CallableStatement stmt1 = connection.prepareCall("call put_questions_details(?,?,?)");
         stmt1.setString(1, quiz.getQuestionId());
         stmt1.setString(2, quizIdFk);
         stmt1.setString(3, quiz.getQuestion());
-       System.out.println("question details " +quiz.getQuestionId() + quizIdFk + quiz.getQuestion());
 
-        int result1 = stmt1.executeUpdate();
-
-        //quizuestion.Save(int quizId)
+        stmt1.executeUpdate();
 
         CallableStatement stmt2 = connection.prepareCall("call put_answer_details(?,?,?,?,?,?)");
         stmt2.setString(1, questionIdFk);
@@ -54,13 +46,9 @@ public class MySqlQuizPersistence implements QuizPersistence {
         stmt2.setString(4, quiz.getOption3());
         stmt2.setString(5, quiz.getOption4());
         stmt2.setString(6, quiz.getAnswer());
-        int result2 = stmt2.executeUpdate();
-        System.out.println("answer details " +questionIdFk + quiz.getOption1() + quiz.getOption2() + quiz.getOption3() + quiz.getOption4()+ quiz.getAnswer());
+        stmt2.executeUpdate();
 
         connection.commit();
         connection.close();
-
     }
-
-
 }

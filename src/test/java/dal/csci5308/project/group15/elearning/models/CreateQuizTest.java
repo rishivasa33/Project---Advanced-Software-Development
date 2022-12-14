@@ -6,34 +6,31 @@ import dal.csci5308.project.group15.elearning.persistence.QuizPersistenceSinglet
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.sql.SQLException;
 
 @SpringBootTest
 public class CreateQuizTest {
 
     @Test
-    void TestsaveQuizInfo() throws SQLException{
-            try{
+    void testSaveQuizInfo(){
+        try {
 
-                Quiz quiz = new Quiz();
-                String value = "test";
-                quiz.setQuizId(value);
-                quiz.setQuizIdFk(value);
-                quiz.setAnswer(value);
-                quiz.setDescription(value);
-                quiz.SaveQuizInfo();
-                Assertions.assertTrue(true);
-            }
-            catch(Exception e){
-                Assertions.fail();
-            }
+            Quiz quiz = new Quiz();
+            String value = "test";
+            quiz.setQuizId(value);
+            quiz.setQuizIdFk(value);
+            quiz.setAnswer(value);
+            quiz.setDescription(value);
+            quiz.SaveQuizInfo();
+            Assertions.assertTrue(true);
+        } catch (Exception e) {
+            Assertions.fail();
+        }
     }
 
-
     @Test
-    void TestSaveQuizQuestions() throws SQLException{
-        try{
+    void testSaveQuizQuestions(){
+        try {
 
             Quiz quiz = new Quiz();
             String value = "test";
@@ -44,15 +41,14 @@ public class CreateQuizTest {
             QuizPersistence quizPersistence = QuizPersistenceSingleton.GetMockDBQuizPersistenceInstance();
             quizPersistence.saveQuizQuestion(quiz, "test", "test");
             Assertions.assertTrue(true);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assertions.fail();
         }
     }
 
     @Test
-    void TestQuizInfoCreation() throws SQLException{
-        try{
+    void testQuizInfoCreation(){
+        try {
 
             Quiz quiz = new Quiz();
             String value = "test2";
@@ -61,21 +57,16 @@ public class CreateQuizTest {
             quiz.SaveQuizInfo();
             Assertions.assertTrue(true);
             Assertions.assertEquals(quiz.getQuizIdFk(), value);
-            Assertions.assertEquals(quiz.getQuizId(), value);;
+            Assertions.assertEquals(quiz.getQuizId(), value);
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assertions.fail();
         }
     }
 
-
-
-
-
     @Test
-    void TestQuizInfoAttributes() throws SQLException{
-        try{
+    void testQuizInfoAttributes() throws SQLException {
+        try {
 
             Quiz quiz = new Quiz();
             String value = "test";
@@ -90,14 +81,10 @@ public class CreateQuizTest {
             Assertions.assertEquals(quiz.getAnswer(), value);
             Assertions.assertEquals(quiz.getDescription(), value);
 
-
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assertions.fail();
         }
     }
-
-
 
 
 }
