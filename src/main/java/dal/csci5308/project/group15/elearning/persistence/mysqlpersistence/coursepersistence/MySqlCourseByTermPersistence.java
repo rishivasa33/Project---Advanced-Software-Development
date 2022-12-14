@@ -6,7 +6,7 @@ import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,11 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MySqlCourseInstancePersistence implements CourseInstancePersistence {
+public class MySqlCourseByTermPersistence implements CourseByTermPersistence {
 
     Database database;
 
-    public MySqlCourseInstancePersistence(Database database) {
+    public MySqlCourseByTermPersistence(Database database) {
         this.database = database;
 /*        try (Connection connection = this.database.getConnection()) {
             String sql_query = "create table if not exists `course_by_term` (`course_instance_id` integer, `course_id` integer," +
@@ -72,14 +72,14 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
 
             while (resultSet.next()) {
                 String courseId = resultSet.getString("course_id");
-                Date startDate = resultSet.getDate("start_date");
-                Date endDate = resultSet.getDate("end_date");
+                Date startDate = resultSet.getDate("course_start_date");
+                Date endDate = resultSet.getDate("course_end_date");
                 String courseTerm = resultSet.getString("course_term");
                 Integer enrolledSeats = resultSet.getInt("enrolled_seats");
                 Integer totalSeats = resultSet.getInt("total_seats");
 
                 ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-                Course course = courseFactory.createCourseForLoad(courseId);
+                Course course = courseFactory.LoadCourseFromPersistence(courseId);
                 course = course.Load(courseId);
 
                 return courseFactory.CreateCourseInstance(courseInstanceId, course, startDate, endDate, courseTerm, enrolledSeats, totalSeats);
@@ -109,7 +109,7 @@ public class MySqlCourseInstancePersistence implements CourseInstancePersistence
                 Integer totalSeats = resultSet.getInt("total_seats");
 
                 ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-                Course course = courseFactory.createCourseForLoad(courseId);
+                Course course = courseFactory.LoadCourseFromPersistence(courseId);
                 course = course.Load(courseId);
 
                 ICourseByTerm courseInstance = courseFactory.CreateCourseInstance(courseInstanceId, course, startDate, endDate, courseTerm, enrolledSeats, totalSeats);

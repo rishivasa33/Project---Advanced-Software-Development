@@ -5,13 +5,13 @@ import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistence;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistence;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class MockDBCourseInstancePersistence implements CourseInstancePersistence {
+public class MockDBCourseByTermPersistence implements CourseByTermPersistence {
     @Override
     public void save(CourseByTerm courseByTerm) throws SQLException {
         courseByTerm.getCourseDetails().Save();
@@ -19,7 +19,7 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
 
     public CourseByTerm loadByID(String course_instance_id) throws ParseException, SQLException {
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-        Course course = courseFactory.createCourseForLoad("CSCI5100");
+        Course course = courseFactory.LoadCourseFromPersistence("CSCI5100");
         course = course.Load("CSCI5100");
         return courseFactory.CreateCourseInstance("TestCInstID",course, "15/01/2023", "15/04/2022", "F22", 10, 20);
     }
@@ -29,7 +29,7 @@ public class MockDBCourseInstancePersistence implements CourseInstancePersistenc
         ArrayList<ICourseByTerm> coursesByTerm = new ArrayList<>();
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
 
-        Course course = courseFactory.createCourseForLoad("CSCI5100");
+        Course course = courseFactory.LoadCourseFromPersistence("CSCI5100");
         course = course.Load("CSCI5100");
 
         ICourseByTerm courseInstance = courseFactory.CreateCourseInstance("TestCInsID1", course, "15/01/2023", "15/04/2022", "F22", 10, 20);

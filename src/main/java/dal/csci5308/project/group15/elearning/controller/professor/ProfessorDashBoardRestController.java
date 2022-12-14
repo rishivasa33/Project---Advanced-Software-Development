@@ -76,7 +76,7 @@ public class ProfessorDashBoardRestController {
            String courseId = jsonObject.getString("courseId");
            int courseModuleId = Integer.parseInt(jsonObject.getString("courseModuleId"));
             CourseFactory courseFactory = new CourseFactory();
-            ICourse course = courseFactory.CreateGradedCourse("", "" , "", 10);
+            ICourse course = courseFactory.CreateCourse("", "" , "", 10);
             course = course.Load(courseId);
           if(course.IsGradedCourse()){
               Course gradedCourse = (Course) course;
@@ -95,18 +95,37 @@ public class ProfessorDashBoardRestController {
         }
     }
 
-    @RequestMapping(value="fetchModuleContentFile", method=RequestMethod.POST)
+    @RequestMapping(value="courseDetails/fetchModuleContentFile", method=RequestMethod.POST)
     public ResponseEntity<byte[]> getPDF(@RequestBody String json) {
         try {
             JsonObject jsonObject = CreateJsonObjectFromRequestBody.GetJsonObjectFromRequestBody(json);
             FetchModuleContentFileRequestView fetchModuleContentFileRequestView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchModuleContentFileRequestView(
                     jsonObject
             );
-           Course course =  FactoryFacade.instance().getCourseFactory().createCourseForLoad(fetchModuleContentFileRequestView.getCourseId());
+           Course course =  FactoryFacade.instance().getCourseFactory().LoadCourseFromPersistence(fetchModuleContentFileRequestView.getCourseId());
            course = course.Load(fetchModuleContentFileRequestView.getCourseId());
            FileCourseContent fileCourseContent =  course.GetCourseBase().GetContentFilePath(fetchModuleContentFileRequestView.getModuleId(), fetchModuleContentFileRequestView.getModuleContentId());
            FetchFileContentResponseView fetchFileContentResponseView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchFileContentResponseView(fileCourseContent);
            return fetchFileContentResponseView.GetResponseForSuccess();
+
+        }
+        catch (SQLException exception ){
+            return FetchFileContentResponseView.GetResponseForFailure();
+        }
+    }
+
+    @RequestMapping(value="courseDetails/fetchModuleContentFile/{courseId}/{courseModuleId}/{courseModuleContentId}", method=RequestMethod.GET)
+    public ResponseEntity<byte[]> getPDFFile(@PathVariable String courseId, @PathVariable String courseModuleId,
+                                             @PathVariable String courseModuleContentId) {
+        try {
+
+            FetchModuleContentFileRequestView fetchModuleContentFileRequestView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchModuleContentFileRequestView(
+                    courseId, courseModuleId, courseModuleContentId);
+            Course course =  FactoryFacade.instance().getCourseFactory().LoadCourseFromPersistence(fetchModuleContentFileRequestView.getCourseId());
+            course = course.Load(fetchModuleContentFileRequestView.getCourseId());
+            FileCourseContent fileCourseContent =  course.GetCourseBase().GetContentFilePath(fetchModuleContentFileRequestView.getModuleId(), fetchModuleContentFileRequestView.getModuleContentId());
+            FetchFileContentResponseView fetchFileContentResponseView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchFileContentResponseView(fileCourseContent);
+            return fetchFileContentResponseView.GetResponseForSuccess();
 
         }
         catch (SQLException exception ){

@@ -17,6 +17,8 @@ import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.Date;
@@ -46,6 +48,8 @@ public class StudentDashboardController {
 
         return "studentDashboard";
     }
+
+
 
     private IStudentDetails fetchCurrentStudentDetails() {
         IStudentFactory studentFactory = FactoryFacade.instance().getStudentFactory();
