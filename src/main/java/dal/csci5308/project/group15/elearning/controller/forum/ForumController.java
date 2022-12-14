@@ -10,7 +10,7 @@ import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFacto
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.security;
+package dal.csci5308.project.group15.elearning.security.encoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

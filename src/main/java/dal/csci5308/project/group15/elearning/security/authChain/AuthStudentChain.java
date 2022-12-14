@@ -1,10 +1,11 @@
-package dal.csci5308.project.group15.elearning.security;
+package dal.csci5308.project.group15.elearning.security.authChain;
 
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserUserFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
 
-public class AuthStudentState implements IAuthRoleState
+public class AuthStudentChain implements IAuthRoleChain
 {
     @Override
     public String getLandingPage()

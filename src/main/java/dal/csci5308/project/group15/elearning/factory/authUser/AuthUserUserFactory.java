@@ -1,8 +1,8 @@
 package dal.csci5308.project.group15.elearning.factory.authUser;
 
-import dal.csci5308.project.group15.elearning.security.AuthUser;
-import dal.csci5308.project.group15.elearning.security.IAuthUser;
-import dal.csci5308.project.group15.elearning.security.AuthUserMock;
+import dal.csci5308.project.group15.elearning.security.authUser.AuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.IAuthUser;
+import dal.csci5308.project.group15.elearning.security.authUser.AuthUserMock;
 
 public class AuthUserUserFactory implements IAuthUserFactory
 {

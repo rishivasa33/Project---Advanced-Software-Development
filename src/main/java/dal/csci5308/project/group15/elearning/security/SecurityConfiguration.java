@@ -1,6 +1,7 @@
 package dal.csci5308.project.group15.elearning.security;
 
 import dal.csci5308.project.group15.elearning.database.Database;
+import dal.csci5308.project.group15.elearning.security.encoder.AuraPasswordEncoder;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

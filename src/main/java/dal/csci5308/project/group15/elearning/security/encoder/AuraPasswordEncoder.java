@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.security;
+package dal.csci5308.project.group15.elearning.security.encoder;
 
 import dal.csci5308.project.group15.elearning.factory.encoder.EncoderFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
