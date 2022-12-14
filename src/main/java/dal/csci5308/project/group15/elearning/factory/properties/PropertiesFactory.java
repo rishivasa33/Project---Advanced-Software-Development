@@ -1,8 +1,8 @@
 package dal.csci5308.project.group15.elearning.factory.properties;
 
-import dal.csci5308.project.group15.elearning.utility.PropertiesUtility;
-import dal.csci5308.project.group15.elearning.utility.RedirectionsProperties;
-import dal.csci5308.project.group15.elearning.utility.SqlProperties;
+import dal.csci5308.project.group15.elearning.properties.PropertiesUtility;
+import dal.csci5308.project.group15.elearning.properties.RedirectionsProperties;
+import dal.csci5308.project.group15.elearning.properties.SqlProperties;
 
 public class PropertiesFactory implements IPropertiesFactory
 {

@@ -2,11 +2,7 @@ package dal.csci5308.project.group15.elearning.controller.login;
 
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
-import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
-import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
-import dal.csci5308.project.group15.elearning.security.AuthUser;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

@@ -1,8 +1,6 @@
 package dal.csci5308.project.group15.elearning.factory.registerUser;
 
-import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.models.Register.IRegisterUserHandler;
-import dal.csci5308.project.group15.elearning.models.Register.RegisterUserHandler;
+import dal.csci5308.project.group15.elearning.models.register.RegisterUser;
 
 public class RegisterUserFactory implements IRegisterUserFactory
 {
@@ -24,12 +22,7 @@ public class RegisterUserFactory implements IRegisterUserFactory
     }
 
     @Override
-    public User makeUser() {
-        return new User();
-    }
-
-    @Override
-    public IRegisterUserHandler makeRegisterUserHandler() {
-        return new RegisterUserHandler();
+    public RegisterUser makeUser() {
+        return new RegisterUser();
     }
 }
