@@ -1,6 +1,5 @@
 package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.student;
 
-import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
@@ -9,14 +8,8 @@ import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFacto
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.student.StudentCourseEnrollment;
-import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
-import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,11 +20,6 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
 
     IDatabaseOperations databaseOperations = DatabaseOperations.instance();
     IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
-    Database database;
-
-    public MySqlStudentCourseEnrollment(Database database) {
-        this.database = database;
-    }
 
     @Override
     public Integer save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
@@ -46,78 +34,56 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
 
     @Override
     public ArrayList<IStudentCourseEnrollment> loadByStudentNumber(String studentNumber) throws SQLException, ParseException {
-        ArrayList<IStudentCourseEnrollment> studentCourses = new ArrayList<>();
 
-        try (Connection connection = database.getConnection()) {
-            String sql = "SELECT * FROM student_course_enrollment WHERE student_number = ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, studentNumber);
-            ResultSet resultSet = statement.executeQuery();
+        ArrayList<IStudentCourseEnrollment> studentEnrolledCourses;
 
-            while (resultSet.next()) {
-                String courseInstanceId = resultSet.getString("course_instance_id");
-                String courseTerm = resultSet.getString("course_term");
+        Map<String, List<Object>> resultSet;
+        try {
+            resultSet = databaseOperations.read(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_COURSE_ENROLLMENT_LOAD_BY_STUDENT_NO"), studentNumber);
 
-                IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
-
-                IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstance(courseInstanceId, studentNumber, courseTerm);
-                studentCourses.add(studentCourseEnrollment);
-            }
-            return studentCourses;
-
-        } catch (SQLException sqlException) {
-            throw new RuntimeException();
+            studentEnrolledCourses = parseStudentCourseEnrollmentsToList(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+        return studentEnrolledCourses;
     }
+
 
     @Override
     public ArrayList<IStudentCourseEnrollment> loadByCourseInstanceID(String courseInstanceId) throws SQLException, ParseException {
-        ArrayList<IStudentCourseEnrollment> studentCourses = new ArrayList<>();
+        ArrayList<IStudentCourseEnrollment> studentEnrolledCourses;
 
-        try (Connection connection = database.getConnection()) {
-            String sql = "SELECT * FROM student_course_enrollment WHERE course_instance_id = ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, courseInstanceId);
-            ResultSet resultSet = statement.executeQuery();
+        Map<String, List<Object>> resultSet;
+        try {
+            resultSet = databaseOperations.read(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_COURSE_ENROLLMENT_LOAD_BY_COURSE_INSTANCE_ID"), courseInstanceId);
 
-            while (resultSet.next()) {
-                String studentNumber = resultSet.getString("student_number");
-                String courseTerm = resultSet.getString("course_term");
-
-                IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
-
-                IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstance(courseInstanceId, studentNumber, courseTerm);
-                studentCourses.add(studentCourseEnrollment);
-            }
-            return studentCourses;
-
-        } catch (SQLException sqlException) {
-            throw new RuntimeException();
+            studentEnrolledCourses = parseStudentCourseEnrollmentsToList(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+        return studentEnrolledCourses;
     }
 
     @Override
     public ArrayList<IStudentCourseEnrollment> loadByTermAndStudentNumber(String studentNumber, String courseTerm) throws SQLException, ParseException {
         ArrayList<IStudentCourseEnrollment> studentCourses = new ArrayList<>();
-        try (Connection connection = database.getConnection()) {
-            String sql = "SELECT * FROM student_course_enrollment WHERE student_number = ? and course_term = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, studentNumber);
-            statement.setString(2, courseTerm);
-            ResultSet resultSet = statement.executeQuery();
+        ArrayList<IStudentCourseEnrollment> studentEnrolledCourses;
 
-            while (resultSet.next()) {
-                String courseInstanceId = resultSet.getString("course_instance_id");
-                IStudentFactory courseFactory = FactoryFacade.instance().getStudentFactory();
+        Map<String, List<Object>> resultSet;
+        try {
+            resultSet = databaseOperations.read(
+                    propertiesFactory.makeSqlProperties().getPropertiesMap().get("STORED_PROCEDURE_COURSE_ENROLLMENT_LOAD_BY_TERM_AND_STUDENT_NO"), courseTerm, studentNumber);
 
-                IStudentCourseEnrollment studentCourseEnrollment = courseFactory.createStudentCourseEnrollmentInstance(courseInstanceId, studentNumber, courseTerm);
-                studentCourses.add(studentCourseEnrollment);
-            }
-            return studentCourses;
-
-        } catch (SQLException sqlException) {
-            throw new RuntimeException();
+            studentEnrolledCourses = parseStudentCourseEnrollmentsToList(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+        return studentEnrolledCourses;
     }
 
     @Override
@@ -150,6 +116,20 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
         return creditsCount;
     }
 
+    private ArrayList<IStudentCourseEnrollment> parseStudentCourseEnrollmentsToList(Map<String, List<Object>> resultSet) {
+        IStudentFactory studentFactory = FactoryFacade.instance().getStudentFactory();
+        ArrayList<IStudentCourseEnrollment> studentCourseEnrollments = new ArrayList<>();
+        for (int row = 0; row < databaseOperations.getRowCount(resultSet); row++) {
+            String studentNumber = String.valueOf(databaseOperations.getValueAt(resultSet, "student_number", row));
+            String courseInstanceID = String.valueOf(databaseOperations.getValueAt(resultSet, "course_instance_id", row));
+            String courseTerm = String.valueOf(databaseOperations.getValueAt(resultSet, "course_term", row));
+
+            IStudentCourseEnrollment enrollment = studentFactory.createStudentCourseEnrollmentInstance(courseInstanceID, studentNumber, courseTerm);
+            studentCourseEnrollments.add(enrollment);
+        }
+        return studentCourseEnrollments;
+    }
+
     private Integer parseValidationResultSet(Map<String, List<Object>> resultSet) {
         Integer courseCount = 0;
         for (int row = 0; row < databaseOperations.getRowCount(resultSet); row++) {
@@ -158,6 +138,5 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
         }
         return courseCount;
     }
-
 
 }

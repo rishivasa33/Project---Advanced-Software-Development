@@ -28,5 +28,6 @@ public interface IUniversityTerms {
 
 
     IUniversityTerms loadTermByTermId(IUniversityTermsPersistence iUniversityTermsPersistence, String termId) throws SQLException;
+
     IUniversityTerms loadCurrentTerm(IUniversityTermsPersistence iUniversityTermsPersistence, Date currentDate);
 }

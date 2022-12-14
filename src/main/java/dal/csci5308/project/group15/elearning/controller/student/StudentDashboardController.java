@@ -2,11 +2,13 @@ package dal.csci5308.project.group15.elearning.controller.student;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.factory.authUser.IAuthUserFactory;
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserUserFactory;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
+import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentDetails;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -29,6 +32,7 @@ import java.util.List;
 @Controller
 @SessionAttributes({"student_number"})
 public class StudentDashboardController {
+    IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
 
     @GetMapping("student/dashboard")
     public String viewStudentDashboard(Model model) {
@@ -40,14 +44,11 @@ public class StudentDashboardController {
         model.addAttribute("student_number", studentNumber);
         model.addAttribute("current_term", currentTerm);
 
-        //Fetch Student's university-level announcements
-
         List<CourseMaterialDeadlineNotification> notificationList = fetchUpcomingDeadlines();
         model.addAttribute("deadlines", notificationList);
 
-        return "studentDashboard";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_STUDENT_DASHBOARD");
     }
-
 
 
     private IStudentDetails fetchCurrentStudentDetails() {
@@ -81,8 +82,7 @@ public class StudentDashboardController {
         }
     }
 
-    private List<CourseMaterialDeadlineNotification> fetchUpcomingDeadlines()
-    {
+    private List<CourseMaterialDeadlineNotification> fetchUpcomingDeadlines() {
         CourseMaterialDeadlineNotification courseMaterialDeadlineNotification = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotification();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IAuthUserFactory authFactory = AuthUserUserFactory.instance();
