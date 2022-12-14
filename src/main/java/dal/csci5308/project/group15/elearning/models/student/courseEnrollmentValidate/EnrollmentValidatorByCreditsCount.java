@@ -18,7 +18,6 @@ public class EnrollmentValidatorByCreditsCount extends EnrollmentValidatorTempla
         Integer maxCreditsPerTerm = Integer.valueOf(propertiesFactory.makeSqlProperties().getPropertiesMap().get("MAX_CREDITS_COUNT_PER_TERM"));
 
         if (studentEnrolledCreditsCount >= maxCreditsPerTerm) {
-            studentCourseEnrollment.setRegistrationResult("Cannot Register! Student has already enrolled (" + studentEnrolledCreditsCount + ") in the maximum allowed (" + maxCreditsPerTerm + ") credits!");
             validationState = new ValidationFailedState();
             validationState.setValidationResult("Cannot Register! Student has already enrolled (" + studentEnrolledCreditsCount + ") in the maximum allowed (" + maxCreditsPerTerm + ") credits!");
             return validationState;

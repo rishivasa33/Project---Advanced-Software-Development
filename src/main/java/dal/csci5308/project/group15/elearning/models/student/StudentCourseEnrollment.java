@@ -22,8 +22,6 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
     private Integer enrolledSeats;
     private Integer totalSeats;
 
-    private String registrationResult;
-
     private IValidationState validationState;
 
     public StudentCourseEnrollment(String courseInstanceID, String studentNumber, ICourseByTerm courseInstance) {
@@ -48,7 +46,6 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
         this.courseTerm = courseTerm;
         this.enrolledSeats = enrolledSeats;
         this.totalSeats = totalSeats;
-        this.registrationResult = "SUCCESS";
     }
 
     @Override
@@ -138,15 +135,6 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
     public Integer loadStudentCreditCountByTerm(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence, String studentNumber, String courseTerm) {
         return iStudentCourseEnrollmentPersistence.loadStudentCreditCountByTerm(studentNumber, courseTerm);
     }
-
-    public String getRegistrationResult() {
-        return registrationResult;
-    }
-
-    public void setRegistrationResult(String registrationResult) {
-        this.registrationResult = registrationResult;
-    }
-
 
     @Override
     public String toString() {

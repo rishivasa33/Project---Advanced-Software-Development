@@ -17,7 +17,6 @@ public class EnrollmentValidatorByCourseCount extends EnrollmentValidatorTemplat
         Integer maxCourseCountPerTerm = Integer.valueOf(propertiesFactory.makeSqlProperties().getPropertiesMap().get("MAX_COURSE_COUNT_PER_TERM"));
 
         if (studentEnrolledCourseCount >= maxCourseCountPerTerm) {
-            studentCourseEnrollment.setRegistrationResult("Cannot Register! Student has already enrolled (" + studentEnrolledCourseCount + ") in the maximum allowed (" + maxCourseCountPerTerm + ") courses!");
             validationState = new ValidationFailedState();
             validationState.setValidationResult("Cannot Register! Student has already enrolled (" + studentEnrolledCourseCount + ") in the maximum allowed (" + maxCourseCountPerTerm + ") courses!");
             return validationState;

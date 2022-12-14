@@ -40,5 +40,4 @@ public interface IStudentCourseEnrollment {
 
     Integer loadStudentCreditCountByTerm(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence, String studentNumber, String courseTerm);
 
-    void setRegistrationResult(String s);
 }

@@ -32,7 +32,6 @@ public abstract class EnrollmentValidatorTemplate {
         if (enrolledSeats < totalSeats) {
             return true;
         } else {
-            studentCourseEnrollment.setRegistrationResult("Cannot Register! Seats are not available");
             validationState = new ValidationFailedState();
             validationState.setValidationResult("Cannot Register! Seats are not available");
             return false;
@@ -47,7 +46,6 @@ public abstract class EnrollmentValidatorTemplate {
             for (IStudentCourseEnrollment enrolledCourse : enrolledCoursesByStudent) {
                 String enrolledCourseID = enrolledCourse.getCourseInstanceID();
                 if (courseIDToBeEnrolled.equals(enrolledCourseID)) {
-                    studentCourseEnrollment.setRegistrationResult("Cannot Register! Student is already Enrolled!");
                     validationState = new ValidationFailedState();
                     validationState.setValidationResult("Cannot Register! Student is already Enrolled!");
                     return false;
