@@ -8,7 +8,11 @@ import dal.csci5308.project.group15.elearning.models.assignment.AssignmentParams
 import dal.csci5308.project.group15.elearning.models.assignment.IAssignmentFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
