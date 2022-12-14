@@ -1,14 +1,14 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.registerUser;
 
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
-import dal.csci5308.project.group15.elearning.models.Register.User;
+import dal.csci5308.project.group15.elearning.models.register.RegisterUser;
 
 import java.sql.SQLException;
 import java.util.*;
 
 public class RegisterUserMockDb implements IDatabaseOperations
 {
-    List<User> registeredUsers;
+    List<RegisterUser> registeredUsers;
     Map<String, String> programMap;
 
     public RegisterUserMockDb()
@@ -20,7 +20,7 @@ public class RegisterUserMockDb implements IDatabaseOperations
     @Override
     public int create(String query, Object... params) throws SQLException
     {
-        User user = new User();
+        RegisterUser user = new RegisterUser();
 
         user.setFirstName(String.valueOf(params[0]));
         user.setLastName(String.valueOf(params[1]));

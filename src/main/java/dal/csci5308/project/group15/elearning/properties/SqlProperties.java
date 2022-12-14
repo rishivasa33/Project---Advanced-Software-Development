@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.utility;
+package dal.csci5308.project.group15.elearning.properties;
 
 import java.util.Map;
 

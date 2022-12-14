@@ -8,7 +8,6 @@ import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
-import dal.csci5308.project.group15.elearning.models.forum.IForumHandler;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.forum.ForumMockDatabase;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.junit.jupiter.api.Assertions;
@@ -23,11 +22,11 @@ public class ForumHandlerTest
     public void loadEmptyForumTopicList()
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
+        ForumTopic topic = ForumFactory.instance().makeForumTopic();
 
-        Map<String, ForumTopic> forumTopicMap = forumHandler.getAllTopics(mockDb, mockAuthUser, "1");
+        Map<String, ForumTopic> forumTopicMap = topic.getAllTopics(mockDb, mockAuthUser, "1");
 
         Assertions.assertNotNull(forumTopicMap);
         Assertions.assertEquals(0, forumTopicMap.size());
@@ -38,7 +37,6 @@ public class ForumHandlerTest
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
 
@@ -48,7 +46,7 @@ public class ForumHandlerTest
         forumTopic.setCreatedBy("Test User");
         forumTopic.setCreatedOn("Test Date");
 
-        int result = forumHandler.createNewTopic(mockDb, mockAuthUser,"COURSE_1", forumTopic);
+        int result = forumTopic.createNewTopic(mockDb, mockAuthUser,"COURSE_1", forumTopic);
 
         Assertions.assertEquals(1, result);
     }
@@ -58,7 +56,6 @@ public class ForumHandlerTest
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
@@ -76,11 +73,11 @@ public class ForumHandlerTest
 
         forumTopic.getReplyList().add(response);
 
-        int result = forumHandler.createNewTopic(mockDb, mockAuthUser, "COURSE_2", forumTopic);
+        int result = forumTopic.createNewTopic(mockDb, mockAuthUser, "COURSE_2", forumTopic);
 
         Assertions.assertEquals(1, result);
 
-        Map<String, ForumTopic> forumTopicMap = forumHandler.getAllTopics(mockDb, mockAuthUser, "COURSE_2");
+        Map<String, ForumTopic> forumTopicMap = forumTopic.getAllTopics(mockDb, mockAuthUser, "COURSE_2");
 
         Assertions.assertEquals(1, forumTopicMap.size());
     }
@@ -90,7 +87,6 @@ public class ForumHandlerTest
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
         ForumTopic forumTopic = ForumFactory.instance().makeForumTopic();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
@@ -108,7 +104,7 @@ public class ForumHandlerTest
 
         forumTopic.getReplyList().add(response);
 
-        int result = forumHandler.createNewTopic(mockDb, mockAuthUser, "COURSE_1", forumTopic);
+        int result = forumTopic.createNewTopic(mockDb, mockAuthUser, "COURSE_1", forumTopic);
 
         Assertions.assertEquals(1, result);
 
@@ -121,11 +117,11 @@ public class ForumHandlerTest
 
         forumTopic.getReplyList().add(response2);
 
-        int result2 = forumHandler.createNewTopic(mockDb, mockAuthUser, "COURSE_1", forumTopic);
+        int result2 = forumTopic.createNewTopic(mockDb, mockAuthUser, "COURSE_1", forumTopic);
 
         Assertions.assertEquals(1, result2);
 
-        Map<String, ForumTopic> forumTopicMap = forumHandler.getAllTopics(mockDb, mockAuthUser, "COURSE_1");
+        Map<String, ForumTopic> forumTopicMap = forumTopic.getAllTopics(mockDb, mockAuthUser, "COURSE_1");
 
         System.out.println(forumTopicMap);
 
@@ -137,7 +133,6 @@ public class ForumHandlerTest
     public void addCommentToTopic()
     {
         IDatabaseOperations mockDb = new ForumMockDatabase();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthFactory authFactory = AuthUserFactory.instance();
         IAuthUser mockAuthUser = authFactory.makeMockAuthUser();
         ForumTopicResponse response = ForumFactory.instance().makeForumTopicResponse();
@@ -159,7 +154,7 @@ public class ForumHandlerTest
         Map<String, ForumTopic> forumTopicMap = new HashMap<>();
         forumTopicMap.put(topic.getId(), topic);
 
-        int result = forumHandler.createNewResponse(mockDb, mockAuthUser, forumTopicMap, comment);
+        int result = response.createNewResponse(mockDb, mockAuthUser, forumTopicMap, comment);
         Assertions.assertEquals(1, result);
     }
 

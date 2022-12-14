@@ -2,23 +2,22 @@ package dal.csci5308.project.group15.elearning.registerUser;
 
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.registerUser.RegisterUserFactory;
+import dal.csci5308.project.group15.elearning.models.register.RegisterUser;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.registerUser.RegisterUserMockDb;
-import dal.csci5308.project.group15.elearning.models.Register.User;
-import dal.csci5308.project.group15.elearning.models.Register.IRegisterUserHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-public class RegisterUserTest
+public class RegisterRegisterUserTest
 {
     @Test
     public void createNewUserTest()
     {
         IDatabaseOperations mockDb = new RegisterUserMockDb();
-        IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
+        RegisterUser registerUserHandler = RegisterUserFactory.instance().makeUser();
 
-        User user = new User();
+        RegisterUser user = new RegisterUser();
         user.setFirstName("Test");
         user.setLastName("User");
         user.setEmail("test@user.com");
@@ -35,7 +34,7 @@ public class RegisterUserTest
     public void getAllProgramListEmptyTest()
     {
         IDatabaseOperations mockDb = new RegisterUserMockDb();
-        IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
+        RegisterUser registerUserHandler = RegisterUserFactory.instance().makeUser();
 
         Map<String, String> programList = registerUserHandler.getAllProgramList(mockDb);
 
@@ -46,7 +45,7 @@ public class RegisterUserTest
     public void getAllProgramListTest()
     {
         IDatabaseOperations mockDb = new RegisterUserMockDb();
-        IRegisterUserHandler registerUserHandler = RegisterUserFactory.instance().makeRegisterUserHandler();
+        RegisterUser registerUserHandler = RegisterUserFactory.instance().makeUser();
 
         Map<String, String> programList = registerUserHandler.getAllProgramList(mockDb);
 

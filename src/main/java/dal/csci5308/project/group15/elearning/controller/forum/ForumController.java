@@ -7,7 +7,7 @@ import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.forum.IForumFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
-import dal.csci5308.project.group15.elearning.models.forum.IForumHandler;
+import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 import dal.csci5308.project.group15.elearning.models.forum.ForumComment;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;
@@ -34,12 +34,12 @@ public class ForumController
         logger.debug("Inside forum list showForum");
 
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
         IForumFactory forumFactory = ForumFactory.instance();
         IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
+        ForumTopic forumTopic = forumFactory.makeForumTopic();
 
-        forumTopicMap = forumHandler.getAllTopics(databaseOperations, authUser, courseId);
+        forumTopicMap = forumTopic.getAllTopics(databaseOperations, authUser, courseId);
 
         model.addAttribute("forumTopicMap", forumTopicMap);
         model.addAttribute("topicList", forumFactory.makeForumTopicList());
@@ -57,13 +57,14 @@ public class ForumController
         logger.debug("New Comment to add: " + comment.getComment());
 
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
         String courseId = String.valueOf(model.getAttribute("courseId"));
+        IForumFactory forumFactory = ForumFactory.instance();
+        ForumTopicResponse response = forumFactory.makeForumTopicResponse();
 
         if(comment.getComment().length() > 0)
         {
-            forumHandler.createNewResponse(databaseOperations, authUser, forumTopicMap, comment);
+            response.createNewResponse(databaseOperations, authUser, forumTopicMap, comment);
         }
 
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
@@ -73,15 +74,16 @@ public class ForumController
     @PostMapping("/createNewTopic")
     public String createNewTopic(@ModelAttribute("newTopic") ForumTopic newTopic, Model model)
     {
-        IForumHandler forumHandler = ForumFactory.instance().makeForumHandler();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
         IAuthUser authUser = AuthUserFactory.instance().makeAuthUser();
+        IForumFactory forumFactory = ForumFactory.instance();
+        ForumTopic forumTopic = forumFactory.makeForumTopic();
 
         String courseId = String.valueOf(model.getAttribute("courseId"));
 
         if(newTopic.getTopic().length() > 0)
         {
-            forumHandler.createNewTopic(databaseOperations, authUser, courseId, newTopic);
+            forumTopic.createNewTopic(databaseOperations, authUser, courseId, newTopic);
         }
 
         IPropertiesFactory propertiesFactory = PropertiesFactory.instance();

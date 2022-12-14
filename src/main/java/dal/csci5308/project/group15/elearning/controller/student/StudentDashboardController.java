@@ -1,7 +1,9 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
+import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
+import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
+import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
 import dal.csci5308.project.group15.elearning.models.deadlineNotification.CourseMaterialDeadlineNotification;
-import dal.csci5308.project.group15.elearning.models.deadlineNotification.ICourseMaterialDeadlineNotificationHandler;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -82,9 +83,14 @@ public class StudentDashboardController {
         }
     }
 
-    private List<CourseMaterialDeadlineNotification> fetchUpcomingDeadlines() {
-        ICourseMaterialDeadlineNotificationHandler courseMaterialDeadlineNotificationHandler = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotificationHandler();
-        return courseMaterialDeadlineNotificationHandler.getCourseMaterialDeadlineNotifications();
+    private List<CourseMaterialDeadlineNotification> fetchUpcomingDeadlines()
+    {
+        CourseMaterialDeadlineNotification courseMaterialDeadlineNotification = CourseMaterialDeadlineNotificationFactory.instance().makeCourseMaterialDeadlineNotification();
+        IDatabaseOperations databaseOperations = DatabaseOperations.instance();
+        IAuthFactory authFactory = AuthUserFactory.instance();
+        IAuthUser authUser = authFactory.makeAuthUser();
+
+        return courseMaterialDeadlineNotification.getCourseMaterialDeadlineNotifications(databaseOperations, authUser);
     }
 
 
