@@ -1,14 +1,14 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistenceSingleton;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
 public class CourseFactory implements ICourseFactory {
-    public Course CreateGradedCourse(String course_id, String course_name, String course_description, int total_credits){
+    public Course CreateCourse(String course_id, String course_name, String course_description, int total_credits){
         return new Course(course_id, course_name, course_description, total_credits);
     }
 
@@ -16,7 +16,7 @@ public class CourseFactory implements ICourseFactory {
         return new UnGradedCourse(course_id, course_name, course_description);
     }
 
-    public BaseCourse CreateCourse(String course_id, String course_name, String course_description){
+    public BaseCourse CreateBaseCourse(String course_id, String course_name, String course_description){
         return new BaseCourse(course_id, course_name, course_description);
     }
 
@@ -28,7 +28,7 @@ public class CourseFactory implements ICourseFactory {
         return new CourseByTerm(courseInstanceID, course, start_date, end_date, courseTerm, enrolledSeats, totalSeats);
     }
 
-    public Course createCourseForLoad(String courseID) throws SQLException {
+    public Course LoadCourseFromPersistence(String courseID) throws SQLException {
 
         Course course = new Course(courseID);
         course = course.Load(courseID);
@@ -47,10 +47,9 @@ public class CourseFactory implements ICourseFactory {
         return courseByTerm;
     }
 
-    @Override
-    public Course createCourseInstanceForLoad(String courseID) throws SQLException {
-        Course course = new Course(courseID);
-        course = course.Load(courseID);
-        return course;
+    public ICourseByTerm LoadCourseByTermFromPersistence(String courseByTermId) throws SQLException, ParseException {
+        CourseByTerm courseByTerm = new CourseByTerm("");
+        return courseByTerm.loadByID(CourseByTermPersistenceSingleton.GetCourseByTermPersistence(), courseByTermId);
     }
+
 }

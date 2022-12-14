@@ -16,7 +16,7 @@ public class MockDBCoursePersistence implements CoursePersistence {
     public BaseCourse Load(String course_id){
 
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-        return courseFactory.CreateCourse(course_id, "test" + course_id, "test description");
+        return courseFactory.CreateBaseCourse(course_id, "test" + course_id, "test description");
     }
 
     public int GenerateUniqueCourseID(){

@@ -40,7 +40,7 @@
         <h2>
             <span th:text="'Add a new Module'"></span>
         </h2>
-            <form  th:action="@{/courseDetails/AddModule}" method="post" id = "create_module_form">
+            <form  th:action="@{AddModule}" method="post" id = "create_module_form">
                 <label>Module Name</label><br>
                 <input type="text"  name = "course_module_name"/><br>
                 <input type = "hidden" th:name ="courseId"  th:value="${courseId}"/>

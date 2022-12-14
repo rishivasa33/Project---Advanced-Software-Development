@@ -6,7 +6,7 @@ import dal.csci5308.project.group15.elearning.models.course.courseContent.Course
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
@@ -56,7 +56,7 @@ public class ProfessorDashBoardController {
     public String CourseDetailsView(@RequestParam String courseId, Model model)
     {
         CourseFactory courseFactory = new CourseFactory();
-        Course course = courseFactory.CreateGradedCourse("","","", 0);
+        Course course = courseFactory.CreateCourse("","","", 0);
         try {
             course = course.Load(courseId);
             ArrayList<CourseModule> course_module_list = course.GetCourseBase().GetAllModules();
@@ -85,7 +85,7 @@ public class ProfessorDashBoardController {
         model.addAttribute("courseModuleId", courseModuleId);
 
         CourseFactory courseFactory = new CourseFactory();
-        ICourse course = courseFactory.CreateGradedCourse("", "" , "", 10);
+        ICourse course = courseFactory.CreateCourse("", "" , "", 10);
         try{
             course = course.Load(courseId);
             String moduleName = course.GetCourseBase().GetModuleName(Integer.parseInt(courseModuleId));
@@ -123,7 +123,7 @@ public class ProfessorDashBoardController {
     {
         try {
             ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-            Course course = courseFactory.CreateGradedCourse(course_code, course_name, course_description, total_credits);
+            Course course = courseFactory.CreateCourse(course_code, course_name, course_description, total_credits);
             course.Save();
             model.addAttribute("actionDone", true);
             model.addAttribute("actionName", "In Course Creation");
@@ -141,7 +141,7 @@ public class ProfessorDashBoardController {
     {
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         try {
-            Course course = courseFactory.createCourseForLoad(courseId);
+            Course course = courseFactory.LoadCourseFromPersistence(courseId);
             UniversityTerms universityTerms = FactoryFacade.instance().getUniversityTermsFactory().createEmptyUniversityTermsInstance();
             ArrayList<IUniversityTerms> universityTermsArrayList =  universityTerms.loadOpenForRegistrationTerms(UniversityTermsSingleton.GetMySqlUniversityTermsPersistenceInstance(), new Date(System.currentTimeMillis()));
             System.out.println("university terms size" + universityTermsArrayList.size());
@@ -163,7 +163,7 @@ public class ProfessorDashBoardController {
     {
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         try {
-            ICourse course = courseFactory.createCourseForLoad(courseId);
+            ICourse course = courseFactory.LoadCourseFromPersistence(courseId);
             course = course.Load(courseId);
             int capacityNumber = Integer.parseInt(capacity);
 
@@ -171,7 +171,7 @@ public class ProfessorDashBoardController {
             universityTerms = universityTerms.loadTermByTermId(UniversityTermsSingleton.GetMySqlUniversityTermsPersistenceInstance(), courseTerm);
 
             CourseByTerm courseByTerm = FactoryFacade.instance().getCourseFactory().createCourseByTermInstance(course,(UniversityTerms) universityTerms, capacityNumber);
-            courseByTerm.save(CourseInstancePersistenceSingleton.GetMySqlCourseInstancePersistenceInstance());
+            courseByTerm.save(CourseByTermPersistenceSingleton.GetMySqlCourseInstancePersistenceInstance());
             model.addAttribute("actionDone", true);
             model.addAttribute("actionName", "In Course Term Creation");
             return "courseCreationSuccess";
