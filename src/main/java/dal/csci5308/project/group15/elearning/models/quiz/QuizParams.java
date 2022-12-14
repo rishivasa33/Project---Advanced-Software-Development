@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.quiz;
+package dal.csci5308.project.group15.elearning.models.quiz;
 
 import java.sql.Date;
 

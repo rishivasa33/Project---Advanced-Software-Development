@@ -1,6 +1,5 @@
 package dal.csci5308.project.group15.elearning.models;
 
-import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
 import dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.assignment.MockDBCreateAssignmentPersistence;
 import org.junit.jupiter.api.Test;

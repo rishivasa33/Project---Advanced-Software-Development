@@ -2,7 +2,6 @@ package dal.csci5308.project.group15.elearning.models.quiz;
 
 import dal.csci5308.project.group15.elearning.persistence.QuizPersistence;
 import dal.csci5308.project.group15.elearning.persistence.QuizPersistenceSingleton;
-import dal.csci5308.project.group15.elearning.quiz.QuizParams;
 
 import java.sql.Date;
 import java.sql.SQLException;
