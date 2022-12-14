@@ -62,7 +62,7 @@ public class StudentCourseController {
     }
 
     @GetMapping("student/course/courseModuleContent/{courseId}/{courseModuleId}")
-    public String viewStudentDashboard(@PathVariable String courseId, @PathVariable String courseModuleId, Model model) {
+    public String viewCourseModuleContent(@PathVariable String courseId, @PathVariable String courseModuleId, Model model) {
 
         try {
             ICourse course = FactoryFacade.instance().getCourseFactory().LoadCourseFromPersistence(courseId);
