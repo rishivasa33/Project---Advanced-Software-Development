@@ -4,6 +4,8 @@ import dal.csci5308.project.group15.elearning.models.assignment.AssignmentFactor
 import dal.csci5308.project.group15.elearning.models.assignment.IAssignmentFactory;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.quiz.IQuizFactory;
 import dal.csci5308.project.group15.elearning.models.quiz.QuizFactory;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
@@ -28,12 +30,15 @@ public class FactoryFacade {
     private static IStudentFactory studentFactory;
     private static IUniversityTermsFactory universityTermsFactory;
 
+    private static ICourseContentFactory courseContentFactory;
+
     private FactoryFacade() {
         courseFactory = new CourseFactory();
         studentFactory = new StudentFactory();
         universityTermsFactory = new UniversityTermsFactory();
         assignmentFactory = new AssignmentFactory();
         quizFactory = new QuizFactory();
+        courseContentFactory = new CourseContentFactory();
     }
 
     public static FactoryFacade instance() {
@@ -64,6 +69,10 @@ public class FactoryFacade {
 
     public IQuizFactory getQuizFactory() {
         return quizFactory;
+    }
+
+    public ICourseContentFactory getCourseContentFactory(){
+        return courseContentFactory;
     }
 
 

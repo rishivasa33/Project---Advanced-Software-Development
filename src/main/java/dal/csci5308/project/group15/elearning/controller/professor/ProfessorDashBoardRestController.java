@@ -4,10 +4,7 @@ import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.*;
 import dal.csci5308.project.group15.elearning.views.ViewFactoriesCollection;
 import dal.csci5308.project.group15.elearning.views.course.courseContent.*;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +25,7 @@ public class ProfessorDashBoardRestController {
         try {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
-            CourseContentFactory courseContentFactory = new CourseContentFactory();
+            ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
             TextCourseContent textCourseContent = courseContentFactory.CreateTextCourseContent(courseContentView);
             textCourseContent.Save(courseContentView.getCourseModuleId());
             CourseContentResponseView courseContentResponseView = courseContentViewFactory.CreateTextCourseContentResponseView(courseContentView.getCourseId(), courseContentView.getCourseModuleId(), textCourseContent);
@@ -54,8 +51,8 @@ public class ProfessorDashBoardRestController {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateFormDataCourseContentView(courseId,
                     courseModuleId, courseContentHeading, uploadedFile);
-            CourseContentFactory courseContentFactory = new CourseContentFactory();
-            FileCourseContent pdfFileCourseContent =  courseContentFactory.CreatePdfCourseContent(courseContentView);
+            ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
+            FileCourseContent pdfFileCourseContent =  courseContentFactory.CreateFileCourseContent(courseContentView);
             pdfFileCourseContent.Save(courseContentView.getCourseModuleId());
             CourseContentResponseView courseContentResponseView = courseContentViewFactory.CreatePdfCourseContentResponseView(courseContentView.getCourseId(), courseContentView.getCourseModuleId(), pdfFileCourseContent);
             return courseContentResponseView.getSerializedStringForSuccess();

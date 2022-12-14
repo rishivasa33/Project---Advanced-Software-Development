@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.models;
+package dal.csci5308.project.group15.elearning.models.course;
 
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
@@ -21,7 +21,7 @@ public class CourseTests {
 
 
         @Test
-    void TestGradedCourseCreation(){
+    void TestCourseCreation(){
 
         CourseFactory courseFactory = new CourseFactory();
         Course course = courseFactory.CreateCourse("5308", "test", "test2", 10);
@@ -32,14 +32,14 @@ public class CourseTests {
     }
 
     @Test
-    void TestGradedCourseCredits(){
+    void TestCourse(){
         CourseFactory courseFactory = new CourseFactory();
         Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
         assertEquals(course.GetCredits(), 20);
     }
 
     @Test
-    void TestGradedCourseSave() throws SQLException {
+    void TestCourseSave() throws SQLException {
         CourseFactory courseFactory = new CourseFactory();
         Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
@@ -47,7 +47,7 @@ public class CourseTests {
     }
 
     @Test
-    void TestGradedCourseLoad() throws SQLException {
+    void TestCourseLoad() throws SQLException {
 
         GradedCoursePersistence coursePersistence =  GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         Course course = coursePersistence.Load("5308");

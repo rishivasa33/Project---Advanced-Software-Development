@@ -1,8 +1,10 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.coursepersistence;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.CourseModulePersistence;
 
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ public class MockDBCourseModulePersistence implements CourseModulePersistence {
 
 
     public CourseModule Load(int courseModuleID){
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
         return courseContentFactory.CreateCourseModule("module1");
     }

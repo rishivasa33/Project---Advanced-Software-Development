@@ -1,7 +1,9 @@
 package dal.csci5308.project.group15.elearning.persistence.mockdbpersistence.coursepersistence;
 
+import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.TextCourseContentPersistence;
 
@@ -15,7 +17,7 @@ public class MockDBTextCourseContentPersistence implements TextCourseContentPers
     }
 
     public TextCourseContent Load(int courseContentId){
-        CourseContentFactory courseContentFactory = new CourseContentFactory();
+        ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
         return courseContentFactory.CreateTextCourseContent ("content heading", "content text");
     }
 

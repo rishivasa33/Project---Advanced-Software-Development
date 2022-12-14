@@ -10,6 +10,7 @@ import dal.csci5308.project.group15.elearning.persistence.coursepersistence.Cour
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MockDBCourseByTermPersistence implements CourseByTermPersistence {
     @Override
@@ -21,7 +22,7 @@ public class MockDBCourseByTermPersistence implements CourseByTermPersistence {
         ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
         Course course = courseFactory.LoadCourseFromPersistence("CSCI5100");
         course = course.Load("CSCI5100");
-        return courseFactory.CreateCourseInstance("TestCInstID",course, "15/01/2023", "15/04/2022", "F22", 10, 20);
+        return courseFactory.CreateCourseInstance(course_instance_id,course, new Date(60000), new Date(61000), "F22", 10, 20);
     }
 
     @Override
