@@ -23,18 +23,19 @@ public class MySqlStudentCourseEnrollment implements IStudentCourseEnrollmentPer
     }
 
     @Override
-    public void save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
+    public String save(StudentCourseEnrollment studentCourseEnrollment) throws SQLException {
         try (Connection connection = database.getConnection()) {
             String query = "insert into student_course_enrollment (student_number, course_instance_id, course_term) values(?, ? ,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, studentCourseEnrollment.getStudentNumber());
             preparedStatement.setString(2, studentCourseEnrollment.getCourseInstanceID());
-            preparedStatement.setString(3, studentCourseEnrollment.getCourseInstance().getCourseTerm());
+            preparedStatement.setString(3, studentCourseEnrollment.getCourseTerm());
             int modifiedRows = preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException sqlException) {
             throw new RuntimeException();
         }
+        return "SUCCESS";
     }
 
     @Override

@@ -1,17 +1,12 @@
-package dal.csci5308.project.group15.elearning.deadlineNotification;
+package dal.csci5308.project.group15.elearning.models.deadlineNotification;
 
 import dal.csci5308.project.group15.elearning.database.DatabaseOperations;
 import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.authUser.AuthUserFactory;
 import dal.csci5308.project.group15.elearning.factory.authUser.IAuthFactory;
-import dal.csci5308.project.group15.elearning.factory.forum.ForumFactory;
 import dal.csci5308.project.group15.elearning.factory.notification.CourseMaterialDeadlineNotificationFactory;
-import dal.csci5308.project.group15.elearning.factory.notification.ICourseMaterialDeadlineNotificationFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
-import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
-import dal.csci5308.project.group15.elearning.security.AuthUser;
 import dal.csci5308.project.group15.elearning.security.IAuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

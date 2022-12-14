@@ -19,6 +19,18 @@ public class Assignment {
     private Date assignmentStartDate;
     private String filepath ;
 
+
+
+    public CreateAssignmentPersistence getCreateAssignmentPersistence() {
+        return createAssignmentPersistence;
+    }
+
+    public void setCreateAssignmentPersistence(CreateAssignmentPersistence createAssignmentPersistence) {
+        this.createAssignmentPersistence = createAssignmentPersistence;
+    }
+
+    private String studentFilePath;
+
     CreateAssignmentPersistence createAssignmentPersistence;
 
 
@@ -78,6 +90,14 @@ public class Assignment {
         this.filepath = filepath;
     }
 
+    public String getStudentFilePath() {
+        return studentFilePath;
+    }
+
+    public void setStudentFilePath(String studentFilePath) {
+        this.studentFilePath = studentFilePath;
+    }
+
     public Assignment(AssignmentParams assObj){
         subId =assObj.getSubId();
         assignmentId = assObj.getAssignmentId();
@@ -86,12 +106,15 @@ public class Assignment {
         assignmentStartDate = assObj.getAssignmentStartDate();
         assignmentEndDate = assObj.getAssignmentEndDate();
         filepath = assObj.getAssignmentFilePath();
+        studentFilePath = assObj.getStudentAssignmentFilePath();
         createAssignmentPersistence = CreateAssignmentPersistenceSingleton.GetCreateAssignmentPersistence();
     }
 
     public Assignment(){
         createAssignmentPersistence = CreateAssignmentPersistenceSingleton.GetCreateAssignmentPersistence();
     }
+
+
 
     public void Save() throws SQLException {
         createAssignmentPersistence.save(this);
@@ -110,5 +133,9 @@ public class Assignment {
     public List<Assignment> loadAssignmentDetails(String assignmentId) throws SQLException {
         List<Assignment> assignmentList = createAssignmentPersistence.loadAssignmentDetails(assignmentId);
         return assignmentList;
+    }
+
+    public void SaveStudentAssignment(String assignment_id, String student_number) throws SQLException {
+        createAssignmentPersistence.saveStudentAssignment(this,student_number,assignment_id);
     }
 }

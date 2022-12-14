@@ -17,7 +17,7 @@ public interface IStudentCourseEnrollment {
 
     ICourseByTerm getCourseInstance();
 
-    void save(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException;
+    String saveAfterValidations(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence) throws SQLException;
 
     ArrayList<IStudentCourseEnrollment> loadByStudentNumber(IStudentCourseEnrollmentPersistence iStudentCourseEnrollmentPersistence, String studentNumber) throws SQLException, ParseException;
 

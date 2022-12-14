@@ -18,6 +18,7 @@ public class AssignmentParams {
     private Date assignmentEndDate;
     private Date assignmentStartDate;
     private MultipartFile file ;
+    private MultipartFile studentfile ;
 
 
     String studentNumber;
@@ -81,6 +82,18 @@ public class AssignmentParams {
         String pathvalue = null;
         try {
             Path path = Paths.get("AssignmentProffAttachments/" + file.getOriginalFilename());
+            pathvalue = path.toString();
+            Files.copy(getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return pathvalue;
+    }
+
+    public String getStudentAssignmentFilePath(){
+        String pathvalue = null;
+        try {
+            Path path = Paths.get("StudentAssignmentAttachments/" + file.getOriginalFilename());
             pathvalue = path.toString();
             Files.copy(getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

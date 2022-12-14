@@ -35,6 +35,15 @@
                th:href="@{/forum/list(courseId=${courseInstanceID})}"
                th:text="'View Forums'"></a>
         </li>
+        <li class="nav-item active">
+            <a class = "nav-link"
+               th:href="@{/loadAssignment/{courseInstanceID}(courseInstanceID=${courseInstanceID})}"
+               th:text="'View Assignments'"></a>
+        </li>
+        <li class="nav-item active">
+            <a class = "nav-link"
+               th:href="@{/quiz}" th:text="'View Quizzes'"></a>
+        </li>
     </ul>
 </nav>
 
