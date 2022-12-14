@@ -1,13 +1,19 @@
 package dal.csci5308.project.group15.elearning.controller.student;
 
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
+import dal.csci5308.project.group15.elearning.models.course.CourseByTerm;
+import dal.csci5308.project.group15.elearning.models.course.ICourse;
 import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.course.ICourseFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseModule;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.models.student.IStudentCourseEnrollment;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
-import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseInstancePersistenceSingleton;
+import dal.csci5308.project.group15.elearning.persistence.coursepersistence.CourseByTermPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.student.StudentCourseEnrollmentPersistenceSingleton;
 import dal.csci5308.project.group15.elearning.persistence.terms.UniversityTermsSingleton;
 import org.springframework.stereotype.Controller;
@@ -28,9 +34,71 @@ public class StudentCourseController {
 
     @GetMapping("/student/course/{courseInstanceID}")
     public String openCoursePage(@PathVariable String courseInstanceID, Model model) {
-        System.out.println("Opening Course Page: " + courseInstanceID);
-        model.addAttribute("courseInstanceID", courseInstanceID);
-        return "studentCoursePage";
+        try {
+            ICourseByTerm courseByTerm =  FactoryFacade.instance().getCourseFactory().LoadCourseByTermFromPersistence(courseInstanceID);
+            ICourse course = courseByTerm.getCourseDetails();
+            ArrayList<CourseModule> courseModuleArrayList = course.GetCourseBase().GetAllModules();
+            ArrayList<ArrayList<String>> arrayLists = new ArrayList<>();
+            for(CourseModule courseModule : courseModuleArrayList){
+                ArrayList<String> courseModuleDetails = new ArrayList<>();
+                courseModuleDetails.add(courseModule.GetModuleName());
+                courseModuleDetails.add(Integer.toString(courseModule.GetCourseModuleId()));
+                arrayLists.add(courseModuleDetails);
+            }
+            System.out.println(arrayLists.size());
+            model.addAttribute("courseId", course.GetCourseID());
+            model.addAttribute("courseModules", arrayLists);
+            model.addAttribute("courseInstanceID", courseInstanceID);
+            model.addAttribute("success", true);
+            return "studentCoursePage";
+
+        }
+        catch (Exception exception){
+                model.addAttribute("success", false);
+                return "studentCoursePage";
+        }
+    }
+
+    @GetMapping("student/course/courseModuleContent/{courseId}/{courseModuleId}")
+    public String viewStudentDashboard(@PathVariable String courseId, @PathVariable String courseModuleId, Model model) {
+
+        try {
+            ICourse course =  FactoryFacade.instance().getCourseFactory().LoadCourseFromPersistence(courseId);
+            Integer courseModuleNumericId = Integer.parseInt(courseModuleId);
+            ArrayList<CourseContent> courseContents = course.GetCourseBase().GetAllContentsInAModule(Integer.parseInt(courseModuleId));
+            String courseModuleName = course.GetCourseBase().GetModuleName(courseModuleNumericId);
+            ArrayList<ArrayList<String>> arrayLists = new ArrayList<>();
+            for(CourseContent courseContent : courseContents){
+                ArrayList<String> courseContentDetails = new ArrayList<>();
+                if(courseContent.IsTextContent()){
+                    courseContentDetails.add("TEXT");
+                    courseContentDetails.add(courseContent.GetContentHeading());
+                    TextCourseContent textCourseContent = (TextCourseContent) courseContent;
+                    courseContentDetails.add(textCourseContent.GetTextContent());
+                    courseContentDetails.add(Integer.toString(textCourseContent.GetContentId()));
+                }
+                else{
+                    courseContentDetails.add("FILE");
+                    courseContentDetails.add(courseContent.GetContentHeading());
+                    FileCourseContent fileCourseContent = (FileCourseContent) courseContent;
+                    courseContentDetails.add(fileCourseContent.GetFileName());
+                    courseContentDetails.add(Integer.toString(fileCourseContent.GetContentId()));
+
+                }
+                arrayLists.add(courseContentDetails);
+            }
+            model.addAttribute("courseId", course.GetCourseID());
+            model.addAttribute("courseModuleId", courseModuleId);
+            model.addAttribute("courseModuleName", courseModuleName);
+            model.addAttribute("courseContentList", arrayLists);
+            model.addAttribute("success", true);
+            return "studentCourseContentPage";
+
+        }
+        catch (Exception exception){
+            model.addAttribute("success", false);
+            return "studentCourseContentPage";
+        }
     }
 
     @GetMapping("/student/viewRegisteredCoursesByTerm")
@@ -86,7 +154,7 @@ public class StudentCourseController {
         ICourseByTerm courseByTerm = courseFactory.CreateCourseInstanceForLoadByTerm(termID);
 
         try {
-            availableCourses = courseByTerm.loadByTerm(CourseInstancePersistenceSingleton.GetMySqlCourseInstancePersistenceInstance(), termID);
+            availableCourses = courseByTerm.loadByTerm(CourseByTermPersistenceSingleton.GetMySqlCourseInstancePersistenceInstance(), termID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {

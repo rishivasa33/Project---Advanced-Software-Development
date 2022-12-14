@@ -90,13 +90,13 @@ class CreateCourseContentAddRequest {
   }
 
   getModuleContentFile(courseModuleContentId){
-    let url = "/fetchModuleContentFile";
+    let url = "fetchModuleContentFile";
     let data = {"courseModuleContentId":courseModuleContentId, "courseId" : this.courseId, "courseModuleId": this.courseModuleId};
     postData(url, data, this.token)
   .then((response) => {
     response.blob().then(blob => {
-        //const filename =  response.headers.get('Content-Disposition').split('filename=')[1].trim();
-        const filename = "download.jpeg"
+        const filename =  response.headers.get('Content-Disposition').split('filename=')[1].trim();
+        //const filename = "download.pdf"
         console.log(filename);
         let url = window.URL.createObjectURL(blob);
         let a = document.createElement('a');

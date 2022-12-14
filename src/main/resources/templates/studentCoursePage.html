@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,6 +46,28 @@
         </li>
     </ul>
 </nav>
+
+<div>
+    <div class="col-md-auto" id="currentCourses">
+        <nav id="coursesSidebar">
+            <div class="sidebar-header">
+                <h3>Current Courses</h3>
+            </div>
+
+            <p th:if="${#lists.isEmpty(courseModules)}">No Modules Available</p>
+            <ul class="navbar-nav">
+                <li class="nav-item active bg-light" th:each="courseModule:${courseModules}">
+                    (parameter1 = val1, parameter2 = val2)
+                    <a class="nav-link"
+                       th:href="@{/student/course/courseModuleContent/{courseId}/{courseModuleId}(courseId=${courseId},courseModuleId=${courseModule[1]})}"
+                       th:text="${courseModule[0]}"></a>
+                    <hr/>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</div>
 
 </body>
 

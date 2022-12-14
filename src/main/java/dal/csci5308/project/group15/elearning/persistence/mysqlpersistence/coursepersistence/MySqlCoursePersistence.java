@@ -82,7 +82,7 @@ public class MySqlCoursePersistence implements CoursePersistence {
             }
 
             ICourseFactory courseFactory = FactoryFacade.instance().getCourseFactory();
-            return courseFactory.CreateCourse(course_id, course_name, course_description);
+            return courseFactory.CreateBaseCourse(course_id, course_name, course_description);
 
         }
         catch (SQLException sqlException){

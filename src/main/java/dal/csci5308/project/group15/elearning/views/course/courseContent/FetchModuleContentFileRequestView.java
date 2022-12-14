@@ -15,6 +15,12 @@ public class FetchModuleContentFileRequestView {
         this.moduleContentId = Integer.parseInt(jsonObject.getString("courseModuleContentId"));
     }
 
+    FetchModuleContentFileRequestView(String courseId, String courseModuleId, String courseModuleContentId){
+        this.courseId = courseId;
+        this.moduleId = Integer.parseInt(courseModuleId);
+        this.moduleContentId = Integer.parseInt(courseModuleContentId);
+    }
+
     public String getCourseId() {
         return courseId;
     }
