@@ -94,9 +94,5 @@ public class MySqlCoursePersistence implements CoursePersistence {
         }
     }
 
-    public int GenerateUniqueCourseID() {
-        Connection connection = database_.getConnection();
-        String sql_query = "SELECT MAX(course_id) as max_course_id FROM course;";
-        return 1;
-    }
+
 }

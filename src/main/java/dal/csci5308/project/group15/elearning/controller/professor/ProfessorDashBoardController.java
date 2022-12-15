@@ -1,5 +1,7 @@
 package dal.csci5308.project.group15.elearning.controller.professor;
 
+import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
+import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
 import dal.csci5308.project.group15.elearning.models.course.*;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContentFactory;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 @RequestMapping("professor/")
 public class ProfessorDashBoardController {
 
+    IPropertiesFactory propertiesFactory = PropertiesFactory.instance();
+
     @GetMapping("dashboard")
     public String DashboardView(Model model)  {
         try {
@@ -44,13 +48,14 @@ public class ProfessorDashBoardController {
         catch (SQLException sqlException){
             model.addAttribute("course_list", null);
         }
-        return "professorDashboard";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_PROFESSOR_DASHBOARD");
     }
 
     @GetMapping("create/course")
     public String CreateCourseView(Model model)
     {
-        return "createCourse";
+
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_CREATE_COURSE");
     }
 
     @GetMapping("courseDetails")
@@ -76,7 +81,7 @@ public class ProfessorDashBoardController {
             System.out.println("Course Module Fetch Error");
         }
 
-        return "courseDetails";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_MODULES_LIST");
     }
 
     @GetMapping("courseDetails/courseModuleDetails")
@@ -96,7 +101,7 @@ public class ProfessorDashBoardController {
             model.addAttribute("courseModuleName", "Error Loading Module");
         }
 
-        return "courseModuleDetails";
+        return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_CONTENTS_LIST");
     }
 
 
@@ -128,12 +133,12 @@ public class ProfessorDashBoardController {
             course.Save();
             model.addAttribute("actionDone", true);
             model.addAttribute("actionName", "In Course Creation");
-            return "courseCreationSuccess";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_ACTION_STATUS");
         }
         catch (SQLException exception){
             model.addAttribute("actionDone", null);
             model.addAttribute("actionName", "In Course Creation");
-            return "courseCreationSuccess";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_ACTION_STATUS");
         }
     }
 
@@ -149,12 +154,12 @@ public class ProfessorDashBoardController {
             model.addAttribute("universityTermsList", universityTermsArrayList);
             model.addAttribute("courseCode", course.GetCourseID());
             model.addAttribute("courseName", course.GetCourseName());
-            return "createCourseByTerm";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_CREATE_COURSE_BY_TERM");
         }
         catch(SQLException exception) {
             model.addAttribute("actionDone", null);
             model.addAttribute("actionName", "In Course Load Creation");
-            return "courseCreationSuccess";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_ACTION_STATUS");
         }
     }
 
@@ -175,20 +180,14 @@ public class ProfessorDashBoardController {
             courseByTerm.save(CourseByTermPersistenceSingleton.GetMySqlCourseInstancePersistenceInstance());
             model.addAttribute("actionDone", true);
             model.addAttribute("actionName", "In Course Term Creation");
-            return "courseCreationSuccess";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_ACTION_STATUS");
         }
         catch(SQLException exception) {
             model.addAttribute("actionDone", null);
             model.addAttribute("actionName", "In Course Term Creation");
-            return "courseCreationSuccess";
+            return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_ACTION_STATUS");
         }
     }
-
-
-
-
-
-
 
 }
 

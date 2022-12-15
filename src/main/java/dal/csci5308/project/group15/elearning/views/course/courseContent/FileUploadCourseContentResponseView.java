@@ -13,6 +13,8 @@ public class FileUploadCourseContentResponseView extends CourseContentResponseVi
     private String courseModuleContentHeading;
     private String courseModuleContentFilePath;
 
+    private String courseModuleContentFileType;
+
     public JsonObject GetJsonValue(){
         JsonObject value = Json.createObjectBuilder()
                 .add("success", true)
@@ -21,16 +23,18 @@ public class FileUploadCourseContentResponseView extends CourseContentResponseVi
                 .add("courseModuleContentId", courseContentId)
                 .add("courseModuleContentHeading", courseModuleContentHeading)
                 .add("courseModuleContentType", "File")
+                .add("courseModuleContentFileType",  this.courseModuleContentFileType)
                 .add("courseModuleContentFilePath", courseModuleContentFilePath).build();
         return value;
     }
 
-    FileUploadCourseContentResponseView (String courseId, int courseModuleId, FileCourseContent pdfFileCourseContent){
+    FileUploadCourseContentResponseView (String courseId, int courseModuleId, FileCourseContent fileCourseContent){
         this.courseId = courseId;
         this.courseModuleId = courseModuleId;
-        this.courseContentId = pdfFileCourseContent.GetContentId();
-        this.courseModuleContentHeading = pdfFileCourseContent.GetContentHeading();
-        this.courseModuleContentFilePath = pdfFileCourseContent.GetFilePath();
+        this.courseContentId = fileCourseContent.GetContentId();
+        this.courseModuleContentHeading = fileCourseContent.GetContentHeading();
+        this.courseModuleContentFilePath = fileCourseContent.GetFilePath();
+        this.courseModuleContentFileType = fileCourseContent.GetState().GetFileType();
     }
 
     FileUploadCourseContentResponseView(String courseId, int courseModuleId){

@@ -34,7 +34,7 @@ public abstract class CourseContentResponseView {
                 jsonArrayBuilder.add(textCourseContentResponseView.GetJsonValue());
             }
             else{
-                FileUploadCourseContentResponseView fileUploadCourseContentResponseView = courseContentViewFactory.CreatePdfCourseContentResponseView(courseId, courseModuleId, (FileCourseContent) courseContent);
+                FileUploadCourseContentResponseView fileUploadCourseContentResponseView = courseContentViewFactory.CreateFileCourseContentResponseView(courseId, courseModuleId, (FileCourseContent) courseContent);
                 jsonArrayBuilder.add(fileUploadCourseContentResponseView.GetJsonValue());
             }
         }

@@ -7,7 +7,7 @@ public interface CoursePersistence {
 
     BaseCourse Load(String course_id);
 
-    int GenerateUniqueCourseID();
+
 
     void Save(BaseCourse baseCourse) throws SQLException;
 }

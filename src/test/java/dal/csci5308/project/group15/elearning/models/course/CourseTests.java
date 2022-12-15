@@ -1,7 +1,9 @@
 package dal.csci5308.project.group15.elearning.models.course;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistence;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.GradedCoursePersistenceSingleton;
 import org.junit.jupiter.api.Assertions;
@@ -44,6 +46,44 @@ public class CourseTests {
         Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
         GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
         course.Save();
+    }
+
+    @Test
+    void TestCourseGetModules() {
+        CourseFactory courseFactory = new CourseFactory();
+        Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
+        GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
+        try {
+            Assertions.assertTrue(course.GetCourseBase().GetAllModules().isEmpty());
+        } catch (Exception e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    void TestCourseGetModuleName() {
+        CourseFactory courseFactory = new CourseFactory();
+        Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
+        GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
+        try {
+            course.GetCourseBase().GetModuleName(1);
+            Assertions.fail();
+        } catch (Exception e) {
+            Assertions.assertTrue(true);
+        }
+    }
+
+    @Test
+    void TestCourseGetModuleContentFilePath() {
+        CourseFactory courseFactory = new CourseFactory();
+        Course course = courseFactory.CreateCourse("5308", "test", "test2", 20);
+        GradedCoursePersistence mockDBGradedCoursePersistence = GradedCoursePersistenceSingleton.GetMockDBGradedCoursePersistenceInstance();
+        try {
+            FileCourseContent filePath =  course.GetCourseBase().GetContentFilePath(1, 2);
+            Assertions.assertTrue(filePath == null);
+        } catch (Exception e) {
+            Assertions.fail();
+        }
     }
 
     @Test

@@ -23,19 +23,6 @@ public class MySqlTextCourseContentPersistence implements TextCourseContentPersi
 
         try (Connection connection = database.getConnection()) {
             if(courseContent.GetContentId() == null) {
-//                String sql_query = "insert into course_module_content(course_module_content_name, course_module_content_text, course_module_id) values(? , ?, ?);";
-//
-//
-//                PreparedStatement preparedStatement = connection.prepareStatement(sql_query, Statement.RETURN_GENERATED_KEYS);
-//                preparedStatement.setString(1, courseContent.GetContentHeading());
-//                preparedStatement.setString(2, courseContent.GetTextContent());
-//                preparedStatement.setInt(3, courseModuleId);
-//                int rows_modified = preparedStatement.executeUpdate();
-//                connection.commit();
-//                ResultSet rs = preparedStatement.getGeneratedKeys();
-//                rs.next();
-//                return rs.getInt(1);
-               // CALL `CSCI5308_15_DEVINT`.`InsertTextCourseContent`(<{IN courseModuleId INT}>, <{IN courseModuleContentName VARCHAR(200)}>, <{IN courseModuleContentText VARCHAR(1000)}>, <{OUT courseModuleContentId  INT}>);
 
                 CallableStatement cStmt = connection.prepareCall("{call InsertTextCourseContent (?, ?, ?, ?)}");
                 cStmt.registerOutParameter("courseModuleContentId", Types.INTEGER);
@@ -54,16 +41,6 @@ public class MySqlTextCourseContentPersistence implements TextCourseContentPersi
                 throw new SQLException("Could not generate courseModuleContentId");
             }
             else {
-//                String sql_query = "update course_module_content set course_module_content_name = ?,  course_module_content_text = ?, course_module_id = ?,)  where course_module_content_id = ?";
-//                PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
-//                preparedStatement.setString(1, courseContent.GetContentHeading());
-//                preparedStatement.setString(2, courseContent.GetTextContent());
-//                preparedStatement.setInt(3, courseModuleId);
-//                preparedStatement.setInt(4, courseContent.GetContentId());
-//                int rows_modified = preparedStatement.executeUpdate();
-//                connection.commit();
-
-                //CALL `CSCI5308_15_DEVINT`.`UpdateTextCourseContent`(<{IN courseModuleContentId INT}>, <{IN courseModuleId INT}>, <{IN courseModuleContentName VARCHAR(200)}>, <{IN courseModuleContentText VARCHAR(1000)}>);
                 CallableStatement cStmt = connection.prepareCall("{call UpdateTextCourseContent (?, ?,  ?, ?)}");
                 cStmt.setInt("courseModuleContentId", courseContent.GetContentId());
                 cStmt.setInt("courseModuleId", courseModuleId);
@@ -114,19 +91,16 @@ public class MySqlTextCourseContentPersistence implements TextCourseContentPersi
         ArrayList<CourseContent> courseContents = new ArrayList<>();
         ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
-        //CALL `CSCI5308_15_DEVINT`.`GetAllContentsInModule`(<{IN courseModuleId INT}>);
 
         try (Connection connection = database.getConnection()) {
             CallableStatement cStmt = connection.prepareCall("{call GetAllContentsInModule (?)}");
             cStmt.setInt("courseModuleId", courseModuleId);
 
-            boolean hasResult = cStmt.execute();
             ResultSet resultSet = cStmt.getResultSet();
             while(resultSet.next()){
                 String courseModuleHeading = resultSet.getString("courseModuleContentName");
                 String courseModuleText = resultSet.getString("courseModuleContentText");
                 int courseModuleContentId = resultSet.getInt("courseModuleContentId");
-                String courseModuleContentType = resultSet.getString("courseModuleContentType");
                 CourseContent courseContent = courseContentFactory.CreateTextCourseContent(courseModuleContentId,courseModuleHeading, courseModuleText);
                 courseContents.add(courseContent);
             }

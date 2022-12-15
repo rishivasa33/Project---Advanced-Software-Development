@@ -19,13 +19,5 @@ public class MockDBCoursePersistence implements CoursePersistence {
         return courseFactory.CreateBaseCourse(course_id, "test" + course_id, "test description");
     }
 
-    public int GenerateUniqueCourseID() {
-        int minimum = 0;
-        int maximum = Integer.MAX_VALUE - 10;
-        Random rand = new Random();
-        int n = maximum - minimum + 1;
-        int i = rand.nextInt() % n;
-        int randomNum = minimum + i;
-        return randomNum;
-    }
+
 }

@@ -48,7 +48,7 @@ public class FileCourseContent extends CourseContent {
         fileCourseContentFileState = state;
     }
 
-    IFileCourseContentFileState GetState(){
+    public IFileCourseContentFileState GetState(){
         return fileCourseContentFileState;
     }
 
