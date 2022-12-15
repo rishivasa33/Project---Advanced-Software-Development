@@ -6,7 +6,12 @@ import dal.csci5308.project.group15.elearning.models.forum.ForumTopic;
 import dal.csci5308.project.group15.elearning.models.forum.ForumTopicResponse;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 
 public class ForumMockDatabase implements IDatabaseOperations
 {
