@@ -51,10 +51,15 @@ public class ProfessorDashBoardRestController {
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateFormDataCourseContentView(courseId,
                     courseModuleId, courseContentHeading, uploadedFile);
             ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
-            FileCourseContent pdfFileCourseContent =  courseContentFactory.CreateFileCourseContent(courseContentView);
-            pdfFileCourseContent.Save(courseContentView.getCourseModuleId());
-            CourseContentResponseView courseContentResponseView = courseContentViewFactory.CreatePdfCourseContentResponseView(courseContentView.getCourseId(), courseContentView.getCourseModuleId(), pdfFileCourseContent);
-            return courseContentResponseView.getSerializedStringForSuccess();
+            FileCourseContent fileCourseContent =  courseContentFactory.CreateFileCourseContent(courseContentView);
+            if(!fileCourseContent.GetState().IsFileValid()){
+                return CourseContentResponseView.getSerializedStringForFailure();
+            }
+            else {
+                fileCourseContent.Save(courseContentView.getCourseModuleId());
+                CourseContentResponseView courseContentResponseView = courseContentViewFactory.CreateFileCourseContentResponseView(courseContentView.getCourseId(), courseContentView.getCourseModuleId(), fileCourseContent);
+                return courseContentResponseView.getSerializedStringForSuccess();
+            }
         }
         catch (Exception exception){
             System.out.println("error happened in course content creation");
@@ -92,7 +97,7 @@ public class ProfessorDashBoardRestController {
     }
 
     @RequestMapping(value="courseDetails/fetchModuleContentFile", method=RequestMethod.POST)
-    public ResponseEntity<byte[]> getPDF(@RequestBody String json) {
+    public ResponseEntity<byte[]> getFile(@RequestBody String json) {
         try {
             JsonObject jsonObject = CreateJsonObjectFromRequestBody.GetJsonObjectFromRequestBody(json);
             FetchModuleContentFileRequestView fetchModuleContentFileRequestView = ViewFactoriesCollection.GetCourseContentViewFactory().CreateFetchModuleContentFileRequestView(
@@ -111,7 +116,7 @@ public class ProfessorDashBoardRestController {
     }
 
     @RequestMapping(value="courseDetails/fetchModuleContentFile/{courseId}/{courseModuleId}/{courseModuleContentId}", method=RequestMethod.GET)
-    public ResponseEntity<byte[]> getPDFFile(@PathVariable String courseId, @PathVariable String courseModuleId,
+    public ResponseEntity<byte[]> getFile(@PathVariable String courseId, @PathVariable String courseModuleId,
                                              @PathVariable String courseModuleContentId) {
         try {
 

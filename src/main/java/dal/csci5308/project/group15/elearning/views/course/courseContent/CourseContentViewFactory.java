@@ -23,11 +23,11 @@ public class CourseContentViewFactory {
         return new TextCourseContentResponseView(courseId, courseModuleId);
     }
 
-    public FileUploadCourseContentResponseView CreatePdfCourseContentResponseView(String courseId, int courseModuleId, FileCourseContent pdfFileCourseContent){
+    public FileUploadCourseContentResponseView CreateFileCourseContentResponseView(String courseId, int courseModuleId, FileCourseContent pdfFileCourseContent){
         return new FileUploadCourseContentResponseView(courseId, courseModuleId, pdfFileCourseContent);
     }
 
-    public FileUploadCourseContentResponseView CreatePdfCourseContentResponseView(String courseId, int courseModuleId){
+    public FileUploadCourseContentResponseView CreateFileCourseContentResponseView(String courseId, int courseModuleId){
         return new FileUploadCourseContentResponseView(courseId, courseModuleId);
     }
 

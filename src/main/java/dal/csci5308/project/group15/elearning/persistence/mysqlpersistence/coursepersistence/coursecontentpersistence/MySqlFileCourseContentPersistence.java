@@ -18,20 +18,23 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
 
         try (Connection connection = database.getConnection()) {
             if(pdfFileCourseContent.GetContentId() == null) {
-                //CALL `CSCI5308_15_DEVINT`.`InsertFileCourseContent`(<{IN courseModuleId INT}>, <{IN courseModuleContentName VARCHAR(200)}>, <{IN courseModuleContentFilePath VARCHAR(1000)}>, <{IN courseModuleContentFileType VARCHAR(100)}>, <{OUT courseModuleContentId  INT}>);
-                CallableStatement cStmt = connection.prepareCall("{call InsertFileCourseContent (?, ?, ?, ?, ?)}");
-                cStmt.registerOutParameter("courseModuleContentId", Types.INTEGER);
+                String sql = "CALL InsertFileCourseContent (?, ?, ?, ?);";
+                CallableStatement cStmt = connection.prepareCall(sql);
                 cStmt.setInt("courseModuleId", courseModuleId);
                 cStmt.setString("courseModuleContentName", pdfFileCourseContent.GetContentHeading());
                 cStmt.setString("courseModuleContentFilePath", pdfFileCourseContent.GetFilePath());
-                //cStmt.setString("courseModuleContentFileType", "PDF");
                 String fileType = "PDF";
                 cStmt.setString("courseModuleContentFileType", fileType);
 
-                boolean hasResult = cStmt.execute();
+                cStmt.execute();
+
+                String sql_2 = "CALL InsertCourseContentGetLastInsertedId()";
+                CallableStatement cStmt_2 = connection.prepareCall(sql_2);
+                boolean hasResult = cStmt_2.execute();
                 while(hasResult){
-                    ResultSet resultSet = cStmt.getResultSet();
-                    int courseModuleContentId = cStmt.getInt("courseModuleContentId");
+                    ResultSet resultSet = cStmt_2.getResultSet();
+                    resultSet.next();
+                    int courseModuleContentId = resultSet.getInt(1);
                     connection.commit();
                     return courseModuleContentId;
 
