@@ -40,8 +40,6 @@ public class RegisterUserController
         RegisterUser registerUser = RegisterUserFactory.instance().makeUser();
         IDatabaseOperations databaseOperations = DatabaseOperations.instance();
 
-        System.out.println(user);
-
         int result = registerUser.createNewUser(databaseOperations, user);
 
         if(result > 0)

@@ -23,7 +23,6 @@ public class Database
 
     private Database()
     {
-        System.out.println("CONSTRUCTOR Creating instance of Database");
     }
 
     public DataSource getDataSource()

@@ -36,7 +36,7 @@ public class Encoder implements IEncoder
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return encodedString;

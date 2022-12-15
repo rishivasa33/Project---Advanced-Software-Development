@@ -117,8 +117,6 @@ public class DatabaseOperations implements IDatabaseOperations {
     private CallableStatement prepareCallableStatement(Connection connection, String procedureName, Object... params) throws SQLException {
         String preparedQuery = prepareProceduralQuery(procedureName, params.length);
 
-        System.out.println("Prepared Query : " + preparedQuery);
-
         CallableStatement statement = connection.prepareCall(preparedQuery);
         statement = prepareCallableStatement(statement, params);
 

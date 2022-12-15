@@ -122,9 +122,7 @@ public class ForumTest
         Assertions.assertEquals(1, result2);
 
         Map<String, ForumTopic> forumTopicMap = forumTopic.getAllTopics(mockDb, mockAuthUser, "COURSE_1");
-
-        System.out.println(forumTopicMap);
-
+        
         Assertions.assertNotNull(forumTopicMap);
         Assertions.assertEquals(2, forumTopicMap.size());
     }
