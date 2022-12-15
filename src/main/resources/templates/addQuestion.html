@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Details</title>
+    <style type="text/css">
+        label {
+            display: inline-block;
+            width: 200px;
+            margin: 5px;
+            text-align: left;
+        }
+        input[type=text], input[type=email], input[type=password], select {
+            display: inline-block;
+            width: 200px;
+        }
+        input[type=radio] {
+            margin-left: 45px;
+        }
+        input[type=checkbox] {
+            margin-right: 190px;
+        }
+        button {
+            padding: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <div style="border-style:solid; width:500px">
+        <h1>Want to add more questions</h1>
+        <form
+                role="form"
+                method="post"
+                th:action="@{/newQuestion}"
+                th:object="${quiz}"
+        >
+        <input type="submit" value="Add Question" />
+        </form>
+    </div>
+
+    <div style="border-style:solid; width:500px">
+        <h1>Done with adding?</h1>
+        <form
+                role="form"
+                method="get"
+                th:action="@{/getexitQuestion}"
+        >
+        <input type="submit" value="Exit" />
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

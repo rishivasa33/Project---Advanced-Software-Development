@@ -1,0 +1,47 @@
+variables:
+ GIT_STRATEGY: clone
+  
+before_script:
+  - chmod +x ./gradlew
+
+build:
+ stage: build
+ tags:
+  - dalfcs_gitlab_docker_ci
+ image: gradle:alpine
+ script: ./gradlew assemble
+ only:
+  refs:
+    - develop
+
+test:
+ stage: test
+ tags:
+  - dalfcs_gitlab_docker_ci
+ image: gradle:alpine
+ script:
+  - ./gradlew check
+  - bundle install
+  - bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml
+ artifacts:
+  when: always
+  paths:
+   - rspec.xml
+  reports:
+   junit: rspec.xml
+ only:
+  refs:
+   - develop
+    
+deploy:
+ stage: deploy
+ tags:
+ - dalfcs_gitlab_docker_ci
+ image: ruby:2.6
+ script:
+ - apt-get update -qy
+ - apt-get install -y ruby-dev
+ - gem install dpl
+ - dpl --provider=heroku --app=$HEROKU_TESTAPP_NAME --api-key=$HEROKU_API_KEY
+ only:
+ - develop
