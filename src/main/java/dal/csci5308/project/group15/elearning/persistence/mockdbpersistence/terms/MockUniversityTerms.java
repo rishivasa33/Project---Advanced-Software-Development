@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MockUniversityTerms implements IUniversityTermsPersistence {
     @Override
     public void save(UniversityTerms universityTerms) {
-        
+
     }
 
     @Override

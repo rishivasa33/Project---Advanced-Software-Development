@@ -5,7 +5,11 @@ import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCo
 import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.views.ViewFactoriesCollection;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import java.util.ArrayList;
 
 public abstract class CourseContentResponseView {

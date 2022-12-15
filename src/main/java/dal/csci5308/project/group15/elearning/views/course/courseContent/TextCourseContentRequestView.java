@@ -2,7 +2,8 @@ package dal.csci5308.project.group15.elearning.views.course.courseContent;
 
 import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 
-import javax.json.*;
+import javax.json.JsonObject;
+
 
 public class TextCourseContentRequestView implements CourseContentRequestView {
     private String courseId;

@@ -2,7 +2,9 @@ package dal.csci5308.project.group15.elearning.views.course.courseContent;
 
 import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonObject;
+
 
 public class FileUploadCourseContentResponseView extends CourseContentResponseView{
 

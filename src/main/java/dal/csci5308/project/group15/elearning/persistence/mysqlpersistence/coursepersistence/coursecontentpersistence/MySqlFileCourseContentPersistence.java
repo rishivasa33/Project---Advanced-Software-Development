@@ -6,10 +6,15 @@ import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCo
 import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
 import dal.csci5308.project.group15.elearning.persistence.coursepersistence.coursecontentpersistence.FileCourseContentPersistence;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MySqlFileCourseContentPersistence implements FileCourseContentPersistence {
     private Database database;
+
     public MySqlFileCourseContentPersistence() {
         database = Database.instance();
     }
@@ -17,7 +22,7 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
     public int Save(FileCourseContent pdfFileCourseContent, int courseModuleId) throws SQLException {
 
         try (Connection connection = database.getConnection()) {
-            if(pdfFileCourseContent.GetContentId() == null) {
+            if (pdfFileCourseContent.GetContentId() == null) {
                 String sql = "CALL InsertFileCourseContent (?, ?, ?, ?);";
                 CallableStatement cStmt = connection.prepareCall(sql);
                 cStmt.setInt("courseModuleId", courseModuleId);
@@ -31,7 +36,7 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
                 String sql_2 = "CALL InsertCourseContentGetLastInsertedId()";
                 CallableStatement cStmt_2 = connection.prepareCall(sql_2);
                 boolean hasResult = cStmt_2.execute();
-                while(hasResult){
+                while (hasResult) {
                     ResultSet resultSet = cStmt_2.getResultSet();
                     resultSet.next();
                     int courseModuleContentId = resultSet.getInt(1);
@@ -40,12 +45,10 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
 
                 }
                 throw new SQLException("Could not generate courseModuleContentId");
-            }
-            else {
+            } else {
 
                 String fileType = "PDF";
 
-                //CALL `CSCI5308_15_DEVINT`.`UpdateFileCourseContent`(<{IN courseModuleId INT}>, <{IN courseModuleContentName VARCHAR(200)}>, <{IN courseModuleContentFilePath VARCHAR(1000)}>, <{IN courseModuleContentFileType VARCHAR(100)}>, <{IN courseModuleContentId  INT}>);
                 CallableStatement cStmt = connection.prepareCall("{call UpdateTextCourseContent (?, ?,  ?, ?, ?)}");
                 cStmt.setInt("courseModuleContentId", pdfFileCourseContent.GetContentId());
                 cStmt.setInt("courseModuleId", courseModuleId);
@@ -55,8 +58,9 @@ public class MySqlFileCourseContentPersistence implements FileCourseContentPersi
 
 
                 boolean hasResult = cStmt.execute();
-                while(hasResult){
-                    connection.commit();;
+                while (hasResult) {
+                    connection.commit();
+                    ;
                     return pdfFileCourseContent.GetContentId();
 
                 }

@@ -33,8 +33,7 @@ public class MySqlGradedCoursePersistence implements GradedCoursePersistence {
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
             preparedStatement.setInt(1, gradedCourse.GetCredits());
             preparedStatement.setString(2, gradedCourse.GetCourseBase().GetCourseID());
-            int rows_modified = preparedStatement.executeUpdate();
-            System.out.println("rows modified: " + rows_modified);
+            preparedStatement.executeUpdate();
             connection.commit();
 
         } catch (SQLException sqlException) {

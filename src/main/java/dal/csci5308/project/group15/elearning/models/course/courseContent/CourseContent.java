@@ -1,8 +1,5 @@
 package dal.csci5308.project.group15.elearning.models.course.courseContent;
 
-
-// command pattern to do stuff with various content types.
-
 import java.sql.SQLException;
 
 public abstract class CourseContent {

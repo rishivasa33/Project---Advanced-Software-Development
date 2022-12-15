@@ -25,9 +25,6 @@ public class FetchFileContentResponseView {
             byte[] fileByteArray = FetchFileFromPath.FetchFileFromPathAsByteArray(fileCourseContent.GetFilePath());
             HttpHeaders headers = new HttpHeaders();
             String filename = fileCourseContent.GetFileName();
-            System.out.println(filename);
-            System.out.println("filename : " + filename);
-            //headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData(filename,filename);
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
             ResponseEntity<byte[]> response = new ResponseEntity<>(fileByteArray, headers, HttpStatus.OK);

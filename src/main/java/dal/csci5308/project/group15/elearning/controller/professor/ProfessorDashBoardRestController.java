@@ -1,15 +1,30 @@
 package dal.csci5308.project.group15.elearning.controller.professor;
 
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
-import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.Course;
+import dal.csci5308.project.group15.elearning.models.course.CourseFactory;
 import dal.csci5308.project.group15.elearning.models.course.ICourse;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.*;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.FileCourseContent;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.ICourseContentFactory;
+import dal.csci5308.project.group15.elearning.models.course.courseContent.TextCourseContent;
 import dal.csci5308.project.group15.elearning.views.ViewFactoriesCollection;
-import dal.csci5308.project.group15.elearning.views.course.courseContent.*;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseContentRequestView;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseContentResponseView;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.CourseContentViewFactory;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.CreateJsonObjectFromRequestBody;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.FetchFileContentResponseView;
+import dal.csci5308.project.group15.elearning.views.course.courseContent.FetchModuleContentFileRequestView;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.json.JsonObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,7 +59,6 @@ public class ProfessorDashBoardRestController {
                                                        @RequestParam String courseModuleId,
                                                        @RequestParam("contentFile") MultipartFile uploadedFile)
     {
-        System.out.println(courseContentType);
         try {
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateFormDataCourseContentView(courseId,
