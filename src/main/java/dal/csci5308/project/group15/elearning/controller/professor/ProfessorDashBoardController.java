@@ -116,7 +116,6 @@ public class ProfessorDashBoardController {
             redirectAttributes.addFlashAttribute("message", "module created successfully");
         }
         catch (SQLException exception){
-            System.out.println("Course Module Creation Error");
             redirectAttributes.addFlashAttribute("message", "module creation failed");
         }
 
