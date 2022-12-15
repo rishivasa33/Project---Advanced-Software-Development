@@ -38,7 +38,6 @@ public class FactoryFacade {
 
     public static FactoryFacade instance() {
         if (null == uniqueInstance) {
-            System.out.println("Creating NEW single instance of FactoryFacade");
 
             uniqueInstance = new FactoryFacade();
             return uniqueInstance;
@@ -66,10 +65,8 @@ public class FactoryFacade {
         return quizFactory;
     }
 
-    public ICourseContentFactory getCourseContentFactory(){
+    public ICourseContentFactory getCourseContentFactory() {
         return courseContentFactory;
     }
-
-
 
 }

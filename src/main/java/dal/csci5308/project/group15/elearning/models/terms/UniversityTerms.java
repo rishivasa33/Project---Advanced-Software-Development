@@ -14,7 +14,6 @@ public class UniversityTerms implements IUniversityTerms {
     private Date registrationStartDate;
     private Date registrationEndDate;
 
-
     public UniversityTerms(String termID, String termName, Date termStartDate, Date termEndDate, Date registrationStartDate, Date registrationEndDate) {
         this.termID = termID;
         this.termName = termName;

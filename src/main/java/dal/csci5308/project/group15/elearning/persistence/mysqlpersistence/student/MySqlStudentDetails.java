@@ -8,13 +8,9 @@ import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFacto
 import dal.csci5308.project.group15.elearning.models.student.IStudentDetails;
 import dal.csci5308.project.group15.elearning.models.student.IStudentFactory;
 import dal.csci5308.project.group15.elearning.models.student.StudentDetails;
-import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
-import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentDetailsPersistence;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

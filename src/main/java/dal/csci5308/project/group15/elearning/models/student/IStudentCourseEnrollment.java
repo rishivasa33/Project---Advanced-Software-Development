@@ -1,6 +1,5 @@
 package dal.csci5308.project.group15.elearning.models.student;
 
-import dal.csci5308.project.group15.elearning.models.course.ICourseByTerm;
 import dal.csci5308.project.group15.elearning.models.student.courseEnrollmentValidate.state.IValidationState;
 import dal.csci5308.project.group15.elearning.persistence.student.IStudentCourseEnrollmentPersistence;
 

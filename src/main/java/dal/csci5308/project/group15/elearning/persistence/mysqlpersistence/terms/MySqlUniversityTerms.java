@@ -6,13 +6,16 @@ import dal.csci5308.project.group15.elearning.database.IDatabaseOperations;
 import dal.csci5308.project.group15.elearning.factory.FactoryFacade;
 import dal.csci5308.project.group15.elearning.factory.properties.IPropertiesFactory;
 import dal.csci5308.project.group15.elearning.factory.properties.PropertiesFactory;
-import dal.csci5308.project.group15.elearning.models.course.courseContent.CourseContent;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTerms;
 import dal.csci5308.project.group15.elearning.models.terms.IUniversityTermsFactory;
 import dal.csci5308.project.group15.elearning.models.terms.UniversityTerms;
 import dal.csci5308.project.group15.elearning.persistence.terms.IUniversityTermsPersistence;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -121,16 +124,16 @@ public class MySqlUniversityTerms implements IUniversityTermsPersistence {
 
             boolean hasResult = cStmt.execute();
             ResultSet resultSet = cStmt.getResultSet();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 String termName = resultSet.getString(2);
                 Date termStartDate = resultSet.getDate(3);
-                Date termEndDate =  resultSet.getDate(4);
+                Date termEndDate = resultSet.getDate(4);
                 Date registrationStartDate = resultSet.getDate(5);
-                Date registrationEndDate =  resultSet.getDate(6);
+                Date registrationEndDate = resultSet.getDate(6);
 
-               IUniversityTerms iUniversityTerms = FactoryFacade.instance().getUniversityTermsFactory().createUniversityTermsInstance(
-                       termId, termName, termStartDate, termEndDate, registrationStartDate, registrationEndDate
-               );
+                IUniversityTerms iUniversityTerms = FactoryFacade.instance().getUniversityTermsFactory().createUniversityTermsInstance(
+                        termId, termName, termStartDate, termEndDate, registrationStartDate, registrationEndDate
+                );
                 connection.commit();
                 return iUniversityTerms;
             }

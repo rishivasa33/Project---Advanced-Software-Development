@@ -26,7 +26,6 @@ public interface IUniversityTerms {
 
     ArrayList<IUniversityTerms> loadOpenForRegistrationTerms(IUniversityTermsPersistence iUniversityTermsPersistence, Date currentDate);
 
-
     IUniversityTerms loadTermByTermId(IUniversityTermsPersistence iUniversityTermsPersistence, String termId) throws SQLException;
 
     IUniversityTerms loadCurrentTerm(IUniversityTermsPersistence iUniversityTermsPersistence, Date currentDate);

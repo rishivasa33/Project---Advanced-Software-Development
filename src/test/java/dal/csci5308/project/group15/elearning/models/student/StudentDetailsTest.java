@@ -20,7 +20,6 @@ class StudentDetailsTest {
         assertEquals(studentDetails.getStudentUserID(), 2);
         assertEquals(studentDetails.getStudentNumber(), "B00909090");
         assertEquals(studentDetails.getStudentProgram(), "MACS");
-
     }
 
     @Test
@@ -31,7 +30,6 @@ class StudentDetailsTest {
         assertNull(studentDetails.getStudentUserID());
         assertNull(studentDetails.getStudentNumber());
         assertNull(studentDetails.getStudentUserID());
-
     }
 
     @Test

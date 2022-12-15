@@ -80,20 +80,15 @@ public class StudentCourseEnrollment implements IStudentCourseEnrollment {
 
     @Override
     public IValidationState validateSaveByCourseCount() {
-
         EnrollmentValidatorTemplate registrationValidator = new EnrollmentValidatorByCourseCount();
-
         validationState = registrationValidator.validateStudentRegistration(this);
-
         return validationState;
     }
 
     @Override
     public IValidationState validateSaveByCreditsCount() {
         EnrollmentValidatorTemplate registrationValidator = new EnrollmentValidatorByCreditsCount();
-
         validationState = registrationValidator.validateStudentRegistration(this);
-
         return validationState;
     }
 
