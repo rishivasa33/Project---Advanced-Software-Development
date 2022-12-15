@@ -48,7 +48,6 @@ public class StudentCourseController {
                 courseModuleDetails.add(Integer.toString(courseModule.GetCourseModuleId()));
                 arrayLists.add(courseModuleDetails);
             }
-            System.out.println(arrayLists.size());
             model.addAttribute("courseId", course.GetCourseID());
             model.addAttribute("courseModules", arrayLists);
             model.addAttribute("courseInstanceID", courseInstanceID);

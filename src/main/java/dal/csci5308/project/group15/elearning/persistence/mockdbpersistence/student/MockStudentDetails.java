@@ -9,7 +9,7 @@ import dal.csci5308.project.group15.elearning.persistence.student.IStudentDetail
 public class MockStudentDetails implements IStudentDetailsPersistence {
     @Override
     public void save(StudentDetails studentDetails) {
-        System.out.println("Save MockStudentDetails");
+
     }
 
     @Override
