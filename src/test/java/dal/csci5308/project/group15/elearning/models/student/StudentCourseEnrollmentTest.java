@@ -153,4 +153,47 @@ public class StudentCourseEnrollmentTest {
         Integer creditsCount = studentCourseEnrollmentPersistence.loadStudentCreditCountByTerm(studentNumber, term);
         assertEquals(creditsCount, 9);
     }
+
+    @Test
+    void getCourseInstanceIDTest() {
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
+        IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstance("F22CSCI5100", "B00901111", "F22");
+
+        assertEquals(studentCourseEnrollment.getCourseInstanceID(), "F22CSCI5100");
+    }
+
+    @Test
+    void getStudentNumberTest() {
+
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
+        IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstance("F22CSCI5100", "B00901111", "F22");
+
+        assertEquals(studentCourseEnrollment.getStudentNumber(), "B00901111");
+    }
+
+    @Test
+    void getCourseTermTest() {
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
+        IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstance("F22CSCI5100", "B00901111", "F22");
+
+        assertEquals(studentCourseEnrollment.getCourseTerm(), "F22");
+    }
+
+    @Test
+    void getEnrolledSeatsTest() {
+
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
+        IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForSave("F22CSCI5100", "B00901111", "F22", 0, 120);
+
+        assertEquals(studentCourseEnrollment.getEnrolledSeats(), 0);
+    }
+
+    @Test
+    void getTotalSeatsTest() {
+
+        IStudentFactory studentCourseEnrollmentFactory = FactoryFacade.instance().getStudentFactory();
+        IStudentCourseEnrollment studentCourseEnrollment = studentCourseEnrollmentFactory.createStudentCourseEnrollmentInstanceForSave("F22CSCI5100", "B00901111", "F22", 0, 120);
+
+        assertEquals(studentCourseEnrollment.getTotalSeats(), 120);
+    }
 }
