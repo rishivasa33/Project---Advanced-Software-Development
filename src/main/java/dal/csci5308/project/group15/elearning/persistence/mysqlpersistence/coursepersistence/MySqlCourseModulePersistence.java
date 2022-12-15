@@ -77,7 +77,6 @@ public class MySqlCourseModulePersistence implements CourseModulePersistence {
         ArrayList<CourseContent> courseContents = new ArrayList<>();
         ICourseContentFactory courseContentFactory = FactoryFacade.instance().getCourseContentFactory();
 
-        //CALL `CSCI5308_15_DEVINT`.`GetAllContentsInModule`(<{IN courseModuleId INT}>);
 
         try (Connection connection = database.getConnection()) {
             CallableStatement cStmt = connection.prepareCall("{call GetAllContentsInModule (?)}");

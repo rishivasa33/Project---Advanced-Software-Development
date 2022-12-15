@@ -31,7 +31,6 @@ public class ProfessorDashBoardRestController {
             return courseContentResponseView.getSerializedStringForSuccess();
         }
         catch (Exception exception){
-            System.out.println("error happened in course content creation");
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView(requestBody);
             return CourseContentResponseView.getSerializedStringForFailure();
@@ -62,7 +61,6 @@ public class ProfessorDashBoardRestController {
             }
         }
         catch (Exception exception){
-            System.out.println("error happened in course content creation");
             CourseContentViewFactory courseContentViewFactory = ViewFactoriesCollection.GetCourseContentViewFactory();
             CourseContentRequestView courseContentView = courseContentViewFactory.CreateJsonCourseContentView();
             return CourseContentResponseView.getSerializedStringForFailure();
@@ -91,7 +89,6 @@ public class ProfessorDashBoardRestController {
 
         }
         catch (Exception exception){
-            System.out.println("error happened in course content creation");
             return CourseContentResponseView.getSerializedStringForFailure();
         }
     }
