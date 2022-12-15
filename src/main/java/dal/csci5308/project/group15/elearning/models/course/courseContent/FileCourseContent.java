@@ -79,7 +79,6 @@ public class FileCourseContent extends CourseContent {
     public String GetFileName(){
         Path path = Paths.get(filePath);
         Path fileName = path.getFileName();
-        String fileNameString = fileName.toString();
-        return fileNameString.split("\\.", 2)[1].trim();
+        return fileName.toString();
     }
 }

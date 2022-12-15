@@ -3,8 +3,11 @@ package dal.csci5308.project.group15.elearning.persistence.mysqlpersistence.assi
 import dal.csci5308.project.group15.elearning.database.Database;
 import dal.csci5308.project.group15.elearning.models.assignment.Assignment;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
-
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,6 @@ public class MySqlCreateAssignmentPersistence implements CreateAssignmentPersist
         stmt.setString(7, assignment.getFilepath());
 
         int result = stmt.executeUpdate();
-        System.out.println(result);
         connection.commit();
         connection.close();
     }
@@ -41,10 +43,8 @@ public class MySqlCreateAssignmentPersistence implements CreateAssignmentPersist
         while (rs.next()) {
             assignmentList.add(rs.getString(1));
         }
-        System.out.println(assignmentList);
         connection.commit();
         connection.close();
-
         return assignmentList;
     }
 
@@ -56,9 +56,7 @@ public class MySqlCreateAssignmentPersistence implements CreateAssignmentPersist
         stmt.setString(1, studentNumber);
         stmt.setString(2, assignmentId);
         stmt.setString(3, assignment.getStudentFilePath());
-
         int result = stmt.executeUpdate();
-        System.out.println(result);
         connection.commit();
         connection.close();
 
@@ -81,15 +79,9 @@ public class MySqlCreateAssignmentPersistence implements CreateAssignmentPersist
             assignment_model.setAssignmentEndDate(rs.getDate(6));
             assignment_model.setFilepath(rs.getString(7));
             assignmentList.add(assignment_model);
-            System.out.println(assignment_model.getAssignmentTitle());
-
         }
-        System.out.println(assignmentList.size());
         connection.commit();
         connection.close();
-
         return assignmentList;
-
-
     }
 }

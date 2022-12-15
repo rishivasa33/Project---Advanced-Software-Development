@@ -95,8 +95,8 @@ class CreateCourseContentAddRequest {
     postData(url, data, this.token)
   .then((response) => {
     response.blob().then(blob => {
-        const filename =  response.headers.get('Content-Disposition').split('filename=')[1].trim();
-        //const filename = "download.pdf"
+        //const filename =  response.headers.get('Content-Disposition').split('filename=')[1].trim();
+        const filename = "download.pdf"
         console.log(filename);
         let url = window.URL.createObjectURL(blob);
         let a = document.createElement('a');
@@ -126,7 +126,8 @@ class CreateCourseContentAddRequest {
              let contentFilePath = content["courseModuleContentFilePath"];
             let contentId = content["courseModuleContentId"];
             $("#contentList").append(`<div id = \"${contentId}\"><h3>${contentHeading}</h3><p>${contentFilePath}</p>
-            <button class = \"moduleContentFile\" id = \"${contentId}\"> Download File</button> </div>`);
+            <button class = \"moduleContentFile\" id = \"${contentId}\"> Download File From Server 1</button> </div>
+            <button> <a href="/professor/courseDetails/fetchModuleContentFile/${this.courseId}/${this.courseModuleId}/${contentId}"> Download File From Server 2</a></button> </div>`);
         } 
     }
     else{

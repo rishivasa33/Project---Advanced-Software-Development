@@ -8,21 +8,15 @@ import java.sql.SQLException;
 public class MockDBQuizPersistence implements QuizPersistence {
 
     public MockDBQuizPersistence(){
-
     }
 
     @Override
     public void saveQuizInfo(Quiz quiz) throws SQLException {
-
     }
 
     @Override
     public void saveQuizQuestion(Quiz quiz, String quizIdFk, String questionIdFk) {
-
     }
 
-    @Override
-    public Quiz load(String quizId) {
-        return null;
-    }
+
 }

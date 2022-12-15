@@ -1,4 +1,4 @@
-package dal.csci5308.project.group15.elearning.quiz;
+package dal.csci5308.project.group15.elearning.models.quiz;
 
 import java.sql.Date;
 
@@ -18,10 +18,16 @@ public class QuizParams {
     String option2;
     String option3;
     String option4;
-
     String quizIdFk;
-
     String questionIdFk;
+
+    public QuizParams() {
+    }
+
+    public QuizParams(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public String getQuizIdFk() {
         return quizIdFk;
@@ -39,12 +45,9 @@ public class QuizParams {
         this.questionIdFk = questionIdFk;
     }
 
-
-
     public String getAnswer() {
         return answer;
     }
-
 
     public void setAnswer(String answer) {
         this.answer = answer;
@@ -82,8 +85,6 @@ public class QuizParams {
         this.option4 = option4;
     }
 
-
-
     public String getQuestionId() {
         return questionId;
     }
@@ -99,6 +100,7 @@ public class QuizParams {
     public void setQuizId(String quizId) {
         this.quizId = quizId;
     }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -106,8 +108,6 @@ public class QuizParams {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-
-
 
     public Date getEndDate() {
         return endDate;
@@ -133,7 +133,6 @@ public class QuizParams {
         this.markingType = markingType;
     }
 
-
     public int getQuestionCount() {
         return questionCount;
     }
@@ -142,23 +141,12 @@ public class QuizParams {
         this.questionCount = questionCount;
     }
 
-
     public String getQuestion() {
         return question;
     }
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-
-    public QuizParams() {
-
-    }
-
-    public QuizParams(String id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public String getId() {

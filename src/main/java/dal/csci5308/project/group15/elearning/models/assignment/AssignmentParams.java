@@ -1,7 +1,6 @@
-package dal.csci5308.project.group15.elearning.assignment;
+package dal.csci5308.project.group15.elearning.models.assignment;
 
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,12 +16,7 @@ public class AssignmentParams {
     private String assignmentDescription;
     private Date assignmentEndDate;
     private Date assignmentStartDate;
-    private MultipartFile file ;
-    private MultipartFile studentfile ;
-
-
-    String studentNumber;
-
+    private MultipartFile file;
 
     public MultipartFile getFile() {
         return file;
@@ -40,7 +34,6 @@ public class AssignmentParams {
     public void setSubId(String subId) {
         this.subId = subId;
     }
-
 
     public String getAssignmentId() {
         return assignmentId;
@@ -78,35 +71,29 @@ public class AssignmentParams {
         return assignmentStartDate;
     }
 
-    public String getAssignmentFilePath(){
+    public void setAssignmentStartDate(Date assignmentStartDate) {
+        this.assignmentStartDate = assignmentStartDate;
+    }
+
+    public String getAssignmentFilePath() {
         String pathvalue = null;
         try {
             Path path = Paths.get("AssignmentProffAttachments/" + file.getOriginalFilename());
             pathvalue = path.toString();
             Files.copy(getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return pathvalue;
     }
 
-    public String getStudentAssignmentFilePath(){
+    public String getStudentAssignmentFilePath() {
         String pathvalue = null;
         try {
             Path path = Paths.get("StudentAssignmentAttachments/" + file.getOriginalFilename());
             pathvalue = path.toString();
             Files.copy(getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return pathvalue;
     }
-
-    public void setAssignmentStartDate(Date assignmentStartDate) {
-        this.assignmentStartDate = assignmentStartDate;
-    }
-
-
-
-
 }

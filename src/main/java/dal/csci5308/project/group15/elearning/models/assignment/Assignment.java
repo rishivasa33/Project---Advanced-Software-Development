@@ -1,25 +1,39 @@
 package dal.csci5308.project.group15.elearning.models.assignment;
 
-import dal.csci5308.project.group15.elearning.assignment.AssignmentParams;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistence;
 import dal.csci5308.project.group15.elearning.persistence.CreateAssignmentPersistenceSingleton;
-
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Assignment {
 
+    CreateAssignmentPersistence createAssignmentPersistence;
     private String subId;
     private String assignmentId;
     private String assignmentTitle;
     private String assignmentDescription;
     private Date assignmentEndDate;
     private Date assignmentStartDate;
-    private String filepath ;
+    private String filepath;
+    private String studentFilePath;
 
+    public Assignment(AssignmentParams assObj) {
+        subId = assObj.getSubId();
+        assignmentId = assObj.getAssignmentId();
+        assignmentTitle = assObj.getAssignmentTitle();
+        assignmentDescription = assObj.getAssignmentDescription();
+        assignmentStartDate = assObj.getAssignmentStartDate();
+        assignmentEndDate = assObj.getAssignmentEndDate();
+        filepath = assObj.getAssignmentFilePath();
+        studentFilePath = assObj.getStudentAssignmentFilePath();
+        createAssignmentPersistence = CreateAssignmentPersistenceSingleton.GetCreateAssignmentPersistence();
+    }
 
+    public Assignment() {
+        createAssignmentPersistence = CreateAssignmentPersistenceSingleton.GetCreateAssignmentPersistence();
+    }
 
     public CreateAssignmentPersistence getCreateAssignmentPersistence() {
         return createAssignmentPersistence;
@@ -28,11 +42,6 @@ public class Assignment {
     public void setCreateAssignmentPersistence(CreateAssignmentPersistence createAssignmentPersistence) {
         this.createAssignmentPersistence = createAssignmentPersistence;
     }
-
-    private String studentFilePath;
-
-    CreateAssignmentPersistence createAssignmentPersistence;
-
 
     public String getSubId() {
         return subId;
@@ -98,37 +107,14 @@ public class Assignment {
         this.studentFilePath = studentFilePath;
     }
 
-    public Assignment(AssignmentParams assObj){
-        subId =assObj.getSubId();
-        assignmentId = assObj.getAssignmentId();
-        assignmentTitle = assObj.getAssignmentTitle();
-        assignmentDescription = assObj.getAssignmentDescription();
-        assignmentStartDate = assObj.getAssignmentStartDate();
-        assignmentEndDate = assObj.getAssignmentEndDate();
-        filepath = assObj.getAssignmentFilePath();
-        studentFilePath = assObj.getStudentAssignmentFilePath();
-        createAssignmentPersistence = CreateAssignmentPersistenceSingleton.GetCreateAssignmentPersistence();
-    }
-
-    public Assignment(){
-        createAssignmentPersistence = CreateAssignmentPersistenceSingleton.GetCreateAssignmentPersistence();
-    }
-
-
-
     public void Save() throws SQLException {
         createAssignmentPersistence.save(this);
     }
 
-    public List<String> loadAssignmentList(String assignmentId) throws SQLException{
-      List<String> assignmentList = createAssignmentPersistence.loadAssignmentList(assignmentId);
-      return assignmentList;
+    public List<String> loadAssignmentList(String assignmentId) throws SQLException, FileNotFoundException {
+        List<String> assignmentList = createAssignmentPersistence.loadAssignmentList(assignmentId);
+        return assignmentList;
     }
-
-    public ArrayList<Assignment> LoadBySubjectId(String subId){
-        return null;
-    }
-
 
     public List<Assignment> loadAssignmentDetails(String assignmentId) throws SQLException {
         List<Assignment> assignmentList = createAssignmentPersistence.loadAssignmentDetails(assignmentId);
@@ -136,6 +122,6 @@ public class Assignment {
     }
 
     public void SaveStudentAssignment(String assignment_id, String student_number) throws SQLException {
-        createAssignmentPersistence.saveStudentAssignment(this,student_number,assignment_id);
+        createAssignmentPersistence.saveStudentAssignment(this, student_number, assignment_id);
     }
 }
