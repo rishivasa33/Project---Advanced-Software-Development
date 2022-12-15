@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/studentDashboard.css}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="topNavBar">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/student/viewRegisteredCoursesByTerm">View Registered Courses By Term</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/student/viewTermsOpenForRegistration">Register for Courses</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    </ul>
+</nav>
+<h1>View Assignment</h1>
+<li  th:each="assignment :${assignmentList}">
+    <a
+    th:href="@{/loadAssignmentDetails/{assignmentId}(assignmentId = ${assignment})}"
+    th:text="${assignment}"
+    ></a>
+    <hr/>
+</li>
+
+</body>
+</html>
