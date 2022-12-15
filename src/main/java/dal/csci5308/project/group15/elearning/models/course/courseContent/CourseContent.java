@@ -1,5 +1,7 @@
 package dal.csci5308.project.group15.elearning.models.course.courseContent;
 
+
+
 import java.sql.SQLException;
 
 public abstract class CourseContent {

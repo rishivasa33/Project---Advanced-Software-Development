@@ -79,8 +79,9 @@ public class ProfessorDashBoardController {
             model.addAttribute("course_module_list", course_module_names);
             model.addAttribute("courseId", courseId);
 
-        } catch (SQLException exception) {
-            System.out.println("Course Module Fetch Error");
+        }
+        catch(SQLException exception){
+            model.addAttribute("course_module_list", null);
         }
 
         return propertiesFactory.makeRedirectionsProperties().getPropertiesMap().get("TEMPLATE_COURSE_MODULES_LIST");
